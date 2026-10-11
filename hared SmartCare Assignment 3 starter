@@ -1,0 +1,120 @@
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mnew file mode 100644[m
+[1mindex 0000000..3b9a5d3[m
+[1m--- /dev/null[m
+[1m+++ b/.gitignore[m
+[36m@@ -0,0 +1,10 @@[m
+[32m+[m[32m.venv/[m
+[32m+[m[32mvenv/[m
+[32m+[m[32m__pycache__/[m
+[32m+[m[32m.pytest_cache/[m
+[32m+[m[32m*.py[cod][m
+[32m+[m[32m.DS_Store[m
+[32m+[m[32m.env[m
+[32m+[m[32m.stage8_faults/[m
+[32m+[m[32m.stage8-check-*/[m
+[32m+[m[32m.stage8-verify-*/[m
+[1mdiff --git a/README.md b/README.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f44198c[m
+[1m--- /dev/null[m
+[1m+++ b/README.md[m
+[36m@@ -0,0 +1,56 @@[m
+[32m+[m[32m# Software Technology 1 Assignment 3[m
+[32m+[m
+[32m+[m[32mOne group repository and one evolving SmartCare application.[m
+[32m+[m[32mBaseline: Stage 6 foundation, 2026 revision 2. This starter deliberately leaves the three Stage 6 service tasks incomplete.[m
+[32m+[m
+[32m+[m[32m## Group index[m
+[32m+[m
+[32m+[m[32m- Group and tutorial: [complete][m
+[32m+[m[32m- Member names, GitHub usernames and UG/PG cohorts: [complete][m
+[32m+[m[32m- Shared repository URL: [complete][m
+[32m+[m[32m- Latest completed stage: [complete][m
+[32m+[m[32m- Verified code SHA: [complete][m
+[32m+[m[32m- Test command, working directory and observed result: [complete][m
+[32m+[m[32m- Final submitted SHA, if different from tested code SHA: [complete; explain evidence-only changes][m
+[32m+[m
+[32m+[m[32mDo not put student IDs, private peer ratings, credentials or personal contact details here.[m
+[32m+[m
+[32m+[m[32m## Complete package and stage sequence[m
+[32m+[m
+[32m+[m[32mAll Assignment 3 ordinary materials are supplied at the beginning: the Overview, Git/GitHub Group Guide, Stage 6–12 handouts, this incomplete SmartCare starter, all seven blank activity/evidence records, and assessment instructions/forms. Stage numbers control the engineering sequence, not document availability.[m
+[32m+[m
+[32m+[m[32mStart with Stage 6. Complete each stage only after the previous applicable stage has been integrated, verified and recorded.[m
+[32m+[m
+[32m+[m[32mUG: 6 → 7 → 8 → 9 → 12[m
+[32m+[m
+[32m+[m[32mPG: 6 → 7 → 8 → 9 → 10 → 11 → 12[m
+[32m+[m
+[32m+[m[32mUse ONE group repository and ONE evolving project/ throughout. The stage folders contain your response/evidence records; all templates are already present. Preserve previous code, tests, records and Git history. Never replace project/ with another starter or copy completed staff reference implementations: those are private staff material.[m
+[32m+[m
+[32m+[m[32mStages 10 and 11 are PG-only. UG skipping these stages is correct and complete. In an UG-only submission, retain the supplied PG-only templates unchanged as intentionally not applicable; do not fill them with fabricated N/A responses. Optional UG collaboration is voluntary and unassessed. Mixed groups protect the verified common Stage 9 SHA while PG extends the same project. Use only the teaching team's confirmed Copilot agent capability or approved equivalent route.[m
+[32m+[m
+[32m+[m[32mThe Stage 8 preparation utility version 1.1 is a controlled teaching asset supplied or run by teaching staff when Stage 8 begins. Follow the instructions provided by your tutor. It is not included in the normal student package. If temporarily supplied for the handout commands, keep it in a sibling Stage_8_Assets/ folder outside the repository. Never include it in Git or the final submission. The Stage 7 checkpoint and Stage 8 technical activity are unchanged.[m
+[32m+[m
+[32m+[m[32mComplete the supplied Stage 12 record when you reach Stage 12. UG releases the common scope; PG releases the extended scope, protecting the common SHA where needed. Record exact tested/submitted SHAs and create one source ZIP as the handout directs, without duplicate application copies per stage.[m
+[32m+[m
+[32m+[m[32m## Application and evidence[m
+[32m+[m
+[32m+[m[32m- [Application setup and commands](project/README.md)[m
+[32m+[m[32m- [Stage 6 activities and evidence](stage06/stage06_activities_and_evidence.md)[m
+[32m+[m[32m- [Stage 7 activities and evidence](stage07/stage07_activities_and_evidence.md)[m
+[32m+[m[32m- [Stage 8 activities and evidence](stage08/stage08_activities_and_evidence.md)[m
+[32m+[m[32m- [Stage 9 activities and evidence](stage09/stage09_activities_and_evidence.md)[m
+[32m+[m[32m- [Stage 10 PG activities and evidence](stage10_pg/stage10_activities_and_evidence.md)[m
+[32m+[m[32m- [Stage 11 PG activities and evidence](stage11_pg/stage11_activities_and_evidence.md)[m
+[32m+[m[32m- [Stage 12 activities and evidence](stage12/stage12_activities_and_evidence.md)[m
+[32m+[m
+[32m+[m[32mGit commands in the practical guide run from this root. Application commands run from project/:[m
+[32m+[m
+[32m+[m[32m```sh[m
+[32m+[m[32mcd project[m
+[32m+[m[32mpython main.py[m
+[32m+[m[32mpython -m pytest[m
+[32m+[m[32mcd ..[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mUse the approved environment described in the Git/GitHub group guide. The verified baseline is Python 3.13 with pytest 8.3.5. GitHub Copilot is the nominated assistant; verify significant output and record required decisions. Use synthetic data only. Use each supplied record only when you reach that stage in the applicable sequence.[m
+[1mdiff --git a/project/README.md b/project/README.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..9cf7469[m
+[1m--- /dev/null[m
+[1m+++ b/project/README.md[m
+[36m@@ -0,0 +1,20 @@[m
+[32m+[m[32m# SmartCare Stage 6 starter[m
+[32m+[m
+[32m+[m[32mRequirements baseline: SmartCare A3 2026 revision 2. Python 3.13 and pytest 8.3.5 verified. Runtime uses only the standard library.[m
+[32m+[m
+[32m+[m[32mFrom this directory, using a Python environment with the development dependency installed:[m
+[32m+[m
+[32m+[m[32m```sh[m
+[32m+[m[32mpython main.py[m
+[32m+[m[32mpython -m pytest[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mIf needed in your approved environment: `python -m pip install -r requirements-dev.txt`.[m
+[32m+[m
+[32m+[m[32mThe demo registers synthetic records and books/finds an appointment. All supplied tests pass. Data exists only in this session and is lost on exit; FR-10 restart persistence is retired. Use synthetic information only.[m
+[32m+[m
+[32m+[m[32m`domain.py` contains the entities, status and guarded cancellation. `data_store.py` holds three dictionaries through add/find/list methods. The three services share that object. Supplied registration, booking, appointment lookup and conflict checking work. IDs are trimmed, non-blank and case-sensitive. Properties provide read-only identity/appointment state; changes go through domain methods. No special architecture terminology is required.[m
+[32m+[m
+[32m+[m[32mStage 6 TODOs: service patient/practitioner lookup and cancellation. Stage 9 TODOs: pure query, named sort key, service listing and interactive menu. The starter TODO contracts are in docstrings. All three Stage 6 TODO calls deliberately raise NotImplementedError; future TODOs remain stubs. No PG rescheduling or assurance solution is supplied.[m
+[32m+[m
+[32m+[m[32mService booking accepts IDs and a `datetime` (local, minute precision). Console parser accepts exactly `YYYY-MM-DD HH:MM`. Store lookups return None when absent; service lookups raise LookupError. Invalid values, duplicates, conflicts and illegal transitions raise ValueError. Lists are new containers holding the stored objects. No age, duration, patient-conflict or past-date rules apply.[m
+[1mdiff --git a/project/main.py b/project/main.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8d61a59[m
+[1m--- /dev/null[m
+[1m+++ b/project/main.py[m
+[36m@@ -0,0 +1,26 @@[m
+[32m+[m[32m"""Run the supplied demo or the Stage 9 interactive menu."""[m
+[32m+[m
+[32m+[m
+[32m+[m[32mimport argparse[m
+[32m+[m
+[32m+[m[32mfrom smartcare.console import run_demo, run_menu[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef main() -> None:[m
+[32m+[m[32m    """Run the demo, or report the inten

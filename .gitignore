@@ -1,0 +1,10 @@
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.DS_Store
+.env
+.stage8_faults/
+.stage8-check-*/
+.stage8-verify-*/
