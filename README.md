@@ -5,9 +5,9 @@ Baseline: Stage 6 foundation, 2026 revision 2. This starter deliberately leaves 
 
 ## Group index
 
-- Group and tutorial: [complete]
-- Member names, GitHub usernames and UG/PG cohorts: [complete]
-- Shared repository URL: [complete]
+- Group and tutorial: Group 1 Monday tutorial
+- Member names, GitHub usernames and UG/PG cohorts: Chars, Thomas, Van, Leo [All UG] 
+- Shared repository URL: github.com/linhvantran/st1-assignment-3
 - Latest completed stage: [complete]
 - Verified code SHA: [complete]
 - Test command, working directory and observed result: [complete]
