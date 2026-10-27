@@ -146,6 +146,7 @@ class AppointmentService:
         appointment.cancel()
 
         return appointment
+    
 
     def list_practitioner_appointments(
         self,
