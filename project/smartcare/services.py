@@ -29,13 +29,23 @@ class PatientService:
         return patient
 
     def find_patient(self, patient_id: str) -> Patient:
-        """Stage 6 TODO: return the stored patient for a valid patient ID.
+        """Stage 6: return the stored patient for a valid patient ID.
 
         Completion must raise LookupError for absence and ValueError for
         a blank/invalid ID. It must not create a replacement patient.
         The starter deliberately raises NotImplementedError.
         """
-        raise NotImplementedError('Stage 6: patient lookup')
+        #Checks if function input value is blank. If it is, raise ValueError telling user that the value is invalid.
+        if not isinstance(patient_id, str) or not patient_id.strip():
+            raise ValueError('Value inserted into find_patient is invalid')
+
+        #Lookup patient_id in datastore.
+        patient = self.data_store.find_patient(patient_id)
+
+        #Raises LookupError telling user patient not found if there is no patient object for the desired ID.
+        if patient is None:
+            raise LookupError('Patient not found')
+        return patient
 
 
 class PractitionerService:
@@ -64,15 +74,24 @@ class PractitionerService:
         return practitioner
 
     def find_practitioner(self, practitioner_id: str) -> Practitioner:
-        """Stage 6 TODO: return the stored practitioner for a valid ID.
+        """Stage 6: return the stored practitioner for a valid ID.
 
         Completion must raise LookupError for absence and ValueError for
         a blank/invalid ID. It must not create a replacement
         practitioner. The starter deliberately raises
         NotImplementedError.
         """
-        raise NotImplementedError('Stage 6: practitioner lookup')
+        #Checks if function input value is blank. If it is, raise ValueError telling user that the value is invalid.
+        if not isinstance(practitioner_id, str) or not practitioner_id.strip():
+            raise ValueError('Value inserted into find_practitioner is invalid')
 
+        #Lookup practitioner_id in datastore.
+        practitioner = self.data_store.find_practitioner(practitioner_id)
+
+        #Raises LookupError telling user practitioner not found if there is no practitioner object for the desired ID.
+        if practitioner is None:
+            raise LookupError('Practitioner not found')
+        return practitioner
 
 class AppointmentService:
     """Coordinate booking, lookup and cancellation using the shared store."""
