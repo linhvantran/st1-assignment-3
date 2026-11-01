@@ -58,7 +58,7 @@ GitHub Copilot generates five tests, all of which pass. Two only assert that obj
 ### Tutorial exit question
 
 Why can 100% code coverage coexist with poor software verification?
-[response]
+Code coverage is a metric measured in percentage that represents the amount of code executed in a test. Poor software verification is caused by test cases that fail to catch logical errors. They coexist because their goals do not collide with each other. Code coverage is a metric while poor software verification is caused by poor programming. 
 
 ## B Requirement to Test Traceability Matrix
 
