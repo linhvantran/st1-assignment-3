@@ -71,7 +71,7 @@ GitHub Copilot generates five tests, all of which pass. Two only assert that obj
 ### Tutorial exit question
 
 Why can 100% code coverage coexist with poor software verification?
-[response]
+Code coverage is a metric measured in percentage that represents the amount of code executed in a test. Poor software verification is caused by test cases that fail to catch logical errors. They coexist because their goals do not collide with each other. Code coverage is a metric while poor software verification is caused by poor programming. 
 
 ## B Requirement to Test Traceability Matrix
 
@@ -289,16 +289,16 @@ Record actual work in test design, implementation, review, traceability, diagnos
 ## N Formative Questions
 
 1. What question does verification answer?
-[response]
+Verification is the process of checking code syntax and design specifications set by the client. It answers the question "Are we building this correctly?" 
 
 2. What question does validation answer?
-[response]
+Checks whether the program satisfies real world needs. This involves checking code and features of the program to ensure they match the required standards for intended use. It answers the question "Are we building the right product?" 
 
 3. What is a unit test?
-[response]
+A unit test is a small automated check that verifies a piece of your code (most commonly a function) works correctly independently. 
 
 4. What is a pytest fixture?
-[response]
+
 
 5. What is parametrisation in pytest?
 [response]
@@ -307,7 +307,7 @@ Record actual work in test design, implementation, review, traceability, diagnos
 [response]
 
 7. What does code coverage tell us, and what does it not prove?
-[response]
+Code coverage tells us the percentage of code executed during a test. It doesn't prove whether the code is valid and it doesn't perform any test cases. 
 
 8. What makes an assertion weak?
 [response]
