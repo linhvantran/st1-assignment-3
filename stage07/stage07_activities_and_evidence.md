@@ -235,22 +235,32 @@ Connect cases to actual contracts and verify unchanged state after rejection.
 
 Select ONE real acceptance criterion. Complete human-first fields before using Copilot. Do not require an accepted generated test.
 
-Requirement: [complete]
-Acceptance criterion: [quote]
-Behaviour to test: [complete]
-Human-first test idea/categories: [complete]
-Prompt and purpose: [complete or link]
+Requirement: FR-07 Retain cancelled history 
+Acceptance criterion: AC-05.2: "Cancelled history remains retrievable in the current session." (from the Stage 7 handout)
+Behaviour to test: After an appointment is cancelled, it stays in the same shared SmartCareDataStore. find_appointment returns the same object, list_appointments includes it, and its status show CANCELLED 
+Human-first test idea/categories: Positive will cancel a SCHEDULED appointment, then check find_appointment returns the same object and list_appointments includes it. Negative: Cancelling an unknown ID raises LookupError and leaves stored records unchanged. 
+Prompt and purpose: I used the Part F prompt with requirement set to "FR-07 Retain cancelled history" and Acce[tance criterion set to "Cancelled history remains retrievable in the current session." The purpose iof this is to compare the generated cnadidates with my ideas before deciding what to keep. 
 
 For each significant candidate, copy this entry as needed:
-- Copilot test idea/candidate: [complete]
-- What it claims to verify: [complete]
-- Requirement trace: [complete]
-- Assertion quality: [complete]
-- Human critique: [complete]
-- Decision: [Accept / Modify / Reject]
-- Reason: [complete]
-- Final test reference if accepted/modified: [link or not retained]
+
+Candidate 1 
+
+- Copilot test idea/candidate: After cancelling A1, assert that find_appointment("A1") is not None. 
+- What it claims to verify: That the cancelled appointments are retained. 
+- Requirement trace: FR-07 / AC-05.2. 
+- Assertion quality: Weak. It passes for any returned object, so it does not check identity, status or the list. 
+- Human critique: It cannot fail for hte right reason. It would pass if the store returned a different object or if cancellation never changed the status. 
+- Decision: Modify
+- Reason: The intention matches AC-05.2, but the assertion proves too little. I replaced it with identity, status and list checks.
+- Final test reference if accepted/modified: T-21, project/tests/test_services.py::test_cancelled_apppointment_is_retained_and_listed
 - Actual verification result: [complete; do not claim an unrun test passed]
+
+Candidate 2
+- Copilot test idea/candidate: Cancel an appointment, create a new SmartCareDataStore form saved data, and assert the cancelled appointment still exists. 
+- What it claims to verify: Cancelled history persists after session ends. 
+- Requirement trace: None. AC-05.2 says cancelled history remains retrievable "in the current session", so persistence is outside it. 
+- Asserion quality:  
+- Human critique: 
 
 Before accepting: traces to a requirement/criterion; can fail for the right reason; assertion checks required behaviour; no invented business rule; no unnecessary private implementation dependence. Reject/modify weak assertions, invented requirements, excessive mocking, duplicates, wrong exceptions, obsolete architecture and unnecessary dependencies.
 
