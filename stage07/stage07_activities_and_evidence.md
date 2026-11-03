@@ -298,25 +298,25 @@ Checks whether the program satisfies real world needs. This involves checking co
 A unit test is a small automated check that verifies a piece of your code (most commonly a function) works correctly independently. 
 
 4. What is a pytest fixture?
-
+A pytest fixture is a reusable function that sets up test data or resources including but not excluded to objects. Tests receive it by naming it as an argument so it cleans it up afterwards. 
 
 5. What is parametrisation in pytest?
-[response]
+Parametrisation is used to run one test function agains many input/expected outut pairs, which avoids copy-pasted tests. 
 
 6. What is regression testing?
-[response]
+Regression testing is where you re-run existing test after a to confirm that the function works as intended after code changes. 
 
 7. What does code coverage tell us, and what does it not prove?
 Code coverage tells us the percentage of code executed during a test. It doesn't prove whether the code is valid and it doesn't perform any test cases. 
 
 8. What makes an assertion weak?
-[response]
+Weak assertion is one that would pass when the code is wrong. 
 
 9. What is the appropriate role of GitHub Copilot as a test assistant?
-[response]
+Using Copilot as a test assistant is helpful when drafting tests/edge case ideas. You must still run, review, and understand the code because you are still responsible for the code. 
 
 10. What is the Stage 7 engineering rule?
-[response]
+
 
 ## O Stage Completion
 
