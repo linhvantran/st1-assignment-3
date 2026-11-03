@@ -113,23 +113,44 @@ Create at least two focused issues. Add a linked practitioner-lookup issue or an
 
 Repeat this block per PR. Record actual events, not planned approvals.
 
-- PR link and title: [response]
-- Linked issue and requirement: [response]
-- Feature branch: [response]
-- Changed behaviour: [response]
-- Meaningful commits: [links]
-- Test command, directory and observed result: [response]
-- Another-member reviewer: [response]
-- Human observations recorded before Copilot: [link and time]
-- Requirement, responsibilities, test assertions and unrelated-scope checks: [response]
-- Key feedback: [response]
+Apppointment Cancellation: 
+
+- PR link and title: Title: Stage 6: complete cancel appointment [https://github.com/linhvantran/st1-assignment-3/pull/5]
+- Linked issue and requirement: FR-06 Appointment Cancellation with FR-07 retained history. Must be able to cancel appointments and pass the eight supplied tests.
+- Feature branch: feature/appointment-cancellation
+- Changed behaviour: Added an appointment cancellation function
+- Meaningful commits: Completed required stages, all 8 tests passed [https://github.com/linhvantran/st1-assignment-3/commit/f4b548091657363aa9cd7a2925b4ad1bf136f40c] 
+- Test command, directory and observed result: pytest tests/ in stage06/: 8 passed, 0 failed
+- Another-member reviewer: charatwukki 
+- Human observations recorded before Copilot: Cancels the appointment by ID https://github.com/linhvantran/st1-assignment-3/commit/f4b548091657363aa9cd7a2925b4ad1bf136f40c#commitcomment-207890660 [6:58PM 3/11/2026]
+- Requirement, responsibilities, test assertions and unrelated-scope checks: Requirement: Meets requirements, appointments can be cancelled by ID. Responsibilities: Able to change the status of the appointments to cancelled. Test assertions: valid ID asserts the status "CANCELLED". Unknown ID asserts LookupError is raised. Unrelated scope: none, only the cancel feature and its tests changed. 
+- Key feedback:  https://github.com/linhvantran/st1-assignment-3/commit/250f06b144ac6f40a515bed390b3791945192500#commitcomment-207891305 [appointment.cancel() completed. works as intended] 
+- Author response/change and verification: [response] 
+- Reviewer recheck and approval: https://github.com/linhvantran/st1-assignment-3/pull/5 [charatwukki is the reviewer and checked the code]
+- Merge outcome and SHA: charatwukki merged 1 commit into main from feature/stage6-cancel [250f06b144ac6f40a515bed390b3791945192500] 
+- Significant Copilot assistance: No copilot assistance used in the code review
+- Linked issue closure: Issue #2 closed manually after merge
+- Each member updated main: charatwukki: pulled main, confirmed at 250f06b144ac6f40a515bed390b3791945192500. linhvantran: pulled main, confirmed at 250f06b144ac6f40a515bed390b3791945192500. cz1295768-ui: pulled main, confirmed at 250f06b144ac6f40a515bed390b3791945192500. CrowdedGolf: pulled main, confirmed at 250f06b144ac6f40a515bed390b3791945192500 
+- Integrated verification after merge: pytest tests/ in stage06: 8 passed, 0 failed, SHA 250f06b144ac6f40a515bed390b3791945192500
+
+Patient Lookup: 
+
+- PR link and title: Implement FR-02 - Patient and practitioner search by ID
+- Linked issue and requirement: FR-02 Appointment lookup must allow user to lookup appointments and pass the supplied tests. 
+- Feature branch: feature/2-patient-lookup
+- Changed behaviour: Added an appointment lookup function
+- Meaningful commits: Add patient and practitioner search by ID [https://github.com/linhvantran/st1-assignment-3/commit/901eeb58ef2687adbe80a9326ac5457ca080df89]
+- Test command, directory and observed result: pytest tests/ in stage06/: 12 passed, 0 failed
+- Another-member reviewer: charatwukki
+- Human observationd recorded before Copilot: Allows the user to find practitioner and patients. https://github.com/linhvantran/st1-assignment-3/commit/901eeb58ef2687adbe80a9326ac5457ca080df89#commitcomment-207893568 [7:24 PM 3/11/2026]
+- Requirement, responsibilities, test assertions and unrelated-scope checks: Requirement: meets the Stage 6 requirement that find_patient and find_practitioner return the stored object for a valid ID. Raises LookupError when absent and ValueError for a blank/invalid ID. Responsibilities: each method validates the ID, delegates the lookup to data_store, and checks for None, with no object creation or storage logic in the service. Test assertions: valid ID unknown ID asserts LookupError; blank, whitespace-only and non-string IDs assert ValueError. Unrelated scope: none, only find_patient and find_practitioner changed, with no changes to the other services. 
+- Key feedback: Patient lookup works as intended. https://github.com/linhvantran/st1-assignment-3/pull/4#pullrequestreview-5663157549 
 - Author response/change and verification: [response]
-- Reviewer recheck and approval: [link]
-- Merge outcome and SHA: [response]
-- Significant Copilot assistance: [summary or none]
-- Linked issue closure: [response]
-- Each member updated main: [member and confirmation]
-- Integrated verification after merge: [command, directory, result and code SHA]
+- Reviewer recheck and approval: https://github.com/linhvantran/st1-assignment-3/pull/4 [charatwukki is the reviewer and checked the code]
+- Significant Copilot assistance: No copilot assistance used in the code review
+- Linked issue closure: Issue #1 closed manually after merge
+- Each member updated main: charatwukki: pulled main, confirmed at 7a33834816888d6d2469b1d49f07d63e2ea7fe6a. linhvantran: pulled main, confirmed at 7a33834816888d6d2469b1d49f07d63e2ea7fe6a. cz1295768-ui: pulled main, confirmed at 7a33834816888d6d2469b1d49f07d63e2ea7fe6a. CrowdedGolf: pulled main, confirmed at 7a33834816888d6d2469b1d49f07d63e2ea7fe6a
+- Integrated verification after merge: pytest tests/ in stage06: 8 passed, 0 failed, SHA 7a33834816888d6d2469b1d49f07d63e2ea7fe6a
 
 ## H Copilot collaboration record
 
@@ -217,8 +238,8 @@ A requirement is then worked on via a single focused change, this includes: issu
 
 ## M Completion and handover
 
-- Starting SHA: [response]
-- Final Stage 6 code SHA: [response]
+- Starting SHA: 24c3c250f2f1add43357414117315b2720623367 [first ever commit] 
+- Final Stage 6 code SHA: 7a33834816888d6d2469b1d49f07d63e2ea7fe6a 
 - Test command: [response]
 - Working directory: [response]
 - Observed result: [response]
