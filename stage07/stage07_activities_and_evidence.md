@@ -1,6 +1,6 @@
 # Stage 7 Testing and Verification Record
 
-Group/tutorial: [complete]  Members/cohorts: [complete]
+Group/tutorial: Group 1 Monday tutorial  Members/cohorts: Chars, Van, Thomas, Leo
 Requirements baseline: SmartCare A3 Requirements Baseline 2026, revision 2.
 Use the same project/. Link actual evidence; keep responses concise. Blank fields are for your group. Copy rows only as needed.
 
@@ -217,8 +217,19 @@ Use fresh shared SmartCareDataStore state, registered objects and completed Stag
 Connect cases to actual contracts and verify unchanged state after rejection.
 
 | Behaviour | Boundary/invalid input | Expected result | Test ID |
-|---|---|---|---|
-| [complete] | [complete] | [complete] | [complete] |
+| Patient ID validation | Blank ID "" | ValueError | T-02 |
+| Patient name validation | Whitespace-only name "  " | ValueError | T-03 |
+| Practitioner validation | Blank specialty | ValueError | T-04 | 
+| Date and Time validation | Seconds or a timezone | ValueError for each | T-09 |
+| Cancellation guard | Cancel an already CANCELLED appointment | ValueError; status stays Cancelled | T-07, T-22 | 
+| Duplicate patient | Register an existing ID "P1" again | ValueError; original patient unchanged | T-11 |
+| Patient lookup | Unknown ID "P9"; blank ID | LookupError; ValueError; no record added | T-13 |
+| Practitioner lookup | Unknown ID "D9" | LookupError | T-14 | 
+| Booking participants | Unknown patient or practitioner | LookupError; nothing stored | T-16 |
+| Practitioner conflict | Same practitioner, same exact time, existing SCHEDULED booking | ValueError; only the first booking remains | T-17 |
+| Conflict boundary | Rebook a slot held by a CANCELLED appointment | Booking succeeds | T-19 | 
+| Cancel lookup | Unknown ID "A9"; blank ID | LookupErrror; ValueError; "A1" still SCHEDULED | T-23 | 
+| Duplicate appointment | Booking with existing ID "A1" | ValueError; original unchanged | T-25 |
 
 ## H GitHub Copilot Test Design
 
@@ -265,10 +276,15 @@ Requirement → test → failure/observation → diagnosis → change → verifi
 
 ## K What the Suite Still Does Not Prove
 
-What does your test suite still not prove? [response]
-Coverage if used: [result or not used]
-Which uncovered areas matter, and why does coverage percentage alone not establish correctness? [response]
-Optional fixtures/parametrisation used and why, if any: [response or not used]
+What does your test suite still not prove? 
+It doesn't test invalid datetime types. For example: using a datetime with microseconds. The test suite also doesn't test blank patients, practitioners or appointment IDs. 
+
+Coverage if used: Not used. The suite was tested through requirement traceability and assertion quality instead. 
+
+Which uncovered areas matter, and why does coverage percentage alone not establish correctness? 
+The uncovered areas that matter the most are the rejection and boundary paths. These include things like blank IDs and using floats or other non-datetime values. 
+
+Optional fixtures/parametrisation used and why, if any: Not used. Each test builds its own fresh SmartCareDataStore, services and data, so the setyp is repeated across the service tests. 
 
 ## L Git and Review Evidence
 
@@ -313,10 +329,10 @@ Code coverage tells us the percentage of code executed during a test. It doesn't
 Weak assertion is one that would pass when the code is wrong. 
 
 9. What is the appropriate role of GitHub Copilot as a test assistant?
-Using Copilot as a test assistant is helpful when drafting tests/edge case ideas. You must still run, review, and understand the code because you are still responsible for the code. 
+Using Copilot as a test assistant is helpful when drafting tests/edge case ideas. You must still run, review, and understand the code because you are still responsible for
 
 10. What is the Stage 7 engineering rule?
-
+A test is only meaningful if it traces to a requirement and that it fails for the right reasons. Passing a test and high coverage don't count as evidence unless the assertions check the required behaviour. AI output must be reviewed before it is accepted. 
 
 ## O Stage Completion
 
