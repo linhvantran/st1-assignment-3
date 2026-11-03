@@ -258,9 +258,13 @@ Candidate 1
 Candidate 2
 - Copilot test idea/candidate: Cancel an appointment, create a new SmartCareDataStore form saved data, and assert the cancelled appointment still exists. 
 - What it claims to verify: Cancelled history persists after session ends. 
-- Requirement trace: None. AC-05.2 says cancelled history remains retrievable "in the current session", so persistence is outside it. 
-- Asserion quality:  
-- Human critique: 
+- Requirement trace: FR-07 / AC-0.52. 
+- Assertion quality: Moderate. The status and list assertions can fail is cancellation breaks or the appointment is removed, so they are meaningful. However, the test calls appointment.cancel() on the domain object, so it never exercises the service's cancel operation. It also skils find_appointment, so it doesn't prove the appointment can be retrieved by ID. 
+- Human critique: it duplicates test_domain_cancellation_and_guard in the supplied test_starter.py, which already checks the same status and list outcome. It would add no new evidence. 
+- Decision: Reject
+- Reason: it is a duplicate scenario. The handout tells us to reject duplicates. The new evidence is in T-21, which cancels through the service and checks find_appointment("A1") is appointment. 
+- Final test reference if accepted/modified: not retained. Existing coverate is the supplied project/tests/test_starter.py::test_domain_cancellation_and_guard. 
+- Actual verification result: 
 
 Before accepting: traces to a requirement/criterion; can fail for the right reason; assertion checks required behaviour; no invented business rule; no unnecessary private implementation dependence. Reject/modify weak assertions, invented requirements, excessive mocking, duplicates, wrong exceptions, obsolete architecture and unnecessary dependencies.
 
