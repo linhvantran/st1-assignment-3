@@ -119,7 +119,7 @@ Apppointment Cancellation:
 - Linked issue and requirement: FR-06 Appointment Cancellation with FR-07 retained history. Must be able to cancel appointments and pass the eight supplied tests.
 - Feature branch: feature/appointment-cancellation
 - Changed behaviour: Added an appointment cancellation function
-- Meaningful commits: Completed required stages, all 8 tests passed [https://github.com/linhvantran/st1-assignment-3/commit/f4b548091657363aa9cd7a2925b4ad1bf136f40c] 
+- Meaningful commits: Completed required stages, all 4 tests passed [https://github.com/linhvantran/st1-assignment-3/commit/f4b548091657363aa9cd7a2925b4ad1bf136f40c] 
 - Test command, directory and observed result: pytest tests/ in stage06/: 4 passed, 0 failed
 - Another-member reviewer: charatwukki 
 - Human observations recorded before Copilot: Cancels the appointment by ID https://github.com/linhvantran/st1-assignment-3/commit/f4b548091657363aa9cd7a2925b4ad1bf136f40c#commitcomment-207890660 [6:58PM 3/11/2026]
@@ -156,24 +156,24 @@ Patient Lookup:
 
 Record meaningful required use, not every trivial completion. Repeat per significant interaction.
 
-- Member and task: [response]
-- Prompt/purpose and relevant issue/diff: [response]
-- Summary of output: [response]
-- Human check against actual code, requirements and tests: [response]
-- Decision — Accept / Modify / Reject: [select]
-- Reason: [response]
-- Verification/evidence: [link and result]
+- Member and task: Chars [Testing] 
+- Prompt/purpose and relevant issue/diff: Create a testing file for data_store.py. Purpose was to get a starting set of tests that call SmartCareDataStore directly. 
+- Summary of output: Four tests for patients: add, find and list return the same object. 
+- Human check against actual code, requirements and tests: Compared the tetss with the contracts in data_store.py. The first run gave 2 failed, 2 passed. Both failures were my typing mistakes, not product defects. 
+- Decision — Accept / Modify / Reject: Modify
+- Reason: The test ideassmatched the data_store.py contracts, but they needed corrections before they ran. They also only ocver patients, not practitioners, appointments or the conflict check. 
+- Verification/evidence: Ran python -m pytest tests/test_data_store.py from project/: 4 passed, 0 failed after the fixes. 
 
 ## I Human versus Copilot review comparison
 
-- Human reviewer noticed before consulting Copilot: [response]
-- Copilot noticed: [response]
-- Overlap: [response]
-- What did the human reviewer notice that Copilot did not: [response]
-- What did Copilot identify that the human reviewer initially missed: [response]
-- Unsupported or incorrect Copilot suggestion: [response or none identified with explanation]
-- Human judgement accepted, modified or rejected, and why: [response]
-- Which evidence justified merge approval: [response]
+- Human reviewer noticed before consulting Copilot: I questioned whether the file directory was rightt, and that caught the example command pointing as a test_services.py that doesn't exist. I also noticed that the new file's run showed 4 passed, not the 8 passed from the Stage 6 baseline. I might get my marks reduced because of this behaviour but as least I tried unlike my teammates. 
+- Copilot noticed: Copilot explained three problems in test_data_store.py which were all my mistakes because I kept misspelling 
+- Overlap: pytest reported all three problems in its output, and Copilot's explanations matched what pytest showed. 
+- What did the human reviewer notice that Copilot did not: The directory showed test_services.py and test_domain.py did not exist. I used dir tests to find the directories and fixed the problem. 
+- What did Copilot identify that the human reviewer initially missed: That the two failures were test defects, not product defects in data_store.py, and that the "ModuleNotFoundError" came from running pytest at the repo root instead of project/. 
+- Unsupported or incorrect Copilot suggestion: When I was having issues with pytest, Copilot thought the issues came from incomplete code, when the real causes were because something was wrong with my interpreter. 
+- Human judgement accepted, modified or rejected, and why: Modified. The test ideas matched the contracts in data_store.py, but the tests needed corrections before they ran. 
+- Which evidence justified merge approval: Ran python -m pytest tests/test_data_store.py from project/: 4 passed, 0 failed, after fixing the test mistakes. 
 
 ## J Contributions
 
