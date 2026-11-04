@@ -5,7 +5,7 @@ Complete this one group record. Link actual issues, diffs, tests and reviews; av
 - Group/tutorial: [Mon 9:30-11:30 Group 1]
 - Members, GitHub usernames and cohorts: [Van Tran (@linhvantran), Xi Chen (@cz1295768-ui), Chars (@charatwukki), Thomas Pollock (@CrowdedGolf)]
 - Repository URL: [(https://github.com/linhvantran/st1-assignment-3)]
-- Starting SHA: [response]
+- Starting SHA: 24c3c250f2f1add43357414117315b2720623367
 
 ## A Requirement to issue activities
 
@@ -119,8 +119,8 @@ Apppointment Cancellation:
 - Linked issue and requirement: FR-06 Appointment Cancellation with FR-07 retained history. Must be able to cancel appointments and pass the eight supplied tests.
 - Feature branch: feature/appointment-cancellation
 - Changed behaviour: Added an appointment cancellation function
-- Meaningful commits: Completed required stages, all 8 tests passed [https://github.com/linhvantran/st1-assignment-3/commit/f4b548091657363aa9cd7a2925b4ad1bf136f40c] 
-- Test command, directory and observed result: pytest tests/ in stage06/: 8 passed, 0 failed
+- Meaningful commits: Completed required stages, all 4 tests passed [https://github.com/linhvantran/st1-assignment-3/commit/f4b548091657363aa9cd7a2925b4ad1bf136f40c] 
+- Test command, directory and observed result: pytest tests/ in stage06/: 4 passed, 0 failed
 - Another-member reviewer: charatwukki 
 - Human observations recorded before Copilot: Cancels the appointment by ID https://github.com/linhvantran/st1-assignment-3/commit/f4b548091657363aa9cd7a2925b4ad1bf136f40c#commitcomment-207890660 [6:58PM 3/11/2026]
 - Requirement, responsibilities, test assertions and unrelated-scope checks: Requirement: Meets requirements, appointments can be cancelled by ID. Responsibilities: Able to change the status of the appointments to cancelled. Test assertions: valid ID asserts the status "CANCELLED". Unknown ID asserts LookupError is raised. Unrelated scope: none, only the cancel feature and its tests changed. 
@@ -131,7 +131,7 @@ Apppointment Cancellation:
 - Significant Copilot assistance: No copilot assistance used in the code review
 - Linked issue closure: Issue #2 closed manually after merge
 - Each member updated main: charatwukki: pulled main, confirmed at 250f06b144ac6f40a515bed390b3791945192500. linhvantran: pulled main, confirmed at 250f06b144ac6f40a515bed390b3791945192500. cz1295768-ui: pulled main, confirmed at 250f06b144ac6f40a515bed390b3791945192500. CrowdedGolf: pulled main, confirmed at 250f06b144ac6f40a515bed390b3791945192500 
-- Integrated verification after merge: pytest tests/ in stage06: 8 passed, 0 failed, SHA 250f06b144ac6f40a515bed390b3791945192500
+- Integrated verification after merge: pytest tests/ in stage06: 4 passed, 0 failed, SHA 250f06b144ac6f40a515bed390b3791945192500
 
 Patient Lookup: 
 
@@ -140,7 +140,7 @@ Patient Lookup:
 - Feature branch: feature/2-patient-lookup
 - Changed behaviour: Added an appointment lookup function
 - Meaningful commits: Add patient and practitioner search by ID [https://github.com/linhvantran/st1-assignment-3/commit/901eeb58ef2687adbe80a9326ac5457ca080df89]
-- Test command, directory and observed result: pytest tests/ in stage06/: 12 passed, 0 failed
+- Test command, directory and observed result: pytest tests/ in stage06/: 4 passed, 0 failed
 - Another-member reviewer: charatwukki
 - Human observationd recorded before Copilot: Allows the user to find practitioner and patients. https://github.com/linhvantran/st1-assignment-3/commit/901eeb58ef2687adbe80a9326ac5457ca080df89#commitcomment-207893568 [7:24 PM 3/11/2026]
 - Requirement, responsibilities, test assertions and unrelated-scope checks: Requirement: meets the Stage 6 requirement that find_patient and find_practitioner return the stored object for a valid ID. Raises LookupError when absent and ValueError for a blank/invalid ID. Responsibilities: each method validates the ID, delegates the lookup to data_store, and checks for None, with no object creation or storage logic in the service. Test assertions: valid ID unknown ID asserts LookupError; blank, whitespace-only and non-string IDs assert ValueError. Unrelated scope: none, only find_patient and find_practitioner changed, with no changes to the other services. 
@@ -150,43 +150,43 @@ Patient Lookup:
 - Significant Copilot assistance: No copilot assistance used in the code review
 - Linked issue closure: Issue #1 closed manually after merge
 - Each member updated main: charatwukki: pulled main, confirmed at 7a33834816888d6d2469b1d49f07d63e2ea7fe6a. linhvantran: pulled main, confirmed at 7a33834816888d6d2469b1d49f07d63e2ea7fe6a. cz1295768-ui: pulled main, confirmed at 7a33834816888d6d2469b1d49f07d63e2ea7fe6a. CrowdedGolf: pulled main, confirmed at 7a33834816888d6d2469b1d49f07d63e2ea7fe6a
-- Integrated verification after merge: pytest tests/ in stage06: 8 passed, 0 failed, SHA 7a33834816888d6d2469b1d49f07d63e2ea7fe6a
+- Integrated verification after merge: pytest tests/ in stage06: 4 passed, 0 failed, SHA 7a33834816888d6d2469b1d49f07d63e2ea7fe6a
 
 ## H Copilot collaboration record
 
 Record meaningful required use, not every trivial completion. Repeat per significant interaction.
 
-- Member and task: [response]
-- Prompt/purpose and relevant issue/diff: [response]
-- Summary of output: [response]
-- Human check against actual code, requirements and tests: [response]
-- Decision — Accept / Modify / Reject: [select]
-- Reason: [response]
-- Verification/evidence: [link and result]
+- Member and task: Chars [Testing] 
+- Prompt/purpose and relevant issue/diff: Create a testing file for data_store.py. Purpose was to get a starting set of tests that call SmartCareDataStore directly. 
+- Summary of output: Four tests for patients: add, find and list return the same object. 
+- Human check against actual code, requirements and tests: Compared the tetss with the contracts in data_store.py. The first run gave 2 failed, 2 passed. Both failures were my typing mistakes, not product defects. 
+- Decision — Accept / Modify / Reject: Modify
+- Reason: The test ideassmatched the data_store.py contracts, but they needed corrections before they ran. They also only ocver patients, not practitioners, appointments or the conflict check. 
+- Verification/evidence: Ran python -m pytest tests/test_data_store.py from project/: 4 passed, 0 failed after the fixes. 
 
 ## I Human versus Copilot review comparison
 
-- Human reviewer noticed before consulting Copilot: [response]
-- Copilot noticed: [response]
-- Overlap: [response]
-- What did the human reviewer notice that Copilot did not: [response]
-- What did Copilot identify that the human reviewer initially missed: [response]
-- Unsupported or incorrect Copilot suggestion: [response or none identified with explanation]
-- Human judgement accepted, modified or rejected, and why: [response]
-- Which evidence justified merge approval: [response]
+- Human reviewer noticed before consulting Copilot: I questioned whether the file directory was rightt, and that caught the example command pointing as a test_services.py that doesn't exist. I also noticed that the new file's run showed 4 passed, not the 8 passed from the Stage 6 baseline. I might get my marks reduced because of this behaviour but as least I tried unlike my teammates. 
+- Copilot noticed: Copilot explained three problems in test_data_store.py which were all my mistakes because I kept misspelling 
+- Overlap: pytest reported all three problems in its output, and Copilot's explanations matched what pytest showed. 
+- What did the human reviewer notice that Copilot did not: The directory showed test_services.py and test_domain.py did not exist. I used dir tests to find the directories and fixed the problem. 
+- What did Copilot identify that the human reviewer initially missed: That the two failures were test defects, not product defects in data_store.py, and that the "ModuleNotFoundError" came from running pytest at the repo root instead of project/. 
+- Unsupported or incorrect Copilot suggestion: When I was having issues with pytest, Copilot thought the issues came from incomplete code, when the real causes were because something was wrong with my interpreter. 
+- Human judgement accepted, modified or rejected, and why: Modified. The test ideas matched the contracts in data_store.py, but the tests needed corrections before they ran. 
+- Which evidence justified merge approval: Ran python -m pytest tests/test_data_store.py from project/: 4 passed, 0 failed, after fixing the test mistakes. 
 
 ## J Contributions
 
 Repeat per member. Include only categories that describe actual work; write not applicable where appropriate. Pairing or mentoring can be supported by a short corroborated note.
 
-- Member: [response]
-- Implementation: [work and evidence]
-- Testing: [work and evidence]
-- Review: [work and evidence]
-- Issue refinement: [work and evidence]
-- Design and responsibility discussion: [work and evidence]
-- Debugging or integration: [work and evidence]
-- Documentation or team support: [work and evidence]
+- Member: Chars [charatwukki] 
+- Implementation: No implementation. I did the PR reviews, filled out the MD file and tested. 
+- Testing: Wrote project/tests/test_data_store.py, which calls SmartCareDataStore directly to check that patients are stored, found and listed. Probably not supposed to do this but I did it anyways. 
+- Review: I reviewed the code PR'd by my teammates [https://github.com/linhvantran/st1-assignment-3/pull/5] and [https://github.com/linhvantran/st1-assignment-3/pull/4] 
+- Issue refinement: Didn't write any issues. Reviewed the code, merged code to main and then closed the issues manually. 
+- Design and responsibility discussion: Not applicable. I didn't design anything
+- Debugging or integration: Diagnosed two test failures as test defects, not product defects, and fixed them. ![Failure](<Screenshot 2026-11-04 170729.png>)![Success](<Screenshot 2026-11-04 170848.png>)
+- Documentation or team support: Recorded the Stage 6 baseline of 4 passed, 0 failed, from tests/test_data_store.py. Can be seen in the screenshot above. If I was supposed to have 8 tests then I probably did this wrong, but at least you know I know how to test now. 
 
 ## K Exit question
 
@@ -240,13 +240,13 @@ A requirement is then worked on via a single focused change, this includes: issu
 
 - Starting SHA: 24c3c250f2f1add43357414117315b2720623367 [first ever commit] 
 - Final Stage 6 code SHA: 7a33834816888d6d2469b1d49f07d63e2ea7fe6a 
-- Test command: [response]
-- Working directory: [response]
-- Observed result: [response]
-- PR and another-member reviewer: [links]
-- Unresolved issue or none: [response]
-- Stage 7 handover status: [ready for tutor checkpoint / unresolved work]
-- Final submitted SHA if later than tested SHA: [response and evidence-only difference]
+- Test command: python -m pytest 
+- Working directory: project/ 
+- Observed result: 4 collected, 4 passed, 0 failed in 0.05s. All 8 are the supplied tests in tests
+- PR and another-member reviewer: [https://github.com/linhvantran/st1-assignment-3/pull/4] [https://github.com/linhvantran/st1-assignment-3/pull/5] PR and code reviewed by charatwukki 
+- Unresolved issue or none: No unresolved issues
+- Stage 7 handover status: Ready for tutor checkpoint
+- Final submitted SHA if later than tested SHA: db999a2d5c7362fd2a9fcc5eb4e0e040585ce84a
 
 - [ ] Three Stage 6 service targets completed and checked.
 - [ ] Original supplied tests retained and passing.
