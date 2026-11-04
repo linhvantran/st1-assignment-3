@@ -1,6 +1,6 @@
 # Stage 7 Testing and Verification Record
 
-Group/tutorial: [complete]  Members/cohorts: [complete]
+Group/tutorial: Group 1 Monday tutorial  Members/cohorts: Chars, Van, Thomas, Leo
 Requirements baseline: SmartCare A3 Requirements Baseline 2026, revision 2.
 Use the same project/. Link actual evidence; keep responses concise. Blank fields are for your group. Copy rows only as needed.
 
@@ -217,29 +217,54 @@ Use fresh shared SmartCareDataStore state, registered objects and completed Stag
 Connect cases to actual contracts and verify unchanged state after rejection.
 
 | Behaviour | Boundary/invalid input | Expected result | Test ID |
-|---|---|---|---|
-| [complete] | [complete] | [complete] | [complete] |
+| Patient ID validation | Blank ID "" | ValueError | T-02 |
+| Patient name validation | Whitespace-only name "  " | ValueError | T-03 |
+| Practitioner validation | Blank specialty | ValueError | T-04 | 
+| Date and Time validation | Seconds or a timezone | ValueError for each | T-09 |
+| Cancellation guard | Cancel an already CANCELLED appointment | ValueError; status stays Cancelled | T-07, T-22 | 
+| Duplicate patient | Register an existing ID "P1" again | ValueError; original patient unchanged | T-11 |
+| Patient lookup | Unknown ID "P9"; blank ID | LookupError; ValueError; no record added | T-13 |
+| Practitioner lookup | Unknown ID "D9" | LookupError | T-14 | 
+| Booking participants | Unknown patient or practitioner | LookupError; nothing stored | T-16 |
+| Practitioner conflict | Same practitioner, same exact time, existing SCHEDULED booking | ValueError; only the first booking remains | T-17 |
+| Conflict boundary | Rebook a slot held by a CANCELLED appointment | Booking succeeds | T-19 | 
+| Cancel lookup | Unknown ID "A9"; blank ID | LookupErrror; ValueError; "A1" still SCHEDULED | T-23 | 
+| Duplicate appointment | Booking with existing ID "A1" | ValueError; original unchanged | T-25 |
 
 ## H GitHub Copilot Test Design
 
 Select ONE real acceptance criterion. Complete human-first fields before using Copilot. Do not require an accepted generated test.
 
-Requirement: [complete]
-Acceptance criterion: [quote]
-Behaviour to test: [complete]
-Human-first test idea/categories: [complete]
-Prompt and purpose: [complete or link]
+Requirement: FR-07 Retain cancelled history 
+Acceptance criterion: AC-05.2: "Cancelled history remains retrievable in the current session." (from the Stage 7 handout)
+Behaviour to test: After an appointment is cancelled, it stays in the same shared SmartCareDataStore. find_appointment returns the same object, list_appointments includes it, and its status show CANCELLED 
+Human-first test idea/categories: Positive will cancel a SCHEDULED appointment, then check find_appointment returns the same object and list_appointments includes it. Negative: Cancelling an unknown ID raises LookupError and leaves stored records unchanged. 
+Prompt and purpose: I used the Part F prompt with requirement set to "FR-07 Retain cancelled history" and Acce[tance criterion set to "Cancelled history remains retrievable in the current session." The purpose iof this is to compare the generated cnadidates with my ideas before deciding what to keep. 
 
 For each significant candidate, copy this entry as needed:
-- Copilot test idea/candidate: [complete]
-- What it claims to verify: [complete]
-- Requirement trace: [complete]
-- Assertion quality: [complete]
-- Human critique: [complete]
-- Decision: [Accept / Modify / Reject]
-- Reason: [complete]
-- Final test reference if accepted/modified: [link or not retained]
+
+Candidate 1 
+
+- Copilot test idea/candidate: After cancelling A1, assert that find_appointment("A1") is not None. 
+- What it claims to verify: That the cancelled appointments are retained. 
+- Requirement trace: FR-07 / AC-05.2. 
+- Assertion quality: Weak. It passes for any returned object, so it does not check identity, status or the list. 
+- Human critique: It cannot fail for hte right reason. It would pass if the store returned a different object or if cancellation never changed the status. 
+- Decision: Modify
+- Reason: The intention matches AC-05.2, but the assertion proves too little. I replaced it with identity, status and list checks.
+- Final test reference if accepted/modified: T-21, project/tests/test_services.py::test_cancelled_apppointment_is_retained_and_listed
 - Actual verification result: [complete; do not claim an unrun test passed]
+
+Candidate 2
+- Copilot test idea/candidate: Cancel an appointment, create a new SmartCareDataStore form saved data, and assert the cancelled appointment still exists. 
+- What it claims to verify: Cancelled history persists after session ends. 
+- Requirement trace: FR-07 / AC-0.52. 
+- Assertion quality: Moderate. The status and list assertions can fail is cancellation breaks or the appointment is removed, so they are meaningful. However, the test calls appointment.cancel() on the domain object, so it never exercises the service's cancel operation. It also skils find_appointment, so it doesn't prove the appointment can be retrieved by ID. 
+- Human critique: it duplicates test_domain_cancellation_and_guard in the supplied test_starter.py, which already checks the same status and list outcome. It would add no new evidence. 
+- Decision: Reject
+- Reason: it is a duplicate scenario. The handout tells us to reject duplicates. The new evidence is in T-21, which cancels through the service and checks find_appointment("A1") is appointment. 
+- Final test reference if accepted/modified: not retained. Existing coverate is the supplied project/tests/test_starter.py::test_domain_cancellation_and_guard. 
+- Actual verification result: 
 
 Before accepting: traces to a requirement/criterion; can fail for the right reason; assertion checks required behaviour; no invented business rule; no unnecessary private implementation dependence. Reject/modify weak assertions, invented requirements, excessive mocking, duplicates, wrong exceptions, obsolete architecture and unnecessary dependencies.
 
@@ -265,10 +290,15 @@ Requirement → test → failure/observation → diagnosis → change → verifi
 
 ## K What the Suite Still Does Not Prove
 
-What does your test suite still not prove? [response]
-Coverage if used: [result or not used]
-Which uncovered areas matter, and why does coverage percentage alone not establish correctness? [response]
-Optional fixtures/parametrisation used and why, if any: [response or not used]
+What does your test suite still not prove? 
+It doesn't test invalid datetime types. For example: using a datetime with microseconds. The test suite also doesn't test blank patients, practitioners or appointment IDs. 
+
+Coverage if used: Not used. The suite was tested through requirement traceability and assertion quality instead. 
+
+Which uncovered areas matter, and why does coverage percentage alone not establish correctness? 
+The uncovered areas that matter the most are the rejection and boundary paths. These include things like blank IDs and using floats or other non-datetime values. 
+
+Optional fixtures/parametrisation used and why, if any: Not used. Each test builds its own fresh SmartCareDataStore, services and data, so the setyp is repeated across the service tests. 
 
 ## L Git and Review Evidence
 
@@ -298,25 +328,25 @@ Checks whether the program satisfies real world needs. This involves checking co
 A unit test is a small automated check that verifies a piece of your code (most commonly a function) works correctly independently. 
 
 4. What is a pytest fixture?
-
+A pytest fixture is a reusable function that sets up test data or resources including but not excluded to objects. Tests receive it by naming it as an argument so it cleans it up afterwards. 
 
 5. What is parametrisation in pytest?
-[response]
+Parametrisation is used to run one test function agains many input/expected outut pairs, which avoids copy-pasted tests. 
 
 6. What is regression testing?
-[response]
+Regression testing is where you re-run existing test after a to confirm that the function works as intended after code changes. 
 
 7. What does code coverage tell us, and what does it not prove?
 Code coverage tells us the percentage of code executed during a test. It doesn't prove whether the code is valid and it doesn't perform any test cases. 
 
 8. What makes an assertion weak?
-[response]
+Weak assertion is one that would pass when the code is wrong. 
 
 9. What is the appropriate role of GitHub Copilot as a test assistant?
-[response]
+Using Copilot as a test assistant is helpful when drafting tests/edge case ideas. You must still run, review, and understand the code because you are still responsible for
 
 10. What is the Stage 7 engineering rule?
-[response]
+A test is only meaningful if it traces to a requirement and that it fails for the right reasons. Passing a test and high coverage don't count as evidence unless the assertions check the required behaviour. AI output must be reviewed before it is accepted. 
 
 ## O Stage Completion
 
