@@ -246,7 +246,7 @@ A requirement is then worked on via a single focused change, this includes: issu
 - PR and another-member reviewer: [https://github.com/linhvantran/st1-assignment-3/pull/4] [https://github.com/linhvantran/st1-assignment-3/pull/5] PR and code reviewed by charatwukki 
 - Unresolved issue or none: No unresolved issues
 - Stage 7 handover status: Ready for tutor checkpoint
-- Final submitted SHA if later than tested SHA: [response and evidence-only difference]
+- Final submitted SHA if later than tested SHA: db999a2d5c7362fd2a9fcc5eb4e0e040585ce84a
 
 - [ ] Three Stage 6 service targets completed and checked.
 - [ ] Original supplied tests retained and passing.
