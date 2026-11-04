@@ -79,31 +79,31 @@ Assign TEST IDs before implementation or generation. Use canonical AC IDs with t
 
 | Requirement | Acceptance criterion | Test ID | Test type | Test name / location | Expected behaviour | Result / observed status | Supplied or student-authored |
 |---|---|---|---|---|---|---|---|
-| FR-01 | AC-01.1 (partial evidence: construction only) | T-01 | Domain, positive | `test_domain.py::test_patient_stores_trimmed_id_and_name` | Valid patient keeps the trimmed ID and name | Not yet run | Student-authored |
-| FR-01 | Validation contract (not AC-01.2): blank patient ID raises ValueError | T-02 | Domain, negative | `test_domain.py::test_blank_patient_id_is_rejected` | Blank patient ID raises ValueError | Not yet run | Student-authored |
-| FR-01 | Validation contract: required patient name | T-03 | Domain, boundary | `test_domain.py::test_whitespace_only_patient_name_is_rejected` | Whitespace-only name raises ValueError | Not yet run | Student-authored |
-| FR-03 | Supporting contract: practitioner ID, name and specialty are required | T-04 | Domain, positive and negative | `test_domain.py::test_practitioner_requires_id_name_and_specialty` | Valid values are stored trimmed; a blank specialty raises ValueError | Not yet run | Student-authored |
-| FR-04 | AC-03.1 (partial evidence: construction only) | T-05 | Domain, positive | `test_domain.py::test_new_appointment_starts_scheduled` | A new appointment has status SCHEDULED | Not yet run | Student-authored |
-| FR-06 | AC-05.1 | T-06 | Domain, positive | `test_domain.py::test_cancel_changes_status` | Cancelling a SCHEDULED appointment gives CANCELLED | Not yet run | Student-authored |
-| FR-06 | AC-05.3 | T-07 | Domain, negative | `test_domain.py::test_repeated_cancellation_is_rejected` | Second cancel raises ValueError; status stays CANCELLED | Not yet run | Student-authored |
-| FR-06 | Supporting contract: Appointment.cancel guard (only SCHEDULED may be cancelled) | T-08 | Domain, negative | `test_domain.py::test_cancel_completed_appointment_is_rejected` | COMPLETED appointment raises ValueError; status stays COMPLETED | Not yet run | Student-authored |
-| FR-04 | Supporting contract: validate_date_time (local naive datetime, minute precision) | T-09 | Domain, boundary | `test_domain.py::test_datetime_with_seconds_or_timezone_is_rejected` | Seconds or timezone raises ValueError | Not yet run | Student-authored |
-| FR-01 | AC-01.1 (complete evidence: stored through the workflow) | T-10 | Service, positive | `test_services.py::test_register_patient_stores_and_returns_same_object` | Registered patient is stored and find_patient returns the same object | Not yet run | Student-authored |
-| FR-01 | AC-01.2 | T-11 | Service, negative | `test_services.py::test_duplicate_patient_id_is_rejected_without_overwrite` | Duplicate ID raises ValueError; original patient unchanged | Not yet run | Student-authored |
-| FR-02 | AC-02.1 | T-12 | Service, positive | `test_services.py::test_find_patient_returns_stored_patient` | Lookup returns the same registered object | Not yet run | Student-authored |
-| FR-02 | AC-02.2 | T-13 | Service, negative | `test_services.py::test_find_unknown_patient_raises_lookup_error` | Valid unknown ID raises LookupError; blank ID raises ValueError | Not yet run | Student-authored |
-| FR-03 | Supporting contract: practitioner lookup over registered objects | T-14 | Service, positive and negative | `test_services.py::test_find_practitioner_returns_stored_or_raises` | Registered ID returns the stored object; unknown ID raises LookupError | Not yet run | Student-authored |
-| FR-04 | AC-03.1 (complete evidence) | T-15 | Service, positive | `test_services.py::test_book_appointment_stores_scheduled_appointment` | Booking with registered participants stores a SCHEDULED appointment | Not yet run | Student-authored |
-| FR-04 | AC-03.2 | T-16 | Service, negative | `test_services.py::test_booking_unknown_participant_is_rejected` | Unknown patient or practitioner raises LookupError; nothing stored | Not yet run | Student-authored |
-| FR-05 | AC-04.1 | T-17 | Service, negative | `test_services.py::test_same_practitioner_same_time_conflict_is_rejected` | Conflict raises ValueError; only the first booking remains | Not yet run | Student-authored |
-| FR-05 | AC-04.2 | T-18 | Service, positive | `test_services.py::test_different_practitioner_same_time_is_allowed` | Booking succeeds for a different practitioner at the same time | Not yet run | Student-authored |
-| FR-05 | Supporting contract: only SCHEDULED appointments conflict | T-19 | Service, boundary | `test_services.py::test_cancelled_booking_does_not_block_slot` | Rebooking a cancelled slot succeeds | Not yet run | Student-authored |
-| FR-06 | AC-05.1 | T-20 | Service, positive | `test_services.py::test_cancel_returns_same_object_with_cancelled_status` | Same stored object returned with status CANCELLED | Not yet run | Student-authored |
-| FR-07 | AC-05.2 | T-21 | Service, positive | `test_services.py::test_cancelled_appointment_is_retained_and_listed` | Found by find_appointment and present in list_appointments | Not yet run | Student-authored |
-| FR-06 | AC-05.3 | T-22 | Service, negative | `test_services.py::test_repeated_cancellation_via_service_is_rejected` | Second cancel raises ValueError; status unchanged | Not yet run | Student-authored |
-| FR-06 | Supporting contract: unknown ID raises LookupError; blank ID raises ValueError | T-23 | Service, negative | `test_services.py::test_cancel_unknown_appointment_raises_lookup_error` | Valid unknown ID raises LookupError; blank ID raises ValueError; stored records unchanged | Not yet run | Student-authored |
-| FR-08 | AC-06.1 | T-24 | Service, positive | `test_services.py::test_find_appointment_returns_known_appointment` | The same stored appointment is returned | Not yet run | Student-authored |
-| FR-04 | Supporting contract: duplicate appointment ID is rejected | T-25 | Service, negative | `test_services.py::test_duplicate_appointment_id_does_not_overwrite` | ValueError; original appointment unchanged | Not yet run | Student-authored |
+| FR-01 | AC-01.1 (partial evidence: construction only) | T-01 | Domain, positive | `test_domain.py::test_patient_stores_trimmed_id_and_name` | Valid patient keeps the trimmed ID and name | Passed | Student-authored |
+| FR-01 | Validation contract (not AC-01.2): blank patient ID raises ValueError | T-02 | Domain, negative | `test_domain.py::test_blank_patient_id_is_rejected` | Blank patient ID raises ValueError | Passed | Student-authored |
+| FR-01 | Validation contract: required patient name | T-03 | Domain, boundary | `test_domain.py::test_whitespace_only_patient_name_is_rejected` | Whitespace-only name raises ValueError | Passed | Student-authored |
+| FR-03 | Supporting contract: practitioner ID, name and specialty are required | T-04 | Domain, positive and negative | `test_domain.py::test_practitioner_requires_id_name_and_specialty` | Valid values are stored trimmed; a blank specialty raises ValueError | Passed | Student-authored |
+| FR-04 | AC-03.1 (partial evidence: construction only) | T-05 | Domain, positive | `test_domain.py::test_new_appointment_starts_scheduled` | A new appointment has status SCHEDULED | Passed | Student-authored |
+| FR-06 | AC-05.1 | T-06 | Domain, positive | `test_domain.py::test_cancel_changes_status` | Cancelling a SCHEDULED appointment gives CANCELLED | Passed | Student-authored |
+| FR-06 | AC-05.3 | T-07 | Domain, negative | `test_domain.py::test_repeated_cancellation_is_rejected` | Second cancel raises ValueError; status stays CANCELLED | Passed | Student-authored |
+| FR-06 | Supporting contract: Appointment.cancel guard (only SCHEDULED may be cancelled) | T-08 | Domain, negative | `test_domain.py::test_cancel_completed_appointment_is_rejected` | COMPLETED appointment raises ValueError; status stays COMPLETED | Passed | Student-authored |
+| FR-04 | Supporting contract: validate_date_time (local naive datetime, minute precision) | T-09 | Domain, boundary | `test_domain.py::test_datetime_with_seconds_or_timezone_is_rejected` | Seconds or timezone raises ValueError | Passed | Student-authored |
+| FR-01 | AC-01.1 (complete evidence: stored through the workflow) | T-10 | Service, positive | `test_services.py::test_register_patient_stores_and_returns_same_object` | Registered patient is stored and find_patient returns the same object | Passed | Student-authored |
+| FR-01 | AC-01.2 | T-11 | Service, negative | `test_services.py::test_duplicate_patient_id_is_rejected_without_overwrite` | Duplicate ID raises ValueError; original patient unchanged | Passed | Student-authored |
+| FR-02 | AC-02.1 | T-12 | Service, positive | `test_services.py::test_find_patient_returns_stored_patient` | Lookup returns the same registered object | Passed | Student-authored |
+| FR-02 | AC-02.2 | T-13 | Service, negative | `test_services.py::test_find_unknown_patient_raises_lookup_error` | Valid unknown ID raises LookupError; blank ID raises ValueError | Passed | Student-authored |
+| FR-03 | Supporting contract: practitioner lookup over registered objects | T-14 | Service, positive and negative | `test_services.py::test_find_practitioner_returns_stored_or_raises` | Registered ID returns the stored object; unknown ID raises LookupError | Passed | Student-authored |
+| FR-04 | AC-03.1 (complete evidence) | T-15 | Service, positive | `test_services.py::test_book_appointment_stores_scheduled_appointment` | Booking with registered participants stores a SCHEDULED appointment | Passed | Student-authored |
+| FR-04 | AC-03.2 | T-16 | Service, negative | `test_services.py::test_booking_unknown_participant_is_rejected` | Unknown patient or practitioner raises LookupError; nothing stored | Passed | Student-authored |
+| FR-05 | AC-04.1 | T-17 | Service, negative | `test_services.py::test_same_practitioner_same_time_conflict_is_rejected` | Conflict raises ValueError; only the first booking remains | Passed | Student-authored |
+| FR-05 | AC-04.2 | T-18 | Service, positive | `test_services.py::test_different_practitioner_same_time_is_allowed` | Booking succeeds for a different practitioner at the same time | Passed | Student-authored |
+| FR-05 | Supporting contract: only SCHEDULED appointments conflict | T-19 | Service, boundary | `test_services.py::test_cancelled_booking_does_not_block_slot` | Rebooking a cancelled slot succeeds | Passed | Student-authored |
+| FR-06 | AC-05.1 | T-20 | Service, positive | `test_services.py::test_cancel_returns_same_object_with_cancelled_status` | Same stored object returned with status CANCELLED | Passed | Student-authored |
+| FR-07 | AC-05.2 | T-21 | Service, positive | `test_services.py::test_cancelled_appointment_is_retained_and_listed` | Found by find_appointment and present in list_appointments | Passed | Student-authored |
+| FR-06 | AC-05.3 | T-22 | Service, negative | `test_services.py::test_repeated_cancellation_via_service_is_rejected` | Second cancel raises ValueError; status unchanged | Passed | Student-authored |
+| FR-06 | Supporting contract: unknown ID raises LookupError; blank ID raises ValueError | T-23 | Service, negative | `test_services.py::test_cancel_unknown_appointment_raises_lookup_error` | Valid unknown ID raises LookupError; blank ID raises ValueError; stored records unchanged | Passed | Student-authored |
+| FR-08 | AC-06.1 | T-24 | Service, positive | `test_services.py::test_find_appointment_returns_known_appointment` | The same stored appointment is returned | Passed | Student-authored |
+| FR-04 | Supporting contract: duplicate appointment ID is rejected | T-25 | Service, negative | `test_services.py::test_duplicate_appointment_id_does_not_overwrite` | ValueError; original appointment unchanged | Passed | Student-authored |
 
 ## C Test Design
 
@@ -179,15 +179,15 @@ The four reference intentions are T-02 (blank patient ID rejected), T-05 (new ap
 
 | Test ID | Behaviour | Test file/function | Result |
 |---|---|---|---|
-| T-01 | Patient keeps the trimmed ID and name | `project/tests/test_domain.py::test_patient_stores_trimmed_id_and_name` | Not yet run |
-| T-02 | Blank patient ID is rejected with ValueError (reference intention) | `project/tests/test_domain.py::test_blank_patient_id_is_rejected` | Not yet run |
-| T-03 | Whitespace-only patient name is rejected with ValueError | `project/tests/test_domain.py::test_whitespace_only_patient_name_is_rejected` | Not yet run |
-| T-04 | Practitioner stores valid trimmed fields; blank specialty is rejected | `project/tests/test_domain.py::test_practitioner_requires_id_name_and_specialty` | Not yet run |
-| T-05 | New appointment starts SCHEDULED (reference intention) | `project/tests/test_domain.py::test_new_appointment_starts_scheduled` | Not yet run |
-| T-06 | Cancelling a SCHEDULED appointment gives CANCELLED (reference intention) | `project/tests/test_domain.py::test_cancel_changes_status` | Not yet run |
-| T-07 | Repeated cancellation is rejected and status stays CANCELLED (reference intention) | `project/tests/test_domain.py::test_repeated_cancellation_is_rejected` | Not yet run |
-| T-08 | Cancelling a COMPLETED appointment is rejected and status stays COMPLETED | `project/tests/test_domain.py::test_cancel_completed_appointment_is_rejected` | Not yet run |
-| T-09 | Datetime with seconds or a timezone is rejected | `project/tests/test_domain.py::test_datetime_with_seconds_or_timezone_is_rejected` | Not yet run |
+| T-01 | Patient keeps the trimmed ID and name | `project/tests/test_domain.py::test_patient_stores_trimmed_id_and_name` | Passed |
+| T-02 | Blank patient ID is rejected with ValueError (reference intention) | `project/tests/test_domain.py::test_blank_patient_id_is_rejected` | Passed |
+| T-03 | Whitespace-only patient name is rejected with ValueError | `project/tests/test_domain.py::test_whitespace_only_patient_name_is_rejected` | Passed |
+| T-04 | Practitioner stores valid trimmed fields; blank specialty is rejected | `project/tests/test_domain.py::test_practitioner_requires_id_name_and_specialty` | Passed |
+| T-05 | New appointment starts SCHEDULED (reference intention) | `project/tests/test_domain.py::test_new_appointment_starts_scheduled` | Passed |
+| T-06 | Cancelling a SCHEDULED appointment gives CANCELLED (reference intention) | `project/tests/test_domain.py::test_cancel_changes_status` | Passed |
+| T-07 | Repeated cancellation is rejected and status stays CANCELLED (reference intention) | `project/tests/test_domain.py::test_repeated_cancellation_is_rejected` | Passed |
+| T-08 | Cancelling a COMPLETED appointment is rejected and status stays COMPLETED | `project/tests/test_domain.py::test_cancel_completed_appointment_is_rejected` | Passed |
+| T-09 | Datetime with seconds or a timezone is rejected | `project/tests/test_domain.py::test_datetime_with_seconds_or_timezone_is_rejected` | Passed |
 
 ## F Service Test Evidence
 
@@ -195,22 +195,22 @@ Use fresh shared SmartCareDataStore state, registered objects and completed Stag
 
 | Test ID | Behaviour | Requirement / criterion | Test file/function | Result |
 |---|---|---|---|---|
-| T-10 | Registered patient is stored and returned as the same object | FR-01 / AC-01.1 | `project/tests/test_services.py::test_register_patient_stores_and_returns_same_object` | Not yet run |
-| T-11 | Duplicate patient ID is rejected and the original is not overwritten | FR-01 / AC-01.2 | `project/tests/test_services.py::test_duplicate_patient_id_is_rejected_without_overwrite` | Not yet run |
-| T-12 | Known patient lookup returns the stored patient | FR-02 / AC-02.1 | `project/tests/test_services.py::test_find_patient_returns_stored_patient` | Not yet run |
-| T-13 | Unknown patient raises LookupError; blank ID raises ValueError | FR-02 / AC-02.2 | `project/tests/test_services.py::test_find_unknown_patient_raises_lookup_error` | Not yet run |
-| T-14 | Practitioner lookup returns the stored object or raises LookupError | FR-03 / supporting contract (practitioner lookup) | `project/tests/test_services.py::test_find_practitioner_returns_stored_or_raises` | Not yet run |
-| T-15 | Booking registered participants stores a SCHEDULED appointment | FR-04 / AC-03.1 | `project/tests/test_services.py::test_book_appointment_stores_scheduled_appointment` | Not yet run |
-| T-16 | Booking an unknown patient or practitioner is rejected; nothing stored | FR-04 / AC-03.2 | `project/tests/test_services.py::test_booking_unknown_participant_is_rejected` | Not yet run |
-| T-17 | Same practitioner at the same time is rejected; state unchanged | FR-05 / AC-04.1 | `project/tests/test_services.py::test_same_practitioner_same_time_conflict_is_rejected` | Not yet run |
-| T-18 | Different practitioner at the same time is allowed | FR-05 / AC-04.2 | `project/tests/test_services.py::test_different_practitioner_same_time_is_allowed` | Not yet run |
-| T-19 | A cancelled booking does not block its slot | FR-05 / supporting contract (only SCHEDULED conflicts) | `project/tests/test_services.py::test_cancelled_booking_does_not_block_slot` | Not yet run |
-| T-20 | Cancellation returns the same appointment with CANCELLED status | FR-06 / AC-05.1 | `project/tests/test_services.py::test_cancel_returns_same_object_with_cancelled_status` | Not yet run |
-| T-21 | Cancelled appointment is still retrievable and listed | FR-07 / AC-05.2 | `project/tests/test_services.py::test_cancelled_appointment_is_retained_and_listed` | Not yet run |
-| T-22 | Repeated cancellation is rejected; status and record unchanged | FR-06 / AC-05.3 | `project/tests/test_services.py::test_repeated_cancellation_via_service_is_rejected` | Not yet run |
-| T-23 | Unknown appointment ID raises LookupError; blank ID raises ValueError | FR-06 / supporting contract (unknown and blank IDs) | `project/tests/test_services.py::test_cancel_unknown_appointment_raises_lookup_error` | Not yet run |
-| T-24 | Known appointment ID returns that appointment | FR-08 / AC-06.1 | `project/tests/test_services.py::test_find_appointment_returns_known_appointment` | Not yet run |
-| T-25 | Duplicate appointment ID does not overwrite the original | FR-04 / supporting contract (duplicate appointment ID) | `project/tests/test_services.py::test_duplicate_appointment_id_does_not_overwrite` | Not yet run |
+| T-10 | Registered patient is stored and returned as the same object | FR-01 / AC-01.1 | `project/tests/test_services.py::test_register_patient_stores_and_returns_same_object` | Passed |
+| T-11 | Duplicate patient ID is rejected and the original is not overwritten | FR-01 / AC-01.2 | `project/tests/test_services.py::test_duplicate_patient_id_is_rejected_without_overwrite` | Passed |
+| T-12 | Known patient lookup returns the stored patient | FR-02 / AC-02.1 | `project/tests/test_services.py::test_find_patient_returns_stored_patient` | Passed |
+| T-13 | Unknown patient raises LookupError; blank ID raises ValueError | FR-02 / AC-02.2 | `project/tests/test_services.py::test_find_unknown_patient_raises_lookup_error` | Passed |
+| T-14 | Practitioner lookup returns the stored object or raises LookupError | FR-03 / supporting contract (practitioner lookup) | `project/tests/test_services.py::test_find_practitioner_returns_stored_or_raises` | Passed |
+| T-15 | Booking registered participants stores a SCHEDULED appointment | FR-04 / AC-03.1 | `project/tests/test_services.py::test_book_appointment_stores_scheduled_appointment` | Passed |
+| T-16 | Booking an unknown patient or practitioner is rejected; nothing stored | FR-04 / AC-03.2 | `project/tests/test_services.py::test_booking_unknown_participant_is_rejected` | Passed |
+| T-17 | Same practitioner at the same time is rejected; state unchanged | FR-05 / AC-04.1 | `project/tests/test_services.py::test_same_practitioner_same_time_conflict_is_rejected` | Passed |
+| T-18 | Different practitioner at the same time is allowed | FR-05 / AC-04.2 | `project/tests/test_services.py::test_different_practitioner_same_time_is_allowed` | Passed |
+| T-19 | A cancelled booking does not block its slot | FR-05 / supporting contract (only SCHEDULED conflicts) | `project/tests/test_services.py::test_cancelled_booking_does_not_block_slot` | Passed |
+| T-20 | Cancellation returns the same appointment with CANCELLED status | FR-06 / AC-05.1 | `project/tests/test_services.py::test_cancel_returns_same_object_with_cancelled_status` | Passed |
+| T-21 | Cancelled appointment is still retrievable and listed | FR-07 / AC-05.2 | `project/tests/test_services.py::test_cancelled_appointment_is_retained_and_listed` | Passed |
+| T-22 | Repeated cancellation is rejected; status and record unchanged | FR-06 / AC-05.3 | `project/tests/test_services.py::test_repeated_cancellation_via_service_is_rejected` | Passed |
+| T-23 | Unknown appointment ID raises LookupError; blank ID raises ValueError | FR-06 / supporting contract (unknown and blank IDs) | `project/tests/test_services.py::test_cancel_unknown_appointment_raises_lookup_error` | Passed |
+| T-24 | Known appointment ID returns that appointment | FR-08 / AC-06.1 | `project/tests/test_services.py::test_find_appointment_returns_known_appointment` | Passed |
+| T-25 | Duplicate appointment ID does not overwrite the original | FR-04 / supporting contract (duplicate appointment ID) | `project/tests/test_services.py::test_duplicate_appointment_id_does_not_overwrite` | Passed |
 
 ## G Negative and Boundary Cases
 
@@ -238,8 +238,8 @@ Select ONE real acceptance criterion. Complete human-first fields before using C
 Requirement: FR-07 Retain cancelled history 
 Acceptance criterion: AC-05.2: "Cancelled history remains retrievable in the current session." (from the Stage 7 handout)
 Behaviour to test: After an appointment is cancelled, it stays in the same shared SmartCareDataStore. find_appointment returns the same object, list_appointments includes it, and its status show CANCELLED 
-Human-first test idea/categories: Positive will cancel a SCHEDULED appointment, then check find_appointment returns the same object and list_appointments includes it. Negative: Cancelling an unknown ID raises LookupError and leaves stored records unchanged. 
-Prompt and purpose: I used the Part F prompt with requirement set to "FR-07 Retain cancelled history" and Acce[tance criterion set to "Cancelled history remains retrievable in the current session." The purpose iof this is to compare the generated cnadidates with my ideas before deciding what to keep. 
+Human-first test idea/categories: Positive: Cancel a SCHEDULED appointment through the service, then check find_appointment returns the same object, list_appointments includes it, and its status is CANCELLED. Negative: Cancelling an unknown ID raises LookupError and leaves stored records unchanged. 
+Prompt and purpose: I used the Part F prompt with requirement set to "FR-07 Retain cancelled history" and Acce[tance criterion set to "Cancelled history remains retrievable in the current session." The purpose of this is to compare the generated cnadidates with my ideas before deciding what to keep. 
 
 For each significant candidate, copy this entry as needed:
 
@@ -248,12 +248,12 @@ Candidate 1
 - Copilot test idea/candidate: After cancelling A1, assert that find_appointment("A1") is not None. 
 - What it claims to verify: That the cancelled appointments are retained. 
 - Requirement trace: FR-07 / AC-05.2. 
-- Assertion quality: Weak. It passes for any returned object, so it does not check identity, status or the list. 
+- Assertion quality: Weak. find_appointment returns the stored object or None, so "is not None" passes for any stores appointment, including one that was never cancelled. It does not check identity, status or the list."
 - Human critique: It cannot fail for hte right reason. It would pass if the store returned a different object or if cancellation never changed the status. 
 - Decision: Modify
-- Reason: The intention matches AC-05.2, but the assertion proves too little. I replaced it with identity, status and list checks.
-- Final test reference if accepted/modified: T-21, project/tests/test_services.py::test_cancelled_apppointment_is_retained_and_listed
-- Actual verification result: [complete; do not claim an unrun test passed]
+- Reason: The intention matches AC-05.2, but the assertion proves too little. data_store.py never deletes appointments, so identity, status and list checks acan fall if retention breaks. I replaced theweak assertion with those three checks."
+- Final test reference if accepted/modified: project/tests/test_services.py::test_cancelled_appointment_is_retained_and_listed 
+- Actual verification result: ![Candidate 1 Verification](<Screenshot 2026-11-04 193259.png>) Tests ran on 1dfce5dcbec7ff75e3c65d84ff3c3f9a399d2070
 
 Candidate 2
 - Copilot test idea/candidate: Cancel an appointment, create a new SmartCareDataStore form saved data, and assert the cancelled appointment still exists. 
@@ -264,16 +264,18 @@ Candidate 2
 - Decision: Reject
 - Reason: it is a duplicate scenario. The handout tells us to reject duplicates. The new evidence is in T-21, which cancels through the service and checks find_appointment("A1") is appointment. 
 - Final test reference if accepted/modified: not retained. Existing coverate is the supplied project/tests/test_starter.py::test_domain_cancellation_and_guard. 
-- Actual verification result: 
+- Actual verification result: ![Candidate 2 Verification](<Screenshot 2026-11-04 193656.png>) Tests ran on 1dfce5dcbec7ff75e3c65d84ff3c3f9a399d2070
 
 Before accepting: traces to a requirement/criterion; can fail for the right reason; assertion checks required behaviour; no invented business rule; no unnecessary private implementation dependence. Reject/modify weak assertions, invented requirements, excessive mocking, duplicates, wrong exceptions, obsolete architecture and unnecessary dependencies.
 
 ## I Weak Copilot Test Reflection
 
-Which Copilot-generated test looked convincing but was weak? [response]
-Why was it weak? [response]
-How did you strengthen it? [response]
-Accepted / modified / rejected test decisions and evidence: [link actual decisions in H]
+Which Copilot-generated test looked convincing but was weak?
+
+
+Why was it weak? find_appointment returns the stored object or None, so is not None passes for any stored appointment, including one that was never cancelled or a different object. It cannot fall for  the right reason, so itdoes not prove AC-05.2. It also never checks the status or list_appointment()
+How did you strengthen it? I replaced it with three assertiuons in T-21, test_cancelled_appointment_is_retained_and_listed: find_appointment("A1") is appointment (the same stored object0, appointment in store.list_appointments(), and appointment.status is AppointmentStatus.CANCELLED. The appointment is cancelled through the service from a SCHEDULED start, so that status change can only come from the cancellation. T-21 ran and passed. 
+Accepted / modified / rejected test decisions and evidence: See section H. Candidate 1 (is not None) was modified into T-21, project/tests/test_services.py::test_cancelled_appointment_is_retained_and_listed, and passed when run alone. Candidate 2 (a domain levl cancel duplicating the supplied tet_domain_cancellation_and_guard) was rejected as a duplicate. 
 
 ## J Regression Run
 
@@ -281,12 +283,35 @@ Run python -m pytest from project/. Retain all accumulated tests. Record the tes
 
 | Command | Working directory | Code SHA | Passed | Failed | Failure summary | Product defect / test defect / unresolved | Evidence and interpretation |
 |---|---|---|---|---|---|---|---|
-| [complete] | [complete] | [complete] | [complete] | [complete] | [complete] | [complete] | [complete] |
+| python -m pytest tests/test_starter.py::test_domain_cancellation_and_guard -v | project/ | 1dfce5dcbec7ff75e3c65d84ff3c3f9a399d2070 | ![Candidate 2 Verification](<Screenshot 2026-11-04 193656.png>) | Nothing Failed | Nothing to summarise because nothing failed | No product defect | Evidence in the passed category. Run passed. HBowever, the test cancels through the domain object only and never checks find_appointment, so it add nothing beyond the supplied test_domain_cancellation_and_guard and T-21.| 
 
-Individual test runs and changed-order independence evidence: [commands, results, links]
+| python -m pytest tests/test_services.py::test_cancelled_appointment_is_retained_and_listed -v | project/ | 1dfce5dcbec7ff75e3c65d84ff3c3f9a399d2070 | ![Candidate 1 Verification](<Screenshot 2026-11-04 193259.png>) | Didn't fail | Nothing to summarise because nothing failed | No test defect, product defect or unresolved | Evidence in the passed category. T-21 passed, so after cancelling A1 through the service, find_appointment("A1" returns the same stored object, it is in list_appointments(), and its status is CANCELLED. This supports AC-05.2. |
+
+| python -m tests/test_domain.py -v | project/ | 1dfce5dcbec7ff75e3c65d84ff3c3f9a399d2070 | ![test_domain.py verification](<Screenshot 2026-11-04 201436.png>) | Didn't fail | Nothing to summarise because nothing failed | No product defect, test defect or unresolved | Evidence in the passed category. Test_domain.py works. |
+
+| python -m pytest tests/test_services.py -v | project/ | 1dfce5dcbec7ff75e3c65d84ff3c3f9a399d2070 | ![test_services.py verification](<Screenshot 2026-11-04 201832.png>) | Didn't fail | Nothing to summarise because nothing failed | No product defect, test defect or unresolved | Evidence in the passed category. Test_services.py works. |
+
+| python -m pytest tests/test_starter.py -v | project/ | 1dfce5dcbec7ff75e3c65d84ff3c3f9a399d2070 | ![test_starter.py](<Screenshot 2026-11-04 201956.png>) | Didn't fail | Nothing to summarise because nothing failed | No product defect, test defect or unresolved | Evidence in the passed category. Test_starter.py works |
+
+Individual test runs and changed-order independence evidence: 
+- python -m pytest tests/test_starter.py -v: 8 passed. Supplied tests
+- python -m pytest tests/test_domain.py -v: 9 passed. 
+- python -m pytest tests/test_services.py -v: 16 passed.
+- python -m pytest tests/test_data_store.py -v: 4 passed. 
+- python -m pytest tests/test_services.py::test_canelled_appointment_is_retained_and_listed -v: 1 passed [This is T-21]
+
+
+
 Optional tutor-led demonstration notes: [optional; leave blank if not used]
+
 A meaningful test should detect a relevant incorrect result. Students do not have to perform the demonstration or submit failure/restoration evidence for assessment. The tutor restores the example and reruns its tests. This is not a Stage 8 fault activity.
-Requirement → test → failure/observation → diagnosis → change → verification: [concise links where applicable]
+Requirement → test → failure/observation → diagnosis → change → verification: 
+
+- FR-06 / AC-05.1 -> T-06: test_cancel_changes_status -> first run 1 failed, 8 passed in test_domain.py; status was SCHEDULED when asserted -> tset defect (the appointment.cancel() call was missing) -> added the call -> rerun: 9 pased
+- Data store tests -> first run 2 failed, 2 passed -> test defects (patient created as "P0" but looked up as "P1", and add_patient given two strings instead of a Patient) -> corrected both -> rerun: 4 passed
+- test_data_store.py -> collection error from a stray a after "P1" (SyntaxError) -> test defect, not a failed test -> removed the character. 
+- Setup -> ModuleNotFoundError: No module named 'smartcare' from running pytast at the repo root -> not a product defect -> reran form project/. 
+- FR-07 / AC-05.2 -> T-21 -> no failure -> verified: Passed
 
 ## K What the Suite Still Does Not Prove
 
