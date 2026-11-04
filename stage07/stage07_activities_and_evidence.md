@@ -331,7 +331,13 @@ Use links rather than copying GitHub history. Continue the Stage 6 workflow; no 
 
 | Issue/task | Branch | PR | Reviewer | Key feedback | Outcome |
 |---|---|---|---|---|---|
-| [complete] | [complete] | [complete] | [complete] | [complete] | [complete] |
+| https://github.com/linhvantran/st1-assignment-3/issues/8 | Stage-07 | https://github.com/linhvantran/st1-assignment-3/pull/11 | chara3kki [Chars. I am literally the only one working on this assignment] | Nothing wrong with the code |Problem solved. Problem manually closed |
+
+| https://github.com/linhvantran/st1-assignment-3/issues/9 | Stage-07 | https://github.com/linhvantran/st1-assignment-3/pull/11 | chara3kki | Nothing wrong with the code | Problem solved. Problem manually closed | 
+
+| https://github.com/linhvantran/st1-assignment-3/issues/10 | Stage-07 | https://github.com/linhvantran/st1-assignment-3/pull/11 | chara3kki | Nothing wrong with the code | Problem solved. Problem manually closed |
+
+
 
 ## M Contribution Evidence
 
@@ -339,7 +345,7 @@ Record actual work in test design, implementation, review, traceability, diagnos
 
 | Member | Actual contribution | Evidence link |
 |---|---|---|
-| [complete] | [complete] | [complete] |
+| charatwukki and chara3kki [Chars] | Created testing documents, PR requests, problems, Code reviews | Problems: https://github.com/linhvantran/st1-assignment-3/issues/10, https://github.com/linhvantran/st1-assignment-3/issues/9, https://github.com/linhvantran/st1-assignment-3/issues/8. Creating and doing tests: https://github.com/linhvantran/st1-assignment-3/commit/f63159ba02dc005107466c1fe5885228958ab980, https://github.com/linhvantran/st1-assignment-3/commit/0ff4a578641d1e5fb890596849a09e5ba4d2f0c3, https://github.com/linhvantran/st1-assignment-3/commit/1dfce5dcbec7ff75e3c65d84ff3c3f9a399d2070 | 
 
 ## N Formative Questions
 
@@ -375,9 +381,9 @@ A test is only meaningful if it traces to a requirement and that it fails for th
 
 ## O Stage Completion
 
-Tested Stage 7 main SHA: [complete]
-Full-suite result: [complete]
-Unresolved defects and effect on baseline: [complete or none]
-Clean working tree and integration evidence: [complete]
-Stage 8 handover status: [complete; no Stage 8 work assigned]
-All tutorial/formative responses and traceability/Copilot decisions complete: [confirm]
+Tested Stage 7 main SHA: 1dfce5dcbec7ff75e3c65d84ff3c3f9a399d2070
+Full-suite result: Ran python -m pytest from project/ at 1dfce5dcbec7ff75e3c65d84ff3c3f9a399d2070. 37 passed. 0 failed. 
+Unresolved defects and effect on baseline: None found. 
+Clean working tree and integration evidence: nothing to commit, working tree clean. 
+Stage 8 handover status: Ready
+All tutorial/formative responses and traceability/Copilot decisions complete: Confirm 
