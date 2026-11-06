@@ -225,44 +225,34 @@ Each member's substantive contribution and artefact: [complete]
 ## K. Ten formative questions
 
 1. What should an engineer do before changing code in response to a failure?
-
-Response: [complete]
+An engineer should make observations on the failure. Document the inputs to allow people to reproduce the problem use test cases to state the expected behaviour from a requirement. An engineer must gather evidence before editing so that they can deduce what is wrong with the code. 
 
 2. Where should expected behaviour come from during debugging?
-
-Response: [complete]
+The expected behaviour should come from the requirements as they define what the program should do. If the actual behaviour does not meet the requirements, it does not meet the expected behaviour. 
 
 3. What is a debugging hypothesis?
-
-Response: [complete]
+A debugging hypothesis is a plausable explanation of why a failure occurs. A debugging hypothesis must be paired with a check in order to confirm whether the hypothesis is correct or wrong. 
 
 4. What is a regression test and why is it retained?
-
-Response: [complete]
+A regression test is a test ran to ensure that the software works properly after code changes. Regression tests are retained so that later changes can be checked against previous behaviours and can't silently reintroduce a bug. 
 
 5. What is meant by root cause?
-
-Response: [complete]
+The root cause means the main reason a failure occurs. An example of this would be a faulty implementation in the code. 
 
 6. What is refactoring?
-
-Response: [complete]
+Refactoring means to improve the code without changing its behaviour or functionality. An example of this could be optimising code by changing its implementation. 
 
 7. What is a swallowed exception?
-
-Response: [complete]
+A swallowed exception is when a program fails but it pretends that nothing happened and carries on [error caught and ignored]. An example of this would be using pass instead of having an error message. Doing this makes debugging a harder process as no proper output as to what went wrong is given to the developer. 
 
 8. What is a code smell?
-
-Response: [complete]
+Code smell is a sign in the code that suggests a design problem, but the code works. An example of this would be unused variables or unclear variable names. 
 
 9. How should GitHub Copilot-generated debugging diagnoses be treated?
-
-Response: [complete]
+All GitHub Copilot-generated debugging diagnoses should be treated as a hypotheses rather than confirmed ansswers. Each suggestion must be checked against the requirements, the actual test results and the code before it is accepted, modified or rejected with a reason. Copilot should never replace your own diagnosis by running the test. It can assume but it should never be counted as evidence. 
 
 10. What is the Stage 8 engineering rule?
-
-Response: [complete]
+Diagnose the problem before you fix it. Observe and document the inputs that caused the failure, state the expected behaviour from the requirements, and form a hypothesis. Use evidence to find the root cause and make sure to use regression tests after code changes. 
 
 ## L. Completion and handover
 
