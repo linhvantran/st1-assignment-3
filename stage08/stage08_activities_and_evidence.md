@@ -4,8 +4,8 @@ UG and PG | One evolving group project | Complete this blank record using the St
 
 All Assignment 3 stage materials are provided from the beginning. Complete this stage only after the previous applicable stage has been integrated, verified and recorded. Use this supplied record in stage08/ in your EXISTING repository. Preserve project/, all earlier tests, records and responses. Do not download another starter or copy staff solutions. The Stage 8 preparation utility is supplied or run by teaching staff when Stage 8 begins. Follow your tutor’s controlled workflow and the handout. If temporarily supplied, keep it outside the repository in a sibling Stage_8_Assets/ folder; exclude it from Git and the final submission.
 
-Group/tutorial: [complete]
-Members and UG/PG cohorts: [complete]
+Group/tutorial: [Mon 9:30-11:30 Group 1]
+Members and UG/PG cohorts: [Van Tran (@linhvantran), Xi Chen (@cz1295768-ui), Chars (@charatwukki), Thomas Pollock (@CrowdedGolf)]
 Record owner / contribution links for each member: [complete]
 
 Use concise results and accessible artefact links rather than copying entire logs. Keep human-first entries before consulting GitHub Copilot. Link shared evidence once; do not repeat it across sections. No entries below are specimen answers or claimed results.
@@ -15,44 +15,105 @@ Use concise results and accessible artefact links rather than copying entire log
 ### A.1 Classify all five statements
 For each, choose symptom, evidence or hypothesis/opinion, and explain your reason. These are discussion statements, not confirmed diagnoses.
 - Appointment disappears after cancellation.
+  - Symptom: This is what happens when the problem occurs, it might not be the root cause of the problem.
 - The data-store removal path is probably being called.
+  - Hypothesis/opinion: This is what is thought to be happening, this statement does not prove it.
 - The failing test shows store.find_appointment('A1') returns None.
+  - Evidence: The failing pytest points to the fact that somthing is going wrong with the lookup function.
 - The service layer is badly designed.
+  - Hypothesis/opinion: Does not point out what specific parts are badly designed and how it is badly designed.
 - Traceback points to smartcare/services.py line 42 in the example.
 The example line number is illustrative; inspect the actual line in your run. The removal hypothesis must be tested against the current project, which has no public delete operation.
-
-Response and reason: [complete]
+  - Evidence: Tracebacks point towards where the program is erroring out.
 
 ### A.2 Build a debugging record
 Choose the cancelled-history scenario or a same-practitioner/time booking. Before changing code, record expected behaviour, observed behaviour, minimal reproduction, a hypothesis and evidence to inspect. Use a requirement to justify the expectation. Keep the initial hypothesis even if later evidence disproves it.
 
-Response and reason: [complete]
+Scenario: Cancelled history:
+
+#### Expected bahiviour:
+- Cancelled appointment is retained in datastore with `AppointmentStatus.SCHEDULED` becoming `AppointmentStatus.CANCELLED` after cancellation.
+
+#### Observed behaviour:
+- Test `test_cancelled_appointment_is_retained_and_listed` fails with `LookupError: Appointment not found`.
+  - This test fails with this LookupError when using the `find_appointment()` function after cancelling a previously valid appointment.
+- `test_repeated_cancellation_via_service_is_rejected` fails with `LookupError: Appointment not found`.
+  - This test fails with this LookupError when using the `cancel_appointment()` function on a previously cancelled appointment that was previously valid.
+
+#### Minimal reproduction:
+- Previously valid appointment cannot be found via the `find_appointment()` function after using the `cancel_appointment()` function on the previously valid appointment.
+
+#### Hypothesis:
+- When an appointment is being cancelled using the `cancel_appointment()` function it is being deleted from the datastore instead of changing `AppointmentStatus.SCHEDULED` to `AppointmentStatus.CANCELLED`.
+
+#### Evidence:
+- Both failing tests raise a LookupError when referencing the datastore for a previously cancelled appointment ID that was once valid.
 
 ### A.3 Test defect or product defect
 A test expects cancelled appointments to be deleted, but FR-07 says history must be retained. What should be changed? Explain why. Also decide whether a test expecting different practitioners at the same time to conflict reflects AC-04.2. Do not assume every failing test is correct.
 
-Response and reason: [complete]
+The test should be changed as "history must be retianed" is a functional requirement that the program must follow while the test should follow those requirements to test if the code also folows those requirements.
 
 ### A.4 Refactoring smell hunt
 Consider a hypothetical 70-line AppointmentService method containing duplicate status strings, direct collection manipulation, printing, validation and four nested conditionals. Identify the smells and propose small refactorings that preserve required behaviour. The direct collection work replaces the old storage-specific scenario; use the existing SmartCareDataStore boundary. Do not implement an extra architecture.
 Classify these proposed changes as refactoring, repair or feature: rename appt to appointment; extract a repeated conflict helper; add rescheduling; restore retained cancellation lookup; replace a magic status string with the existing enum. Explain the behaviour that must remain unchanged.
 
-Response and reason: [complete]
+#### Rename appt to appointment:
+- Refactoring. Functionality of appt must remain the same but the name and all references will be changed to appointment.
+
+#### Extract a repeated conflict helper:
+- Repair. The repeated conflict helper will need to be extracted and repaired. All other unrelated parts of the program remain the same.
+
+#### Add rescheduling:
+- Feature. Most of the underlying scheduling code will remain the same but a new feature to handle rescheduling will need to be created to interact with the existing scheduling code.
+
+#### Restore retained cancellation lookup:
+- Repair. The part of the code causing the cancellation infromation to need to be restored will need to be repaired to stop this issue.
+
+#### Replace a magic status string with existing enum:
+- Refactoring. Fuctionality based on the states and the states themselves remain the same but how the states are stored changes.
 
 ### A.5 Traceback and hypothesis ranking
 Using one actual failure, identify its exception/assertion, expected and observed values, test line, application call path and supporting requirement. List three plausible causes and rank them by fit with the available evidence. For each cause, name a check that could distinguish it from the others. Explain why a traceback alone does not establish the cause.
 
-Response and reason: [complete]
+#### Failure:
+- Test `test_cancelled_appointment_is_retained_and_listed` from `test_services.py`
+
+#### Exception / assertion:
+- `LookupError: Appointment not found`
+
+#### Expected values:
+- `appointment == ("A1", "P1", "D1", datetime(2026, 11, 10, 9, 0), AppointmentStatus.SCHEDULED)` and `appointments.find_appointment("A1") == ("A1", "P1", "D1", datetime(2026, 11, 10, 9, 0), AppointmentStatus.CANCELLED)`
+- pytest asserts that `appointment` is `appointments.find_appointment("A1")` meaning that `appointment` and `appointments.find_appointment("A1")` are both the same object despite the cancellation.
+
+#### Observed values:
+- `appointment == ("A1", "P1", "D1", datetime(2026, 11, 10, 9, 0), AppointmentStatus.SCHEDULED)` is still true as the program was successful in creating and storing the appointment using the `appointments.book_appointment()` function as the `appointments.cancel_appointment()` function successfully found and cancelled "A1" as there were no errors raised during cancellation. `appointments.find_appointment("A1") == ("A1", "P1", "D1", datetime(2026, 11, 10, 9, 0), AppointmentStatus.CANCELLED)` is no loger true as the `appointments.find_appointment()` function can no longer find "A1" and raises a LookupError.
+- pytest cannot assert that `appointment` is `appointments.find_appointment("A1")` as `appointments.find_appointment("A1")` raises a LookupError.
+
+#### Test line:
+- line `142` in `test_services.py`
+
+#### Application call path and supporting requirement:
+- Path: `test/test_services`
+- Supporting requirements: FR-07 (Retain cancelled history) and AC-05.1 (Cancelling a SCHEDULED appointment changes it to CANCELLED)
+
+#### Plausable causes:
+1. Cancelled appointment was deleted.
+  - Distingusihing check: Check if appointment "A1" still exists in datastore after using `appointments.cancel_appointment()`. If appointment "A1" no longer exists in the datastore after running `appointments.cancel_appointment("A1")`, the cancel function or one of its downstream functions is deleting the appointment.
+
+2. Cancelling an appointment overwrites the wrong part of the list.
+  - Distinguishing check: Check whether parts of appointment "A1" get overwritten in the datastore after using `appointments.cancel_appointment()`. If parts of appointment "A1" are overwritten or jumbled in unexpected ways after using `appointments.cancel_appointments("A1")`, there is likely a problem with how the cancel function and its downstream functions interact with the datastore.
+
+3. There is an issue with the lookup system.
+  - Distinguishing check: Check whether appointment "A1" is intact in the datastore and try looking it up using `appointments.find_appointment("A1")`. If this fails despite appointment "A1" being correct in the datastore, there is likely an issue with the lookup system.
+
+#### Why can't a traceback alone establish the cause of an issue?
+A traceback alone cannot establish the cause of an issue becasue, 
 
 ### A.6 Exit question
 Why is changing code immediately after seeing a failure often a poor debugging strategy?
 
-Response and reason: [complete]
-
-
-Classification responses (1–5, each with reason): [complete]
-Tutorial debugging record — expected; observed; reproduction; hypothesis; evidence to inspect: [complete]
-Traceback — exception/assertion; expected/observed values; test line; call path; requirement; ranked causes and discriminating checks: [complete]
+Changing code immediately after seeing a failure is a poor debugging stratergy as this approach does not let you think deeply about what could have gone wrong, what the likely causes are, and stratergies that could be used to fix the problem.
 
 ## B. Stage 7 baseline and safe preparation
 
