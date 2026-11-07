@@ -117,13 +117,27 @@ Changing code immediately after seeing a failure is a poor debugging stratergy a
 
 ## B. Stage 7 baseline and safe preparation
 
-- Stage 7 code SHA and requirement baseline: [complete]
-- Baseline test command / working directory / observed result / evidence: [complete]
-- Clean preparation SHA if a record-only commit followed Stage 7: [complete]
-- Branch and preparer / how teammates obtained this branch: [complete]
-- Downloaded tool version, source SHA256 and --check outcome: [complete]
-- --apply and --verify output summaries / artefact references: [complete]
-- Bounded diff inspected and recovery location (not committed): [complete]
+- Stage 7 code SHA and requirement baseline: baac2416c93ca8fdf426580ceb94ed3c31118d74
+
+- Baseline test command / working directory / observed result / evidence: python -m pytest -q / project/ / 5 failed, 32 passed in 0.66s / ================================ short test summary info ================================
+FAILED tests/test_services.py::test_same_practitioner_same_time_conflict_is_rejected - Failed: DID NOT RAISE <class 'ValueError'>
+FAILED tests/test_services.py::test_different_practitioner_same_time_is_allowed - ValueError: Practitioner already has a SCHEDULED appointment at this time
+FAILED tests/test_services.py::test_cancelled_appointment_is_retained_and_listed - LookupError: Appointment not found
+FAILED tests/test_services.py::test_repeated_cancellation_via_service_is_rejected - LookupError: Appointment not found
+FAILED tests/test_starter.py::test_conflict_rule_and_different_practitioner - Failed: DIDNOT RAISE <class 'ValueError'>
+5 failed, 32 passed in 0.34s
+
+- Clean preparation SHA if a record-only commit followed Stage 7: No record-only commit came between Stage 7 and preparation. 
+
+- Branch and preparer / how teammates obtained this branch: git switch main, git fetch origin, git switch --track origin/debug/stage08. Chars and Pranav Gupta prepared the branch and before are the commands taht allow teammates to obtain this branch. 
+
+- Downloaded tool version, source SHA256 and --check outcome: Stage 8 tool 1.1, 986c5445532ffd1d85e88639b6b6f34b84e15b2bbfc1882511a96938c3b641f6, CHECK ONLY: project unchanged; both proposed fault signatures verified in a temporary copy 
+
+- --apply and --verify output summaries / artefact references: 
+- --apply output: Stage 8 tool 1.1, 986c5445532ffd1d85e88639b6b6f34b84e15b2bbfc1882511a96938c3b641f6,PREPARED: F8-01 practitioner conflict; F8-02 retained-history lookup. Verified expected failures: test_f8_01_conflict; test_f8_02_history. 
+- --verify output: VERIFIED: exactly 2 expected failures; both approved symtom signatures present. 
+
+- Bounded diff inspected and recovery location (not committed): 
 - Prepared faulty-state commit SHA: [complete]
 - Preparation or recovery issues and resolution, if any: [complete]
 - Initial prepared full-suite command / result / key failures: [complete]
