@@ -157,11 +157,11 @@ ERROR project/tests/test_starter.py
 
 ## C. F8-01 diagnosis and repair
 
-- Symptom / observed behaviour: [complete]
-- Expected behaviour and requirement: [complete]
-- Minimal synthetic reproduction steps: [complete]
-- Meaningful failing test path/name and exact relevant failure: [complete]
-- Human hypothesis and intended checks: see E, F8-01.
+- Symptom / observed behaviour: Booking a second SCHEDULED appointment for the same practitioner at the same datetime with with distinct appointment IDs and registered patients is not rejected. Booking a different practitioner at the same datetime is wrongly rejected showing "ValueError: Practitioner already has a SCHEDULED appointment at this time."
+- Expected behaviour and requirement: A same practitioner SCHEDULED conflict at the same time must be rejected with ValueError (FR-05 / AC-04.1). A different practitioner at the same time must be allowed (AC-04.2). 
+- Minimal synthetic reproduction steps: 1. Register in the patients P1 and P2, and practitioners D1 and D2. 2. Book A1 (P1, D1) at 2026-11-10 09:00, expected it succeeds. Book A2 (P2, D1) at the same time, Expected: ValueError. Book A3 (P2, D2) at the same time, Expected: succeeds. Check that the stored appointments are unchanged after the rejected booking. 
+- Meaningful failing test path/name and exact relevant failure: project/tests/test_services.py::test_same_practitioner_same_time_conflict_is_rejected, "Failed: DID NOT RAISE <class 'ValueError'>"
+- Human hypothesis and intended checks: I believe that the practitioner/time conflict check compares the wrong thing. It matches different practitioners instead of the same one. Intended checks: Inspect the conflict check in book_appointment and the store method that find a practitioner's appointments, and call that store method directly with two practitioners at the same time. 
 - Supported root cause and inspected code/runtime evidence: [complete after diagnosis]
 - Smallest justified fix / diff / why other behaviour is preserved: [complete]
 - Repair SHA / focused verification result: [complete]
@@ -184,8 +184,8 @@ ERROR project/tests/test_starter.py
 Complete both entries BEFORE Copilot. C/D supply observed/expected/reproduction/test; retain those initial facts and link them here.
 
 ### F8-01 human entry
-Likely cause and why plausible: [complete]
-Evidence intended to inspect / competing explanation / discriminating check: [complete]
+Likely cause and why plausible: I believe the practitioner/time conflict check comapres the wrong thing. It matches different practitioners instead of the same one. This is plausible because it explains both symptoms (a same practitioner double booking is not rejected, and a different practitioner booking at the same time is rejected.)
+Evidence intended to inspect / competing explanation / discriminating check: I will inspect the conflict check in book_appointment and the data store method that find a practitioner's appointments at a time. Competing explanation: The store returns the right appoinjtments but the service applies the wrong condition to them. Discriminating check: Call the store method directly with D1 and D2 at the same datetime. If it returns the wrong appointments, the fault is in the store. If it returns the right ones, the fault is in the service. 
 Member and saved sequence/time or commit showing this preceded consultation: [complete]
 
 ### F8-02 human entry
