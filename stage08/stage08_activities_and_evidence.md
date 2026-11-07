@@ -150,7 +150,7 @@ Changing code immediately after seeing a failure is a poor debugging stratergy a
 - Human hypothesis and intended checks: see E, F8-02.
 - Supported root cause and inspected code/runtime evidence: A conditional statement inside the `find_appointment()` function within `data_store.py` has a conditional statement that results in the function returning `LookupError: Appointment not found` if the appointment has the status CANCELLED.
 - Smallest justified fix / diff / why other behaviour is preserved: Removal of `and appointment.status.value != "cancelled"` from the conditional `if (appointment.appointment_id == appointment_id.strip() and appointment.status.value != "cancelled"):` on line 94 of `data_store.py`. Other behaviour will be preserved as this conditional will become `if appointment.appointment_id == appointment_id.strip():` which still checks if the appointment id is the stripped version of the input id without inclduing the part that filtered out cancelled appointments.
-- Repair SHA / focused verification result: [complete]
+- Repair SHA / focused verification result: SHA: 7093bb114650416377726f7f8461fedb4a34c820 Result: 0 errors (3 non-relevant / out of scope).
 
 ## E. Human-first hypotheses
 
@@ -222,7 +222,7 @@ Final human conclusion and comparison with initial hypothesis: Evidence from dee
 | F8-01 before repair | [complete] | [complete] | [complete] |
 | F8-01 after repair | [complete] | [complete] | [complete] |
 | F8-02 before repair | d61d05d757f82622a2c199829e9518e7c3ca0bab | cmd: python -m pytest directory: project | 5 failures (2 relevant to F8-02): `FAILED tests/test_services py::test_cancelled_appointment_is_retained_and_listed - LookupError: Appointment not found` and `FAILED tests/test_services.py::test_repeated_cancellation_via_service_is_rejected - LookupError: Appointment not found` |
-| F8-02 after repair | [complete] | [complete] | [complete] |
+| F8-02 after repair | 7093bb114650416377726f7f8461fedb4a34c820 | cmd: python -m pytest directory: project | 3 failures (0 relevant to F8-02): Previous failed tests were fixed. |
 | Full suite after both repairs, before refactor | [complete] | [complete] | [complete] |
 
 Explain how the assertions detect each relevant incorrect result and protect previous behaviour: [complete]
