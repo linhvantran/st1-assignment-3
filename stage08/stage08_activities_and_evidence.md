@@ -221,7 +221,7 @@ Final human conclusion and comparison with initial hypothesis: Evidence from dee
 |---|---|---|---|
 | F8-01 before repair | [complete] | [complete] | [complete] |
 | F8-01 after repair | [complete] | [complete] | [complete] |
-| F8-02 before repair | d61d05d757f82622a2c199829e9518e7c3ca0bab | cmd: python -m pytest directory: project | 5 failures (2 relevant to F8-02) `FAILED tests/test_services py::test_cancelled_appointment_is_retained_and_listed - LookupError: Appointment not found` and `FAILED tests/test_services.py::test_repeated_cancellation_via_service_is_rejected - LookupError: Appointment not found` |
+| F8-02 before repair | d61d05d757f82622a2c199829e9518e7c3ca0bab | cmd: python -m pytest directory: project | 5 failures (2 relevant to F8-02): `FAILED tests/test_services py::test_cancelled_appointment_is_retained_and_listed - LookupError: Appointment not found` and `FAILED tests/test_services.py::test_repeated_cancellation_via_service_is_rejected - LookupError: Appointment not found` |
 | F8-02 after repair | [complete] | [complete] | [complete] |
 | Full suite after both repairs, before refactor | [complete] | [complete] | [complete] |
 
