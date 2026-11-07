@@ -90,8 +90,7 @@ class SmartCareDataStore:
         if not isinstance(appointment_id, str) or not appointment_id.strip():
             raise ValueError("Appointment ID cannot be blank")
         for appointment in self.list_appointments():
-            if (appointment.appointment_id == appointment_id.strip()
-                    and appointment.status.value != "cancelled"):
+            if appointment.appointment_id == appointment_id.strip():
                 return appointment
         return None
 

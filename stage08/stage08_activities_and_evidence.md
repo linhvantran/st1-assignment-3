@@ -137,10 +137,23 @@ FAILED tests/test_starter.py::test_conflict_rule_and_different_practitioner - Fa
 - --apply output: Stage 8 tool 1.1, 986c5445532ffd1d85e88639b6b6f34b84e15b2bbfc1882511a96938c3b641f6,PREPARED: F8-01 practitioner conflict; F8-02 retained-history lookup. Verified expected failures: test_f8_01_conflict; test_f8_02_history. 
 - --verify output: VERIFIED: exactly 2 expected failures; both approved symtom signatures present. 
 
-- Bounded diff inspected and recovery location (not committed): 
-- Prepared faulty-state commit SHA: [complete]
-- Preparation or recovery issues and resolution, if any: [complete]
-- Initial prepared full-suite command / result / key failures: [complete]
+- Bounded diff inspected and recovery location (not committed): Inspect using "git show --stat dc66e56",  project/smartcare/data_store.py | 29 +++++++++++------------------
+ 1 file changed, 11 insertions(+), 18 deletions(-). Recovery backup and hash record are in project/.stage8_faults/, which is a local recovery metadata ignored by the .gitignore file and not commited. 
+
+- Prepared faulty-state commit SHA: dc66e5633e6c32453e46b24999270e2c02cfa137
+
+- Preparation or recovery issues and resolution, if any: 
+None. --check, --apply and --verify all ran successfully, and --restore was not needed. 
+
+- Initial prepared full-suite command / result / key failures: 
+python -m pytest -q in project/ on dc66e5633e6c32453e46b24999270e2c02cfa137
+
+RESULT: 
+
+ERROR project/tests/test_data_store.py
+ERROR project/tests/test_domain.py
+ERROR project/tests/test_services.py
+ERROR project/tests/test_starter.py
 
 ## C. F8-01 diagnosis and repair
 
@@ -155,14 +168,16 @@ FAILED tests/test_starter.py::test_conflict_rule_and_different_practitioner - Fa
 
 ## D. F8-02 diagnosis and repair
 
-- Symptom / observed behaviour: [complete]
-- Expected behaviour and requirement: [complete]
-- Minimal synthetic reproduction steps: [complete]
-- Meaningful failing test path/name and exact relevant failure: [complete]
+- Symptom / observed behaviour: `LookupError: Appointment not found` when referencing a previously valid appointment that has been cancelled with `cancel_appointment()`
+- Expected behaviour and requirement: Referencing a previously valid cancelled appointment returns the same appointment object with `AppointmentStatus.CANCELLED`. There should be no LookupError if the appointment number was vaild before the cancellation.
+- Minimal synthetic reproduction steps: Previously valid appointment cannot be found via the `find_appointment()` function after using the `cancel_appointment()` function on the previously valid appointment.
+- Meaningful failing test path/name and exact relevant failure:
+  - Test: `test_cancelled_appointment_is_retained_and_listed`, Path: `tests\test_services.py:142`, Exact relevant failure: `LookupError: Appointment not found`
+  - Test: `test_repeated_cancellation_via_service_is_rejected`, Path: `tests\test_services.py:154`, Exact relevant failure: `LookupError: Appointment not found`
 - Human hypothesis and intended checks: see E, F8-02.
-- Supported root cause and inspected code/runtime evidence: [complete after diagnosis]
-- Smallest justified fix / diff / why other behaviour is preserved: [complete]
-- Repair SHA / focused verification result: [complete]
+- Supported root cause and inspected code/runtime evidence: A conditional statement inside the `find_appointment()` function within `data_store.py` has a conditional statement that results in the function returning `LookupError: Appointment not found` if the appointment has the status CANCELLED.
+- Smallest justified fix / diff / why other behaviour is preserved: Removal of `and appointment.status.value != "cancelled"` from the conditional `if (appointment.appointment_id == appointment_id.strip() and appointment.status.value != "cancelled"):` on line 94 of `data_store.py`. Other behaviour will be preserved as this conditional will become `if appointment.appointment_id == appointment_id.strip():` which still checks if the appointment id is the stripped version of the input id without inclduing the part that filtered out cancelled appointments.
+- Repair SHA / focused verification result: SHA: 7093bb114650416377726f7f8461fedb4a34c820 Result: 0 errors (3 non-relevant / out of scope).
 
 ## E. Human-first hypotheses
 
@@ -174,9 +189,12 @@ Evidence intended to inspect / competing explanation / discriminating check: [co
 Member and saved sequence/time or commit showing this preceded consultation: [complete]
 
 ### F8-02 human entry
-Likely cause and why plausible: [complete]
-Evidence intended to inspect / competing explanation / discriminating check: [complete]
-Member and saved sequence/time or commit showing this preceded consultation: [complete]
+Likely cause and why plausible: `cancel_appointment()` function or one of its downstream functions deletes the appointment instead of changing `AppointmentStatus.SCHEDULED` to `AppointmentStatus.CANCELLED`. This is plausible because any function in our tests that needs to look up "A1" in the datastore fails with `LookupError: Appointment not found` after cancelling the appointment despite there being no error before cancelling the appointment.
+Evidence intended to inspect / competing explanation / discriminating check:
+- Evidence: Both failing tests raise `LookupError: Appointment not found` when trying to complete an opperation on "A1" after it has been cancelled with `cancel_appointment()`.
+- Competing explanation(s): Somthing goes wrong with retrieving appointments via `find_appointment()` after cancellation. Cancelling appointment overwrites the wrong part of the list and error with lookup system.
+- Discriminating check: To distinguish if it is an accidental deletion check if appointment "A1" still exists in the datastore itself to bypass the `find_appointment()` function after using `appointments.cancel_appointment()`. If appointment "A1" no longer exists in the datastore after running `appointments.cancel_appointment("A1")`, the cancel function or one of its downstream functions is deleting the appointment instead of setting `AppointmentStatus.CANCELLED`.
+Member and saved sequence/time or commit showing this preceded consultation: Thomas (@CrowdedGolf / u3325015) [complete]
 
 ## F. GitHub Copilot prompts, findings and human decisions
 
@@ -190,11 +208,39 @@ Actual prompt / output reference and member: [complete]
 Final human conclusion and comparison with initial hypothesis: [complete]
 
 ### F8-02 Copilot review
-Actual prompt / output reference and member: [complete]
-1. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: [complete]
-2. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: [complete]
-3. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: [complete]
-Final human conclusion and comparison with initial hypothesis: [complete]
+Actual prompt / output reference and member:
+- Prompt:
+  - Observed behaviour: `LookupError: Appointment not found` when referencing a previously valid appointment that has been cancelled with `cancel_appointment()`
+  Expected behaviour: Referencing a previously valid cancelled appointment returns the same appointment object with `AppointmentStatus.CANCELLED`. There should be no LookupError if the appointment number was vaild before the cancellation. 
+  Steps to reproduce: Create a valid appointment and then cancel it with `cancel_appointment` then try to lookup the previously cancelled appointment.
+  Failing tests: `test_cancelled_appointment_is_retained_and_listed`, Path: `tests\test_services.py:142`, Exact relevant failure: `LookupError: Appointment not found` and `test_repeated_cancellation_via_service_is_rejected`, Path: `tests\test_services.py:154`, Exact relevant failure: `LookupError: Appointment not found`
+  My hypothesis: Somthing has gone wrong with either the `cancel_appointment()` function under AppointmentServices or one of its downstream functions which is causing a cancelled appointment to be deleted instead of being changed to CANCELLED.
+  Relevant code: project/tests/test_services.py, project/smartcare/services.py, project/smartcare/domain.py, and project/smartcare/datastore.py
+
+  Task:
+  Rank the three most likely causes. For each, identify the evidence I should inspect to distinguish it from the other possible causes. Do not rewrite the entire application. Do not invent requirements. Treat all suggested explanations as hypotheses.
+- Output reference:
+  - https://github.com/copilot/share/824642ac-4ba4-8014-9012-da0dc00261e4
+- Member:
+    - Thomas (@CrowdedGolf / u3325015) 
+
+Suggestions:
+1. Cancelled appointments are filtered out during lookup — very likely.
+In data_store.py, find_appointment returns a matching appointment only if its status is not "cancelled". The service delegates to that lookup and raises LookupError when it gets None (services.py, services.py).
+To distinguish it: inspect whether the record remains in _appointments and whether the same ID is found before and after cancellation. The current code’s list method returns all stored values (data_store.py), while the finder filters by status.
+  - accept, modify, or reject: Accept. This explination is the likely cause as it is similar to my first competing idea. I have checked the code and there is infact a secion in `lookup_appointment()` in `data_store.py` that makes the lookup function return a LookupError if an appointment's status is CANCELLED. This is also supported by my findings in `test_regressions.py` where I found that the cancelled appointment still exists in the datastore itself but it is not found when using the lookup function.
+
+2. Cancellation removes or replaces the stored record — possible, but not supported by the code shown.
+This would also cause lookup to fail after cancellation. However, the current service calls appointment.cancel() and returns that object without removing it, and the domain method changes only the status (services.py, domain.py).
+To distinguish it: check whether "A1" is still a key in _appointments after cancellation, and whether list_appointments() still contains the original object. The test itself checks retention at test_services.py.
+  - accept, modify, or rejcet: Reject. From my testing in `test_regressions.py` as the cancelled appointment still exists in the datastore post cancellation but it cannot be found when using the lookup function.
+
+3. The service is using a different store or the lookup ID differs — less likely.
+Either could make lookup return None independently of status. In the shown test setup, though, all three services share the same store (test_services.py), and the store trims the lookup ID before comparing it (data_store.py).
+To distinguish it: verify the store object identity used by booking, cancellation, and lookup, and log the stored appointment ID alongside the exact lookup argument.
+  - accept, modify, or reject: Reject. All of the functions refer to the same `SmartCareDataStore` class in `data_store.py`.
+
+Final human conclusion and comparison with initial hypothesis: Evidence from deeper within the code structure disproves my intial hypothesis of `cancel_appointment()` being the cause. Deeper analysis of the code reveals that the root cause is a conditional statement within the `lookup_appointment()` function that causes it to return a `LookupError` if the appointment has been cancelled.
 
 ## G. Failing to passing regression evidence
 
@@ -202,8 +248,8 @@ Final human conclusion and comparison with initial hypothesis: [complete]
 |---|---|---|---|
 | F8-01 before repair | [complete] | [complete] | [complete] |
 | F8-01 after repair | [complete] | [complete] | [complete] |
-| F8-02 before repair | [complete] | [complete] | [complete] |
-| F8-02 after repair | [complete] | [complete] | [complete] |
+| F8-02 before repair | d61d05d757f82622a2c199829e9518e7c3ca0bab | cmd: python -m pytest directory: project | 5 failures (2 relevant to F8-02): `FAILED tests/test_services py::test_cancelled_appointment_is_retained_and_listed - LookupError: Appointment not found` and `FAILED tests/test_services.py::test_repeated_cancellation_via_service_is_rejected - LookupError: Appointment not found` |
+| F8-02 after repair | 7093bb114650416377726f7f8461fedb4a34c820 | cmd: python -m pytest directory: project | 3 failures (0 relevant to F8-02): Previous failed tests were fixed. |
 | Full suite after both repairs, before refactor | [complete] | [complete] | [complete] |
 
 Explain how the assertions detect each relevant incorrect result and protect previous behaviour: [complete]
