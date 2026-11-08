@@ -1,6 +1,6 @@
 ============================= test session starts =============================
 platform win32 -- Python 3.14.5, pytest-8.3.5, pluggy-1.7.0
-rootdir: C:\Users\chars\st1-assignment-3\project
+rootdir: C:\Users\JohnAmongUs\st1-assignment-3\project
 collected 16 items / 13 deselected / 3 selected
 
 tests\test_services.py .FF                                               [100%]

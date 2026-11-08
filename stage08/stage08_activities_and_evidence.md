@@ -6,7 +6,9 @@ All Assignment 3 stage materials are provided from the beginning. Complete this 
 
 Group/tutorial: [Mon 9:30-11:30 Group 1]
 Members and UG/PG cohorts: [Van Tran (@linhvantran), Xi Chen (@cz1295768-ui), Chars (@charatwukki), Thomas Pollock (@CrowdedGolf)]
-Record owner / contribution links for each member: [complete]
+Record owner / contribution links for each member: 
+
+charatwukki and chara3kki [Chars]: Sections B, E and F for F8-01, K, J, and F8-01 repair 18f0173e614a76da644ebf57e02b8d012b368d2d; Created issues for F8-02 and F8-01 https://github.com/linhvantran/st1-assignment-3/issues/14 and https://github.com/linhvantran/st1-assignment-3/issues/13 respectively. 
 
 Use concise results and accessible artefact links rather than copying entire logs. Keep human-first entries before consulting GitHub Copilot. Link shared evidence once; do not repeat it across sections. No entries below are specimen answers or claimed results.
 
@@ -162,9 +164,9 @@ ERROR project/tests/test_starter.py
 - Minimal synthetic reproduction steps: 1. Register in the patients P1 and P2, and practitioners D1 and D2. 2. Book A1 (P1, D1) at 2026-11-10 09:00, expected it succeeds. Book A2 (P2, D1) at the same time, Expected: ValueError. Book A3 (P2, D2) at the same time, Expected: succeeds. Check that the stored appointments are unchanged after the rejected booking. 
 - Meaningful failing test path/name and exact relevant failure: project/tests/test_services.py::test_same_practitioner_same_time_conflict_is_rejected, "Failed: DID NOT RAISE <class 'ValueError'>"
 - Human hypothesis and intended checks: I believe that the practitioner/time conflict check compares the wrong thing. It matches different practitioners instead of the same one. Intended checks: Inspect the conflict check in book_appointment and the store method that find a practitioner's appointments, and call that store method directly with two practitioners at the same time. 
-- Supported root cause and inspected code/runtime evidence: [complete after diagnosis]
-- Smallest justified fix / diff / why other behaviour is preserved: [complete]
-- Repair SHA / focused verification result: [complete]
+- Supported root cause and inspected code/runtime evidence: In project/smartcare/data_store.py, has_practitioner_conflict compares 'appointment.practitioenr.practitioner_id != practitioner_id', so only other practitioners' appointments count as conflicts. This reverses FR-05 / AC-04.1 and AC-04.2. Evidence: git diff fb81c4 dc66e56 shows == changed to !=, services.py passes the correct practitioner ID, and the two practitioner tests fail in opposite directions. 
+- Smallest justified fix / diff / why other behaviour is preserved: Changed != back to == on the practitioner comparison in has_practitioner_conflict. Nothing else was edited. The other behaviours were preserved because we just fixed one comparison and nothing else was changed. 
+- Repair SHA / focused verification result: 18f0173e614a76da644ebf57e02b8d012b368d2d; python -m pytest tests/test_services.py -k "practitioner" in project/: 3 passed, 13 deselected in 0.05s
 
 ## D. F8-02 diagnosis and repair
 
@@ -273,26 +275,28 @@ Final human conclusion and comparison with initial hypothesis: Evidence from dee
 | F8-01 after repair | 18f0173e614a76da644ebf57e02b8d012b368d2d | python -m pytest tests/test_services.py -k "practitioner" in project/ | Artefact File in stage08 folder dd93f02b4cfac30ee989487b2b17875396d85195 |
 | F8-02 before repair | d61d05d757f82622a2c199829e9518e7c3ca0bab | cmd: python -m pytest directory: project | 5 failures (2 relevant to F8-02): `FAILED tests/test_services py::test_cancelled_appointment_is_retained_and_listed - LookupError: Appointment not found` and `FAILED tests/test_services.py::test_repeated_cancellation_via_service_is_rejected - LookupError: Appointment not found` |
 | F8-02 after repair | 7093bb114650416377726f7f8461fedb4a34c820 | cmd: python -m pytest directory: project | 3 failures (0 relevant to F8-02): Previous failed tests were fixed. |
-| Full suite after both repairs, before refactor | [complete] | [complete] | [complete] |
+| Full suite after both repairs, before refactor | 18f0173e614a76da644ebf57e02b8d012b368d2d | python -m pytest -q in project/ | ......................................                                          [100%]
+38 passed in 0.07s |
 
-Explain how the assertions detect each relevant incorrect result and protect previous behaviour: [complete]
-Unrelated failures investigated / resolution: [complete or not applicable with reason]
+Explain how the assertions detect each relevant incorrect result and protect previous behaviour: The tests assert the requires outcomes from the requirements, not the faulty behaviour. For F8-01 they expect a same practitioner comflict to be rejected and a different practitioner to be allowed. For F8-02 they expect a cancelled appointment to be retained, found and listed, and repeated canceation to be rejected. A wrong result fails an assertion, and the rest of the suite passing shows earlier behaviour was kept. 
+Unrelated failures investigated / resolution: No unrelated failures investigated. After both repairs the full suite passed with no failures, so there were no other failures to investigate. 
 
 ## H. Refactoring decision and before/after verification
 
-Smell and exact location: [complete]
-Small proposed structural change / why justified: [complete before editing]
-External behaviour to preserve / relevant tests: [complete]
+Smell and exact location: Duplicated code in project/smartcare/services.py, AppointmentService.cancel_appointment repeats the LookupError that is already in AppointmentService.find_appointment. 
+Small proposed structural change / why justified: This removes duplication so that the check lives in one place. It is a structural change that doesn't fix any defect and adds no feature. 
+External behaviour to preserve / relevant tests: cancel_appointment must still return the same stored object with CANCELLED status. Must raise LookupError('Appointment not found') for an unknown ID. Must raise ValueError for an invalid transition without changing state, and keep the appointment in the store (FR-06/07, BR-07, AC-05.2), Relevant tests: The chancellation and retained history tests in tests/test_services.py and tests/test_regressions.py
 Before result: see G, full passing suite.
-Actual change / diff / separate refactor SHA: [complete]
-Focused and full after-refactor commands / working directory / results / evidence: [complete]
-Result — accepted, revised or rejected / reason / behaviour-preservation conclusion: [complete]
+Actual change / diff / separate refactor SHA: In project/smartcare/services.py, cancel_appointment now calls 'self.find_appointment(appointment_id)' instead of repeating the lookup check. (3 lines replaced by 1). Commit 018f51595f585c20f673b2174b504c9eece8c880
+Focused and full after-refactor commands / working directory / results / evidence: python -m pytest tests/test_services.py -k "cancel" and python -m pytest -q, both in project/. ......................................                                          [100%]
+38 passed in 0.06s
+Result — accepted, revised or rejected / reason / behaviour-preservation conclusion: Accepted. The "appointment not found" rule now lives in one place. All functions remain the same and all tests passed. 
 
 ## I. Git, human review and integration
 
-Issues for both defects / refactor scope and owners: [complete]
+Issues for both defects / refactor scope and owners: Issues F8-01 and F8-02 / Repair only. Both issues are owned by chara3kki (charatwukki's different account [Chars])
 Branch / prepared, repair and refactor checkpoints: [link B/C/D/H]
-PR link and another member's reviewer identity: [complete]
+PR link and another member's reviewer identity: 
 Key human feedback, difference from Copilot findings and response/outcome: [complete]
 Actual review approval / merge evidence: [complete]
 Integrated code SHA and team pull/retest command / working directory / result: [complete]
@@ -301,9 +305,11 @@ Each member's substantive contribution and artefact: [complete]
 
 ## J. Required reflections
 
-1. Which Copilot diagnosis appeared convincing but lacked evidence? [complete; report honestly if none and discuss the least-supported real suggestion]
-2. What evidence changed your group's view? [complete]
-3. How did regression tests protect the refactoring? [complete]
+1. Which Copilot diagnosis appeared convincing but lacked evidence? Suggestion 2 was the least supported. It said book_appointment might pass the wrong practitioner ID to the conflict check, which sounded paulsible because wrong arguments are a common cause of a reversed result. Bout Copilot only said the service "appears" consistent, and it gave no evidence. When I read services.py, the call passes practitioner.practitioner_id and the booking datetime, and the prepared commit changed only data_store.py. So I rejected it was wrong. 
+
+2. What evidence changed your group's view? When checking the copilot suggestions. Reading services.py showed service passed the correct practitioner ID, but copilot suggested that something was wrong with it. This allowed us to reject suggestion 2 with evidence. Looking back, we learned that a plausible explanation is not a diagnosis until we have seen the line of code or run the check ourselves. 
+
+3. How did regression tests protect the refactoring? The suite was fully passing before the refactor, so any new failure would have come from the change itself. The tets check waht the code does and not how it is written, so they showed behaviour stayed the same while the structure changed. The regression tests caught my first attempt taht failed because of a mistyped attribute name, and the suite passed again once I fixed it
 
 ## K. Ten formative questions
 
