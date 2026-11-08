@@ -269,8 +269,8 @@ Final human conclusion and comparison with initial hypothesis: Evidence from dee
 
 | Checkpoint | Code SHA or precise diff | Command and working directory | Actual result and artefact reference |
 |---|---|---|---|
-| F8-01 before repair | dc66e5633e6c32453e46b24999270e2c02cfa137 | [complete] |
-| F8-01 after repair | [complete] | [complete] | [complete] |
+| F8-01 before repair | dc66e5633e6c32453e46b24999270e2c02cfa137 | python -m pytest tests/test_services.py -k "practitioner" in project/ | Artefact file in stage08 folder 092b434a0ccc54949bddfd1529e3707c8ad9177f |
+| F8-01 after repair | 18f0173e614a76da644ebf57e02b8d012b368d2d | python -m pytest tests/test_services.py -k "practitioner" in project/ | Artefact File in stage08 folder dd93f02b4cfac30ee989487b2b17875396d85195 |
 | F8-02 before repair | d61d05d757f82622a2c199829e9518e7c3ca0bab | cmd: python -m pytest directory: project | 5 failures (2 relevant to F8-02): `FAILED tests/test_services py::test_cancelled_appointment_is_retained_and_listed - LookupError: Appointment not found` and `FAILED tests/test_services.py::test_repeated_cancellation_via_service_is_rejected - LookupError: Appointment not found` |
 | F8-02 after repair | 7093bb114650416377726f7f8461fedb4a34c820 | cmd: python -m pytest directory: project | 3 failures (0 relevant to F8-02): Previous failed tests were fixed. |
 | Full suite after both repairs, before refactor | [complete] | [complete] | [complete] |
