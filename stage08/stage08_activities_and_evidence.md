@@ -295,13 +295,13 @@ Result — accepted, revised or rejected / reason / behaviour-preservation concl
 ## I. Git, human review and integration
 
 Issues for both defects / refactor scope and owners: Issues F8-01 and F8-02 / Repair only. Both issues are owned by chara3kki (charatwukki's different account [Chars])
-Branch / prepared, repair and refactor checkpoints: [link B/C/D/H]
-PR link and another member's reviewer identity: 
-Key human feedback, difference from Copilot findings and response/outcome: [complete]
-Actual review approval / merge evidence: [complete]
-Integrated code SHA and team pull/retest command / working directory / result: [complete]
+Branch / prepared, repair and refactor checkpoints: Branch: https://github.com/linhvantran/st1-assignment-3/tree/debug/stage08
+PR link and another member's reviewer identity: https://github.com/linhvantran/st1-assignment-3/pull/15 Reviewer: CrowdedGolf
+Key human feedback, difference from Copilot findings and response/outcome: Some of Copilot's findings were easily disproved by a quick look at the code. We rejected those suggestions but took into account the ones that had some evidence of it being correct.
+Actual review approval / merge evidence: https://github.com/linhvantran/st1-assignment-3/pull/15
+Integrated code SHA and team pull/retest command / working directory / result: 8afc0166acf3610ced7521d2ff3eacda38c3ebd8
 Evidence-only later SHA / explanation if different: [complete or not applicable]
-Each member's substantive contribution and artefact: [complete]
+Each member's substantive contribution and artefact: charatwukki: Section B, F8-01 related questions, and reflection. CrowdedGolf: Section A and F8-02 related sections.
 
 ## J. Required reflections
 

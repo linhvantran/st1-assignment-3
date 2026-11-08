@@ -106,8 +106,8 @@ Create at least two focused issues. Add a linked practitioner-lookup issue or an
 
 | Issue link                                                 | Requirement | Owner                   | Acceptance criteria or precise link                                 | Status |
 |------------------------------------------------------------|-|-------------------------|---------------------------------------------------------------------|--------|
-| (https://github.com/linhvantran/st1-assignment-3/issues/1) | FR-02 Patient Search (PatientService.find_patient), plus practitioner lookup if you cover it here | Van Tran (@linhvantran) | Returns the same stored patient for a registered ID; raises LookupError for an unknown ID and ValueError for a blank or invalid ID; a lookup changes no stored data. | Open   |
-| (https://github.com/linhvantran/st1-assignment-3/issues/2)                                                  | FR-06 Appointment Cancellation with FR-07 retained history (AppointmentService.cancel_appointment)| Van Tran (@linhvantran) | A SCHEDULED appointment becomes CANCELLED and the same stored object is returned and retained; unknown ID raises LookupError, blank or invalid ID raises ValueError, and repeated or COMPLETED cancellation raises ValueError with the status unchanged.                                                      | Open   |
+| (https://github.com/linhvantran/st1-assignment-3/issues/1) | FR-02 Patient Search (PatientService.find_patient), plus practitioner lookup if you cover it here | Van Tran (@linhvantran) | Returns the same stored patient for a registered ID; raises LookupError for an unknown ID and ValueError for a blank or invalid ID; a lookup changes no stored data. | Closed   |
+| (https://github.com/linhvantran/st1-assignment-3/issues/2)                                                  | FR-06 Appointment Cancellation with FR-07 retained history (AppointmentService.cancel_appointment)| Van Tran (@linhvantran) | A SCHEDULED appointment becomes CANCELLED and the same stored object is returned and retained; unknown ID raises LookupError, blank or invalid ID raises ValueError, and repeated or COMPLETED cancellation raises ValueError with the status unchanged.                                                      | Closed   |
 
 ## G Pull request evidence
 
@@ -187,6 +187,15 @@ Repeat per member. Include only categories that describe actual work; write not 
 - Design and responsibility discussion: Not applicable. I didn't design anything
 - Debugging or integration: Diagnosed two test failures as test defects, not product defects, and fixed them. ![Failure](<Screenshot 2026-11-04 170729.png>)![Success](<Screenshot 2026-11-04 170848.png>)
 - Documentation or team support: Recorded the Stage 6 baseline of 4 passed, 0 failed, from tests/test_data_store.py. Can be seen in the screenshot above. If I was supposed to have 8 tests then I probably did this wrong, but at least you know I know how to test now. 
+
+- Member: Thomas [CrowdedGolf] 
+- Implementation: I added the patient and practitioner lookup functions to satisfy the requirements of https://github.com/linhvantran/st1-assignment-3/issues/1
+- Testing: I made sure that this solution passed the pytest cases.
+- Review: Did not review anything this week.
+- Issue refinement: Didn't write any issues. I just worked on the patient and practitioner lookup functions.
+- Design and responsibility discussion: I designed the practitioner and patient lookup functions. There was some discussion around the requirements when the issue was being created.
+- Debugging or integration: Integrated patient and practitioner lookup so they now complete their required functions instead of raising a not implemented error.
+- Documentation or team support: I added a couple code comments to my work in the hopes that it makes the code easier to understand.
 
 ## K Exit question
 
