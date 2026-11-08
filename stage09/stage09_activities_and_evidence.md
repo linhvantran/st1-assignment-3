@@ -12,12 +12,12 @@ Stage 8 integrated SHA, command, working directory and actual result: <!-- compl
 
 | Information | Required session/domain or transient state? | Requirement or reason |
 |---|---|---|
-| Patient identity | | |
-| Appointment history | | |
-| Temporary menu choice | | |
-| Practitioner specialty | | |
-| Debug print output | | |
-| Appointment status | | |
+| Patient identity | Required | A valid patient ID value is required for most of the functions to link to the correct patient. |
+| Appointment history | Required | FR-07 requires history to be retained. |
+| Temporary menu choice | Transient / Debug | This is only a temporary state as a user will change their menu choice. |
+| Practitioner specialty | Required | This is a required part of the Practitioner element. |
+| Debug print output | Transient / Debug | Print outputs with debug information are not needed for the final product and are only used for testing. |
+| Appointment status | Required | Appointment status is a required part of the appointment class so we can know if an appointment is scheduled, cancelled, or completed. |
 
 What is intentionally lost on exit? <!-- response -->
 
@@ -27,10 +27,10 @@ Plan before AI. This replaces schema/key design; no database tables are required
 
 | Function or component | Explicit inputs and types | Outputs | Responsibility and validation | Domain source / existing constraint |
 |---|---|---|---|---|
-| appointment_sort_key | | | | |
-| select_appointments | | | | |
-| Service listing | | | | |
-| Console | | | | |
+| appointment_sort_key | Appointment: tuple | Elements arranged as specified in the key. Type: tuple | Provide a key to order appointment so datetime or ID is the first element based off what the appointments need to be sorted by. Validated by checking that an appointment put through this key retains all the same data but with datetime as the first element. | |
+| select_appointments | appointments: list, practitioner_id: str, status: enum | The selected appointments. Type: list | Retrieve the correct appointment objects from datastore and return them as a list. Verified by checking retrieved objects against expected values from datastore. | |
+| AppointmentService.list_practitioner_appointments | practitioner_id: str, status: enum | List of practitioners appointmetns. | Collect all appointments a specific practitioner is assigned to and return it as a list. Verified by checking that the returned list contains all appointments assigned to that practitioner. | |
+| Console | user_input: str, AppiontmentService: class, PractitionerService: class, and PatientService: class | Prints a TUI that displays various options the user can interact with. | Prompt, parse, call services, display results and recover from expected input errors. Validated by checking that all the function of the TUI properly call the connected functions. | |
 
 Relate patient ID/name, practitioner ID/name/specialty, and appointment ID/actual participants/date_time/status to the existing contracts: <!-- response -->
 
@@ -38,14 +38,15 @@ Relate patient ID/name, practitioner ID/name/specialty, and appointment ID/actua
 
 | Conceptual case | Violation | Correct boundary and reason |
 |---|---|---|
-| Appointment.cancel reads input | | |
-| Service prints/reads the menu | | |
-| Query sorts its source in place | | |
-| Store prints Appointment saved | | |
+| Appointment.cancel reads input | `appointment.cancel()` should only be cancelling the appointment. A confirmation should not be within the cancel function itself. | `appointment.cancel()` instantly cancels the appointment when called. The confirmation message is moved to happen within another function (likely in console) before the code actually runs the cancel function. |
+| Service prints/reads the menu | The `AppointmentService` class is only responsible for appointment data. It should not be printing a console menu or reading a console command as those tasks are for `console.py` | The console calls `AppointmentService` to provide the appointment data to the console so it can print the relevant menu with it. The console will also call the `AppointmentService` if the command read requires AppointmentService to be called. |
+| Query sorts its source in place | `select_appointments` should only be selecting some appointments and returning a list of those selected appointments. It should not be calling a sort function. | `select_appointment` retrieves specific appointments with the appointments list retrieved being used in a separate sort function. |
+| Store prints Appointment saved | The datastore itself should return the saved appointment object itself. It should not just return ‘Appointment saved’ | The datastore returns the appointment object and another function (potentially within console) prints ‘Appointment Saved’ to the UI when a appointment is saved correctly. |
 
 ### A4 Sorting comparison
 
-For `appointments.sort(key=appointment_sort_key)` and `result = sorted(appointments, key=appointment_sort_key)`, predict source order, return value and result identity. Give a meaningful mutation check: <!-- response -->
+For `appointments.sort(key=appointment_sort_key)` and `result = sorted(appointments, key=appointment_sort_key)`, predict source order, return value and result identity. Give a meaningful mutation check:
+The first bit of code will change the source order as it is modifying the original list while the second code will not because it creates a new list. The first will not return anything but the original list would have been modified per the sorting key. The second line of code will return the sorted list as a new list “result” while retaining the original “appointments” list. Assertion: Check that the values within an element parsed through one of these key functions matches are the same as the original element but in a different order.
 
 Score-example prediction and explanation of passing the named key: <!-- response -->
 
