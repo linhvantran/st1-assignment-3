@@ -201,11 +201,34 @@ Member and saved sequence/time or commit showing this preceded consultation: Tho
 Use the full handout prompt separately for BOTH defects, after E. Keep each actual prompt or accessible reference; include observed behaviour, expected behaviour, reproduction, failing test, human hypothesis, relevant code, three ranked causes and discriminating checks, with the no-rewrite/no-invented-requirements constraints.
 
 ### F8-01 Copilot review
-Actual prompt / output reference and member: [complete]
-1. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: [complete]
-2. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: [complete]
-3. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: [complete]
-Final human conclusion and comparison with initial hypothesis: [complete]
+Actual prompt / output reference and member: "Observed behaviour: Booking a second SCHEDULED appointment for the same practitioner at the same datetime is not rejected. A different practitioner at that time is wrongly rejected with "Practitioner already has a SCHEDULED appointment at this time".
+Expected behaviour: Same-practitioner conflicts raise ValueError (FR-05 / AC-04.1); a different practitioner at the same time is allowed (AC-04.2).
+Steps to reproduce: <your reproduction steps from C>
+Failing test: tests/test_services.py::test_same_practitioner_same_time_conflict_is_rejected - Failed: DID NOT RAISE <class 'ValueError'>
+My hypothesis: The practitioner/time conflict check compares the wrong thing and matches different practitioners instead of the same one.
+
+Task:
+Rank the three most likely causes. For each, identify
+the evidence I should inspect to distinguish it from
+the other possible causes.
+Do not rewrite the entire application.
+Do not invent requirements.
+Treat all suggested explanations as hypotheses.
+
+Information is in the @linhvantran/st1-assignment-3 repo
+
+Branch: debug/stage08, SHA: dc66e5633e6c32453e46b24999270e2c02cfa137"
+
+Output reference: https://github.com/copilot/share/4a7d520a-0ba0-8c64-a110-744fe42048e6
+
+Member: Chars (@charatwukki) 
+
+  1. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: The practitioner-ID comparison in has_practitioner_conflict is inverted (!= instead of ==), which would flag different practitioners and miss the same one. / git diff shows 'practitioner_id == practitioner_id' changed to '!= practitioner_id'; tests: 2 failed, 1 passed (same practitioner not rejected, different practitioner rejected). / Correct ? Accept: the line and the reversed behaviour both confirm it.
+
+2. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: book_appointment passes an unexpected practitioner ID to the conflict check. / Read the calls has_practitioner_conflict(practitioner.practitioner_id, date_time), so it passes the looked-up practitioner's ID and the booking datetime. dc66e56 changed only data_store.py, so the service is unchanged from Stage 7. Verdict: Wrong. Decision: Reject. The service passes the correct arguments, and the fault is the '!=" in the store's practitioenr comparison. 
+
+3. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: The datetime or status condition selects the wrong stored appointment. / Compared the datetime and status conditions before and after in git diff fb8f1c4 dc66e56, and printed AppointmentStatus.SCHEDULED.value. / The datetime condition is unchanged. The status check changed from 'is AppointmentStatus.SCHEDULED' to '.value == "scheduled"', and AppointmentStatus.SCHEDULED.value is 'scheduled', so it still selects only scheduled appointments. The reversed behaviour in both tests comes from the practitioner comparison. Verdict: Partly correct (the status line was changed, but it is not the cause). Decidsion: Modify. Not the cause of F8-01; leave unchanged in the repair, and note the magic string as a possible refactor smell. 
+Final human conclusion and comparison with initial hypothesis: The root cause is in project/smartcare/data_store.py, has_practitioner_conflict. The practitioner comparison was changed from '==' to '!=', so only other practitioners' appointments count as conflicts. That reverses the reule in FR-05 / AC-04.1 and AC-04.2. This matches my initial hypothesis, which was that the check matches different practitioners instead of the same one. This is evident when checking the diff between fb8f1c4 and dc66e56 [might be cheating but this was literally the easiest way] and the reserved results of the two practitioner rests. Copilot suggestion 1 is correct and is the cause. Copilot suggestion 2 is wrong, because services.py passes the correct ID. Copilot suggestion 3 was partly correct as the status check was rewritten but still selects schedules appointments, so it is not the cause. 
 
 ### F8-02 Copilot review
 Actual prompt / output reference and member:
