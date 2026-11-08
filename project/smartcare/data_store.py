@@ -106,7 +106,7 @@ class SmartCareDataStore:
     ) -> bool:
         for appointment in self.list_appointments():
             if (appointment.appointment_id != exclude_appointment_id
-                    and appointment.practitioner.practitioner_id != practitioner_id
+                    and appointment.practitioner.practitioner_id == practitioner_id
                     and appointment.date_time == date_time
                     and appointment.status.value == "scheduled"):
                 return True
