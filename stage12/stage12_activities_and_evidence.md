@@ -2,7 +2,7 @@
 
 BLANK student response template. Supplied from the beginning in stage12/ in your EXISTING repository; complete it only when you reach Stage 12 after the previous applicable stage is integrated, verified and recorded; preserve project/, tests, earlier records and Git history. UG/common and PG/extended scope must be explicit. Use concise results and versioned links, not copied logs or source. No staff answers or fabricated approvals.
 
-Group/tutorial: [response]
+Group/tutorial: [Mon 9:30-11:30 Group 1]
 Members and UG/PG applicability: [response]
 
 
@@ -24,18 +24,15 @@ Tutorial activity 2 and actual readiness matrix. Add exact requirement/acceptanc
 
 | Release claim / requirement / scope | Evidence | Location/link and SHA | Reviewer | Sufficient? | Gap/action |
 |---|---|---|---|---|---|
-| Cancellation history works | [response] | [response] | [response] | [response] | [response] |
-| Architecture responsibilities are appropriate | [response] | [response] | [response] | [response] | [response] |
-| Rescheduling is safe — PG only | [response] | [response] | [response] | [response] | [response] |
-| AI use is responsible — common recheck / PG assurance | [response] | [response] | [response] | [response] | [response] |
-| System is maintainable | [response] | [response] | [response] | [response] | [response] |
-| FR-01–03 register/find and validation | [response] | [response] | [response] | [response] | [response] |
-| FR-04–05 booking/conflict rules | [response] | [response] | [response] | [response] | [response] |
-| FR-06–08 cancellation/history/find | [response] | [response] | [response] | [response] | [response] |
-| FR-09 and QRY/FP listing/filter/order/purity | [response] | [response] | [response] | [response] | [response] |
-| UI full console sequence and error recovery | [response] | [response] | [response] | [response] | [response] |
-| Session-only scope / FR-10 retired | [response] | [response] | [response] | [response] | [response] |
-| PG RES and assurance integration | [response] | [response] | [response] | [response] | [response] |
+| Cancellation history works | pytests that check for retained history post cancellation pass. | tests starting on lines 125, 135 in `test_services.py` pass | CrowdedGolf | Yes, all testing cases confirm that the cancelled appointment is retained. | None |
+| Architecture responsibilities are appropriate | Each part of the architecture plays a key and destinct role. For example, `console.py` calls the service functions inside `services.py` which then pull data in and out of the datastore through `data_store.py` as required. | function starting line 142 in `console.py` calls a service once the input handling is done. | CrowdedGolf | Yes, each section of the code architecture plays a distinct role wihtout any responsiblity overlap. | None |
+| AI use is responsible — common recheck / PG assurance | AI only used in the sections specified and in complience with the guidelines. | Section H stage 6, Section H stage 7, Section F stage 8, and Section E: stage 9 | CrowdedGolf | All evidence recorded within these md files supports that AI was used appropriately. | None |
+| System is maintainable | The system follows object oriented principles with logical function names and responsibilities. | `test_services.py`, `console.py` | CrowdedGolf | Yes, our following these principles makes it easier to maintain. But there are not many code comments. | Lack of code comments. Improve documentation with a futre revision. |
+| FR-01–03 register/find and validation | Tests for finding and registering both patients and practitioners pass. | tests starting on lines 30, 37, 47, 53, and 63 in `test_services.py` pass | CrowdedGolf | Yes, the tests confirm that patient and practitioner data can successfully be created and looked up. | None |
+| FR-04–05 booking/conflict rules | relevant pytests pass to show that valid bookings are successfully created and creating a booking for the same practitioner and time as an existing SCHEDULED booking is cancelled. | tests starting on lines 71, 83, 94 and 104 in `test_services.py` pass | CrowdedGolf | Yes, these tests have been designed to test for possible failures to prove that the appointment booking functions are working as intended if it passes. | None |
+| FR-06–08 cancellation/history/find | relevant pytests pass to show that only scheduled appointments can be cancelled and the same appointment object with CANCELLED status is retained in history. | Tests starting on lines 125 and 135 in `test_services.py` pass | CrowdedGolf | Yes, these tests have checked the program to make sure that CANCELLED appointments are retained in the datastore with the CANCELLED status | None |
+| FR-09 and QRY/FP listing/filter/order/purity | Relevant pytests pass to show that the required practitioners appointments are returned, results are sorted using the working key, and query, filter, and ordering guidelines are followed. | tests in `test_queries.py` pass. | CrowdedGolf | Yes, the tests have passed. The tests have been formulated to check and make sure that all aspects of the queries are functioning as expected | None |
+| UI full console sequence and error recovery | Testing of various usecases in the console does not produce any unexpected behaviour. | `console.py` | CrowdedGolf | Yes, no issues were found in testing of the console. | None |
 
 
 ## C Full regression results
