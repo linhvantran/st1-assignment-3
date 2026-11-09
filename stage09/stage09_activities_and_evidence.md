@@ -124,16 +124,16 @@ Responsibility check: explain how domain invariants, shared-store collections, s
 
 ## G. Ten formative answers
 
-1. What makes select_appointments pure, and what side effect breaks purity? <!-- response -->
-2. Which explicit inputs are needed, and why avoid a global store? <!-- response -->
-3. How can a new list reuse Appointment objects safely? <!-- response -->
-4. Why use a named key, and what breaks equal-time ties? <!-- response -->
-5. How do default and explicit status filters differ? <!-- response -->
-6. How do empty, unknown practitioner and invalid filter cases differ? <!-- response -->
-7. Which console errors recover, and how is unchanged state checked? <!-- response -->
-8. What is data integrity for registered participants, conflicts and history? <!-- response -->
-9. What is Copilot's review role, and who verifies findings? <!-- response -->
-10. How do pure functions and OOP responsibilities work together? <!-- response -->
+1. What makes select_appointments pure, and what side effect breaks purity? It only uses what you pass in (that being the appointmetns, practitioner ID and status) and gives back a new list, with no hidden state or I/O. Sorting the original list in place, printing, or reaching into a global store would break that. 
+2. Which explicit inputs are needed, and why avoid a global store? The appointmentslist, the practitioner ID and the status filter. A global store means the result depends on a hidden state, so the same arguments could give different results and it's much harder to test with small synthetic data. 
+3. How can a new list reuse Appointment objects safely? The new list can just hold references to the same Appointment objects with no copying needed. That's fine as long as the query only reads them and never modifies them. Changing the new list doesn't touch the source list either. 
+4. Why use a named key, and what breaks equal-time ties? A named key gives one reusable rule you can test directly. If two appointments share a date/time, the appointment ID breaks the tie, so the key is (date_time, appointment_id)
+5. How do default and explicit status filters differ? No status (None) returns every status, including CANCELLED and COMPLETED, so history stays visible. An explicit AppointmentStatus returns only that status. The console converts the typed tesxt to the enum, while direct callers must pass the enum or None. 
+6. How do empty, unknown practitioner and invalid filter cases differ? A known practitioner wiht no matches gets an empty list and no error. An unregistered practitioner ID raises LookupError, and a blank or invalid ID raises ValueError. a non enum status like the string 'scheduled' also raises ValueError, because it's bad input and not "not matches". 
+7. Which console errors recover, and how is unchanged state checked? Expected ValueError and LookupError cases, like an unknown menu choice, bad or duplicate IDs, a malformed date, an invalid status or a repeated cancellation. The console shows a message and returns to the menu, without catching and ignoring every Exception. To check state, look up or list the records before and after the failure and confirm the next action still works. 
+8. What is data integrity for registered participants, conflicts and history? Appointment only link to real registered patients and practitioenrs, same practitioenr SCHEDULED conflicts get rejected, and cancelled appointments stay in the store. A rejected action leaves the data unchanged. 
+9. What is Copilot's review role, and who verifies findings? It suggests things to check, but its findings are only hypotheses. The team verifies each one against the code, requirements and tests, then accepts, modifies or rejects it, and another member does the human review. 
+10. How do pure functions and OOP responsibilities work together? The pure queries select and sort what they're given. Appointment owns cancellation, the store holds the collections and the services coordinate and validate. The console only handles input and output and calls the services, so the domain rules stay out of it. 
 
 ## H. Review, completion and common handover
 
