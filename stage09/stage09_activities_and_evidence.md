@@ -2,8 +2,8 @@
 
 Common UG and PG record. All Assignment 3 stage materials are provided from the beginning. Complete this stage only after the previous applicable stage has been integrated, verified and recorded. Use this supplied record in stage09/ in your EXISTING repository. Preserve project/, all earlier tests, records and responses. Do not download another starter or copy staff solutions. Use the Stage 9 handout and Overview/revision 2 baseline. Keep responses concise and link accessible artefacts; do not paste entire logs or private peer ratings.
 
-Group: <!-- complete -->
-Members and responsibilities: <!-- complete -->
+Group: [Mon 9:30-11:30 Group 1]
+Members and responsibilities: CrowdedGolf [Thomas]: Sections A and B.
 Stage 8 integrated SHA, command, working directory and actual result: <!-- complete -->
 
 ## A. Tutorial activities
@@ -28,10 +28,10 @@ Plan before AI. This replaces schema/key design; no database tables are required
 
 | Function or component | Explicit inputs and types | Outputs | Responsibility and validation | Domain source / existing constraint |
 |---|---|---|---|---|
-| appointment_sort_key | Appointment: tuple | Elements arranged as specified in the key. Type: tuple | Provide a key to order appointment so datetime or ID is the first element based off what the appointments need to be sorted by. Validated by checking that an appointment put through this key retains all the same data but with datetime as the first element. | [complete] |
-| select_appointments | appointments: list, practitioner_id: str, status: enum | The selected appointments. Type: list | Retrieve the correct appointment objects from datastore and return them as a list. Verified by checking retrieved objects against expected values from datastore. | [complete] |
-| AppointmentService.list_practitioner_appointments | practitioner_id: str, status: enum | List of practitioners appointmetns. | Collect all appointments a specific practitioner is assigned to and return it as a list. Verified by checking that the returned list contains all appointments assigned to that practitioner. | [complete] |
-| Console | user_input: str, AppiontmentService: class, PractitionerService: class, and PatientService: class | Prints a TUI that displays various options the user can interact with. | Prompt, parse, call services, display results and recover from expected input errors. Validated by checking that all the function of the TUI properly call the connected functions. | [complete] |
+| appointment_sort_key | Appointment: tuple | Elements arranged as specified in the key. Type: tuple | Provide a key to order appointment so datetime or ID is the first element based off what the appointments need to be sorted by. Validated by checking that an appointment put through this key retains all the same data but with datetime as the first element. | `Appointment` |
+| select_appointments | appointments: list, practitioner_id: str, status: enum | The selected appointments. Type: list | Retrieve the correct appointment objects from datastore and return them as a list. Verified by checking retrieved objects against expected values from datastore. | `Appointment` |
+| AppointmentService.list_practitioner_appointments | practitioner_id: str, status: enum | List of practitioners appointmetns. | Collect all appointments a specific practitioner is assigned to and return it as a list. Verified by checking that the returned list contains all appointments assigned to that practitioner. | `Practitioner` |
+| Console | user_input: str, AppiontmentService: class, PractitionerService: class, and PatientService: class | Prints a TUI that displays various options the user can interact with. | Prompt, parse, call services, display results and recover from expected input errors. Validated by checking that all the function of the TUI properly call the connected functions. | `Appointment` |
 
 Relate patient ID/name, practitioner ID/name/specialty, and appointment ID/actual participants/date_time/status to the existing contracts:
 - `ID/name` releated to `Patient`
