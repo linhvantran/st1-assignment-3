@@ -3,7 +3,7 @@
 Common UG and PG record. All Assignment 3 stage materials are provided from the beginning. Complete this stage only after the previous applicable stage has been integrated, verified and recorded. Use this supplied record in stage09/ in your EXISTING repository. Preserve project/, all earlier tests, records and responses. Do not download another starter or copy staff solutions. Use the Stage 9 handout and Overview/revision 2 baseline. Keep responses concise and link accessible artefacts; do not paste entire logs or private peer ratings.
 
 Group: [Mon 9:30-11:30 Group 1]
-Members and responsibilities: CrowdedGolf [Thomas]: Sections A and B. 
+Members and responsibilities: CrowdedGolf [Thomas]: Sections A and B. linhvantran [Van Tran]:the sort key (#16), select_appointments (#17) with their tests, Section C and F.
 
 charatwukki and chara3kki [Chars]: Created test_workflows.py, Created the issues, Filled out Copilot information and suggestions, Filled out the formative questions. 
 
