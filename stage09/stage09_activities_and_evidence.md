@@ -88,14 +88,18 @@ Cover QRY-01–04, FP-01–03, UI-01–02 and relevant FR-01–09. Explain empty
 
 ## C. Implementation and query verification
 
-| Requirement / test ID | Code location | Case and meaningful assertion | Actual result | Evidence link |
-|---|---|---|---|---|
-| | | | | |
+| Requirement / test ID | Code location | Case and meaningful assertion | Actual result | Evidence link                                                                                           |
+|---|---|---|---|---------------------------------------------------------------------------------------------------------|
+| QRY-03, FP-03 / Q-01 | `project/smartcare/queries.py::appointment_sort_key`; `project/tests/test_queries.py::test_sort_key_returns_date_time_and_appointment_id` | The key returns the date/time and appointment ID for one appointment: `key == (NINE_AM, 'A1')` | Passed. `python -m pytest` from `project/`: 42 passed (38 existing + 4 new) | (https://github.com/linhvantran/st1-assignment-3/pull/20) SHA: 3b968e201f8abe83232736a5954f6941a49a426a |
+| QRY-03 / Q-02 | `project/smartcare/queries.py::appointment_sort_key`; `project/tests/test_queries.py::test_equal_time_appointments_sort_by_appointment_id` | Two appointments at the same time, A2 created before A1, sort as `[a1, a2]`, so the ID breaks the tie | Passed (same run as Q-01) | (https://github.com/linhvantran/st1-assignment-3/pull/20) SHA: 3b968e201f8abe83232736a5954f6941a49a426a                                                                  |
+| FP-03 / Q-03 | `project/smartcare/queries.py::appointment_sort_key`; `project/tests/test_queries.py::test_sort_key_orders_by_time_before_id` | The earlier appointment has the larger ID. `sorted(..., key=appointment_sort_key)` puts it first, so the test fails if the key used ID before time | Passed (same run as Q-01) | (https://github.com/linhvantran/st1-assignment-3/pull/20) SHA: 3b968e201f8abe83232736a5954f6941a49a426a                                                                  |
+| FP-03 / Q-04 | `project/smartcare/queries.py::appointment_sort_key`; `project/tests/test_queries.py::test_sort_key_does_not_change_the_appointment` | After the call, the appointment's ID, date/time and status are unchanged, and `patient` and `practitioner` are the same objects (`is`) | Passed (same run as Q-01) | (https://github.com/linhvantran/st1-assignment-3/pull/20) SHA: 3b968e201f8abe83232736a5954f6941a49a426a                                                                  |
 
-Include practitioner isolation, every enum status/default all, equal-time ID tie-break, named-key reuse, repeated calls, empty/already-sorted fresh lists, unchanged source order/fields, known-empty/unknown/invalid service cases and retained history.
+Rows for `select_appointments` (#17) and `list_practitioner_appointments` (#18) are added once that code is written and tested. They need these cases: practitioner isolation, every enum status and default all, equal-time ID tie-break through the query, named-key reuse, repeated calls, empty and already-sorted inputs returning a fresh list, unchanged source order and fields, known-empty, unknown and invalid service cases, and retained cancelled history.
 
-Purity explanation from code inspection, including absence of hidden state and I/O: <!-- response -->
-What the tests do and do not establish: <!-- response -->
+Purity explanation from code inspection, including absence of hidden state and I/O: `appointment_sort_key` reads `appointment.date_time` and `appointment.appointment_id` and returns a new tuple. It assigns to nothing, uses no module-level or global state, does not call `print` or `input`, and does not touch a data store, so the same appointment always gives the same key. (Extend this once `select_appointments` exists: it also takes its list as an argument and returns a new list.)
+
+What the tests do and do not establish: The four tests show that the key has the right shape and values, that equal-time appointments are ordered by ID, that time is compared before ID, and that the call does not change the appointment's fields or its patient and practitioner objects. They do not prove purity by themselves, because a test cannot show the absence of printing or hidden state, so that comes from reading the code. They also do not cover the other Stage 9 behaviour, such as filtering by practitioner and status or the service validation. Those belong to the tests for #17 and #18.
 
 ## D. Integrated console and workflow evidence
 
