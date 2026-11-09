@@ -72,13 +72,6 @@ Here is a picture:
 - No age, duration, patient conflict or past date rules apply. 
 - No rescheduling or assurance work is part of the common Stage 9 candidate. 
 
-
-
-
-
-
-
-
 ## Complete package and stage sequence
 
 All Assignment 3 ordinary materials are supplied at the beginning: the Overview, Git/GitHub Group Guide, Stage 6–12 handouts, this incomplete SmartCare starter, all seven blank activity/evidence records, and assessment instructions/forms. Stage numbers control the engineering sequence, not document availability.
