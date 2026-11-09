@@ -5,9 +5,10 @@ Common UG and PG record. All Assignment 3 stage materials are provided from the 
 Group: [Mon 9:30-11:30 Group 1]
 Members and responsibilities: CrowdedGolf [Thomas]: Sections A and B. linhvantran [Van Tran]:the sort key (#16), select_appointments (#17) with their tests, Section C and F.
 
-charatwukki and chara3kki [Chars]: Created test_workflows.py, Created the issues, Filled out Copilot information and suggestions, Filled out the formative questions, Created AppointmentService.list_practitioner_appointments in services.py. 
+charatwukki and chara3kki [Chars]: Created test_workflows.py, Created the issues, Filled out Copilot information and suggestions, Filled out the formative questions, Created AppointmentService.list_practitioner_appointments in services.py. Filled out F and H. Created the MD file, run instructions, and scope. 
 
-Stage 8 integrated SHA, command, working directory and actual result: <!-- complete -->
+Stage 8 integrated SHA, command, working directory and actual result: 8afc0166acf3610ced7521d2ff3eacda38c3ebd8, 'python -m pytest -q in project/; ......................................                                             [100%]
+38 passed in 0.11sS
 
 ## A. Tutorial activities
 
