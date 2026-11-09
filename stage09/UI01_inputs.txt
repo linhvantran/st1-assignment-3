@@ -1,0 +1,60 @@
+1
+P1
+Alex Example
+2
+P1
+3
+D1
+Taylor Example
+General practice
+4
+D1
+4
+D1
+3
+D2
+Jordan Example
+Cardiology
+4
+D2
+5
+A1
+P1
+D1
+2026-10-01 09:00
+5
+A-CONFLICT
+P1
+D1
+2026-10-01 09:00
+7
+A-CONFLICT
+5
+A2
+P1
+D2
+2026-10-01 09:00
+8
+D1
+
+6
+A1
+7
+A1
+8
+D1
+
+8
+D1
+scheduled
+5
+A3
+P1
+D1
+2026-10-01 09:00
+8
+D1
+
+0
+
+

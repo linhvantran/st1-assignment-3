@@ -2,8 +2,11 @@
 
 Common UG and PG record. All Assignment 3 stage materials are provided from the beginning. Complete this stage only after the previous applicable stage has been integrated, verified and recorded. Use this supplied record in stage09/ in your EXISTING repository. Preserve project/, all earlier tests, records and responses. Do not download another starter or copy staff solutions. Use the Stage 9 handout and Overview/revision 2 baseline. Keep responses concise and link accessible artefacts; do not paste entire logs or private peer ratings.
 
-Group: <!-- complete -->
-Members and responsibilities: <!-- complete -->
+Group: [Mon 9:30-11:30 Group 1]
+Members and responsibilities: CrowdedGolf [Thomas]: Sections A and B. linhvantran [Van Tran]:the sort key (#16), select_appointments (#17) with their tests, Section C and F.
+
+charatwukki and chara3kki [Chars]: Created test_workflows.py, Created the issues, Filled out Copilot information and suggestions, Filled out the formative questions. 
+
 Stage 8 integrated SHA, command, working directory and actual result: <!-- complete -->
 
 ## A. Tutorial activities
@@ -28,10 +31,10 @@ Plan before AI. This replaces schema/key design; no database tables are required
 
 | Function or component | Explicit inputs and types | Outputs | Responsibility and validation | Domain source / existing constraint |
 |---|---|---|---|---|
-| appointment_sort_key | Appointment: tuple | Elements arranged as specified in the key. Type: tuple | Provide a key to order appointment so datetime or ID is the first element based off what the appointments need to be sorted by. Validated by checking that an appointment put through this key retains all the same data but with datetime as the first element. | [complete] |
-| select_appointments | appointments: list, practitioner_id: str, status: enum | The selected appointments. Type: list | Retrieve the correct appointment objects from datastore and return them as a list. Verified by checking retrieved objects against expected values from datastore. | [complete] |
-| AppointmentService.list_practitioner_appointments | practitioner_id: str, status: enum | List of practitioners appointmetns. | Collect all appointments a specific practitioner is assigned to and return it as a list. Verified by checking that the returned list contains all appointments assigned to that practitioner. | [complete] |
-| Console | user_input: str, AppiontmentService: class, PractitionerService: class, and PatientService: class | Prints a TUI that displays various options the user can interact with. | Prompt, parse, call services, display results and recover from expected input errors. Validated by checking that all the function of the TUI properly call the connected functions. | [complete] |
+| appointment_sort_key | Appointment: tuple | Elements arranged as specified in the key. Type: tuple | Provide a key to order appointment so datetime or ID is the first element based off what the appointments need to be sorted by. Validated by checking that an appointment put through this key retains all the same data but with datetime as the first element. | `Appointment` |
+| select_appointments | appointments: list, practitioner_id: str, status: enum | The selected appointments. Type: list | Retrieve the correct appointment objects from datastore and return them as a list. Verified by checking retrieved objects against expected values from datastore. | `Appointment` |
+| AppointmentService.list_practitioner_appointments | practitioner_id: str, status: enum | List of practitioners appointmetns. | Collect all appointments a specific practitioner is assigned to and return it as a list. Verified by checking that the returned list contains all appointments assigned to that practitioner. | `Practitioner` |
+| Console | user_input: str, AppiontmentService: class, PractitionerService: class, and PatientService: class | Prints a TUI that displays various options the user can interact with. | Prompt, parse, call services, display results and recover from expected input errors. Validated by checking that all the function of the TUI properly call the connected functions. | `Appointment` |
 
 Relate patient ID/name, practitioner ID/name/specialty, and appointment ID/actual participants/date_time/status to the existing contracts:
 - `ID/name` releated to `Patient`
@@ -85,36 +88,42 @@ Cover QRY-01–04, FP-01–03, UI-01–02 and relevant FR-01–09. Explain empty
 
 ## C. Implementation and query verification
 
-| Requirement / test ID | Code location | Case and meaningful assertion | Actual result | Evidence link |
-|---|---|---|---|---|
-| | | | | |
+| Requirement / test ID | Code location | Case and meaningful assertion | Actual result | Evidence link                                                                                           |
+|---|---|---|---|---------------------------------------------------------------------------------------------------------|
+| QRY-03, FP-03 / Q-01 | `project/smartcare/queries.py::appointment_sort_key`; `project/tests/test_queries.py::test_sort_key_returns_date_time_and_appointment_id` | The key returns the date/time and appointment ID for one appointment: `key == (NINE_AM, 'A1')` | Passed. `python -m pytest` from `project/`: 42 passed (38 existing + 4 new) | (https://github.com/linhvantran/st1-assignment-3/pull/20) SHA: 3b968e201f8abe83232736a5954f6941a49a426a |
+| QRY-03 / Q-02 | `project/smartcare/queries.py::appointment_sort_key`; `project/tests/test_queries.py::test_equal_time_appointments_sort_by_appointment_id` | Two appointments at the same time, A2 created before A1, sort as `[a1, a2]`, so the ID breaks the tie | Passed (same run as Q-01) | (https://github.com/linhvantran/st1-assignment-3/pull/20) SHA: 3b968e201f8abe83232736a5954f6941a49a426a                                                                  |
+| FP-03 / Q-03 | `project/smartcare/queries.py::appointment_sort_key`; `project/tests/test_queries.py::test_sort_key_orders_by_time_before_id` | The earlier appointment has the larger ID. `sorted(..., key=appointment_sort_key)` puts it first, so the test fails if the key used ID before time | Passed (same run as Q-01) | (https://github.com/linhvantran/st1-assignment-3/pull/20) SHA: 3b968e201f8abe83232736a5954f6941a49a426a                                                                  |
+| FP-03 / Q-04 | `project/smartcare/queries.py::appointment_sort_key`; `project/tests/test_queries.py::test_sort_key_does_not_change_the_appointment` | After the call, the appointment's ID, date/time and status are unchanged, and `patient` and `practitioner` are the same objects (`is`) | Passed (same run as Q-01) | (https://github.com/linhvantran/st1-assignment-3/pull/20) SHA: 3b968e201f8abe83232736a5954f6941a49a426a                                                                  |
 
-Include practitioner isolation, every enum status/default all, equal-time ID tie-break, named-key reuse, repeated calls, empty/already-sorted fresh lists, unchanged source order/fields, known-empty/unknown/invalid service cases and retained history.
+Rows for `select_appointments` (#17) and `list_practitioner_appointments` (#18) are added once that code is written and tested. They need these cases: practitioner isolation, every enum status and default all, equal-time ID tie-break through the query, named-key reuse, repeated calls, empty and already-sorted inputs returning a fresh list, unchanged source order and fields, known-empty, unknown and invalid service cases, and retained cancelled history.
 
-Purity explanation from code inspection, including absence of hidden state and I/O: <!-- response -->
-What the tests do and do not establish: <!-- response -->
+Purity explanation from code inspection, including absence of hidden state and I/O: `appointment_sort_key` reads `appointment.date_time` and `appointment.appointment_id` and returns a new tuple. It assigns to nothing, uses no module-level or global state, does not call `print` or `input`, and does not touch a data store, so the same appointment always gives the same key. (Extend this once `select_appointments` exists: it also takes its list as an argument and returns a new list.)
+
+What the tests do and do not establish: The four tests show that the key has the right shape and values, that equal-time appointments are ordered by ID, that time is compared before ID, and that the call does not change the appointment's fields or its patient and practitioner objects. They do not prove purity by themselves, because a test cannot show the absence of printing or hidden state, so that comes from reading the code. They also do not cover the other Stage 9 behaviour, such as filtering by practitioner and status or the service validation. Those belong to the tests for #17 and #18.
 
 ## D. Integrated console and workflow evidence
 
 | Scenario / acceptance ID | Reproducible inputs / artefact | Expected result | Observed result and state check | Evidence link |
 |---|---|---|---|---|
-| UI-01 full menu workflow | | | | |
-| UI-02 invalid-input recovery | | | | |
-| Automated service workflow | | | | |
+| UI-01 full menu workflow |Get-Content ..\stage09\UI01_inputs.txt | python -u main.py --interactive 2>&1 | Tee-Object -FilePath ..\stage09\UI01_outputs.txt | Register/find P1, D1, D2, book A1, reject conflict, book A2 with D2, cancel, find, list, book freed slot, exit.  | Verified registrations and lookups correct. A1 booked. A-CONFLICT rejected and flind A-CONFLICT gave "Appointment not found (not stored)> A2 booked for D2 at the same time. Not run: stopped at the first listing, so cancel, retrieval, filters, freed slot and exit were not reached.  | UI01_inputs.txt and UI01_outputs.txt |
+| UI-02 invalid-input recovery | Get-Content ..\stage09\UI02_inputs.txt | python -u main.py --interactive 2>&1 | Tee-Object -FilePath ..\stage09\UI02_outputs.txt | Each rejection prints a message and returns to the menu. Leaves state unchanged, and successful action follows. | Verified all rejections gave a message with no traceback. P1 still Alex Example. A9 and A8 "Appointment not found" after failed bookings. A1 unchanged after the duplicate booking. A1 still cancelled after repeated cancellation. | UI02_inputs.txt and UI02_outputs.txt |
+| Automated service workflow | cd project, then python -m pytest -q tests/test_workflows.py, then python -m pytest -q | Rejections leave state unchanged. Different practitioner allowed, cancellation retained, filters work, and freed slot bookable. | 6 passed, 2 failed in 0.55s. Passing: conflict rejection, duplicate ID/unkonwn participants ID (ID not reserved), different-practitioner booking, cancellation keeps the same object findable, repeated/unknown cancellation, freed slot. State is checked with before/after snapshot() comparisons.| tests/test_workflows.py |
 
 Include registration/find, booking, conflict rejection, different-practitioner booking, cancellation, retrieval, listing/filtering, freed slot and exit; duplicate/unknown/blank IDs, malformed/impossible date, invalid status, unknown choice and repeated cancellation. Identify before/after state and subsequent successful action.
 
 ## E. GitHub Copilot review and human decisions
 
-Human design completed before AI: <!-- reference -->
-Actual prompt/context supplied: <!-- paste or accessible reference -->
-Actual response: <!-- accessible reference -->
+Human design completed before AI: b14a02aa80d34ed27bd5e4ae9a71cbc22dd9081e. This is the SHA before I used AI. 
+Actual prompt/context supplied: https://github.com/copilot/share/ca094108-0aa4-82d4-9900-264aa083409a
+Actual response: https://github.com/copilot/share/ca094108-0aa4-82d4-9900-264aa083409a
 
 | AI finding | Code/test evidence | Severity | Accept/Modify/Reject and reason | Change or no change | Actual verification |
 |---|---|---|---|---|---|
-| | | | | | |
+| Listing test books A1 and A2 for D1 at EIGHT_AM while A2 is still SCHEDULED, causing a same-practitioner conflict | test_practitioner_appointment_listing_filters_orders_and_isolates_results in tests/test_workflows.py | Important | Modify: Cancel A2 before booking A1 so the equal time fixture does not break the conflict rule.  | Reordered the setup. | Test now books all five appointments and fails only at NotImplementError |
 
-Responsibility check: explain how domain invariants, shared-store collections, service coordination, pure queries and console effects remain separate: <!-- response -->
+| snapshot() uses list_patients() and list_practitioners(). | snapshot() helper in tests/test_workflows.py | Optional | Accept: Both methods exist in the store. | No change. | 6 passed, 2 failed in 0.55s. | 
+
+Responsibility check: explain how domain invariants, shared-store collections, service coordination, pure queries and console effects remain separate: Appointment owns its domain rules, including guarded cancellation (a repeated cacnel was rejected with "Only SCHEDULED appointments may be cancelled" and the record stayed cancelled). SmartCareDataStore only holds the in-memory collections and looks up registered patients, practitioners and appointments. The services coordinate registraction, booking, conflict checks, cancellation and validated listing, and they call the queries. queries.py selects the sorts the lists it is given using the named key; it has no input/output, global store, services call or mutation. Console.py only prompts, parses, calls the services, prints, and catches ValueError and LookupError, so no domain rules are duplicated there. In the console runs, rejected requests returned to the menu and the stored records were unchanged. In tests/test_workflows.py, before/after snapshot comparisons passed for conflict, duplicate ID, unknown participant and repeated cancellation cases. 
 
 ## F. Required reflections
 
