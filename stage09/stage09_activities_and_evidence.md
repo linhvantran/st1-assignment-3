@@ -154,9 +154,9 @@ Review responses and Copilot comparison: This was merged after all of the tests 
 Integrated common Stage 9 SHA: 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1 [SHA after merge into main] 
 Full regression command, working directory, actual count/result and evidence: python -m pytest -q in project/ on 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1, ..........................................................                         [100%]
 58 passed in 0.11s [this is the evidence and actual count/result]
-README run instructions and scope/limitations: 
-Unresolved issues and support/action: <!-- comp
-UG common candidate / PG future branch plan: <!-- complete -->
+README run instructions and scope/limitations: https://github.com/linhvantran/st1-assignment-3/blob/main/README.md [this is the group introductions but that is also where i added the instructions]
+Unresolved issues and support/action: None 
+UG common candidate / PG future branch plan: 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1 
 
 - [ ] Query contracts, purity, new lists and named-key ordering verified.
 - [ ] Service empty/unknown/invalid cases and cancellation history verified.
