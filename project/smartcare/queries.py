@@ -24,4 +24,10 @@ def select_appointments(
     Order by date/time then appointment ID using appointment_sort_key.
     Do not mutate the source list/objects or perform input/output.
     """
-    raise NotImplementedError('Stage 9: pure query')
+    selected = [
+        appointment
+        for appointment in appointments
+        if appointment.practitioner.practitioner_id == practitioner_id
+           and (status is None or appointment.status is status)
+    ]
+    return sorted(selected, key=appointment_sort_key)
