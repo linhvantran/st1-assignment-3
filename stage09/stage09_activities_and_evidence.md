@@ -5,7 +5,7 @@ Common UG and PG record. All Assignment 3 stage materials are provided from the 
 Group: [Mon 9:30-11:30 Group 1]
 Members and responsibilities: CrowdedGolf [Thomas]: Sections A and B. 
 
-charatwukki and chara3kki [Chars]: Created test_workflows.py, Created the issues, Filled out Copilot information and suggestions, Filled out the formative questions. 
+charatwukki and chara3kki [Chars]: Created test_workflows.py, Created the issues, Filled out Copilot information and suggestions, Filled out the formative questions, Created AppointmentService.list_practitioner_appointments in services.py. 
 
 Stage 8 integrated SHA, command, working directory and actual result: <!-- complete -->
 
@@ -107,7 +107,7 @@ What the tests do and do not establish: The four tests show that the key has the
 |---|---|---|---|---|
 | UI-01 full menu workflow |Get-Content ..\stage09\UI01_inputs.txt | python -u main.py --interactive 2>&1 | Tee-Object -FilePath ..\stage09\UI01_outputs.txt | Register/find P1, D1, D2, book A1, reject conflict, book A2 with D2, cancel, find, list, book freed slot, exit.  | Verified registrations and lookups correct. A1 booked. A-CONFLICT rejected and flind A-CONFLICT gave "Appointment not found (not stored)> A2 booked for D2 at the same time. Not run: stopped at the first listing, so cancel, retrieval, filters, freed slot and exit were not reached.  | UI01_inputs.txt and UI01_outputs.txt |
 | UI-02 invalid-input recovery | Get-Content ..\stage09\UI02_inputs.txt | python -u main.py --interactive 2>&1 | Tee-Object -FilePath ..\stage09\UI02_outputs.txt | Each rejection prints a message and returns to the menu. Leaves state unchanged, and successful action follows. | Verified all rejections gave a message with no traceback. P1 still Alex Example. A9 and A8 "Appointment not found" after failed bookings. A1 unchanged after the duplicate booking. A1 still cancelled after repeated cancellation. | UI02_inputs.txt and UI02_outputs.txt |
-| Automated service workflow | cd project, then python -m pytest -q tests/test_workflows.py, then python -m pytest -q | Rejections leave state unchanged. Different practitioner allowed, cancellation retained, filters work, and freed slot bookable. | 6 passed, 2 failed in 0.55s. Passing: conflict rejection, duplicate ID/unkonwn participants ID (ID not reserved), different-practitioner booking, cancellation keeps the same object findable, repeated/unknown cancellation, freed slot. State is checked with before/after snapshot() comparisons.| tests/test_workflows.py |
+| Automated service workflow | cd project, then python -m pytest -q tests/test_workflows.py, then python -m pytest -q | Rejections leave state unchanged. Different practitioner allowed, cancellation retained, filters work, and freed slot bookable. | 8 passed in 0.55s. Passing: conflict rejection, duplicate ID/unkonwn participants ID (ID not reserved), different-practitioner booking, cancellation keeps the same object findable, repeated/unknown cancellation, freed slot. State is checked with before/after snapshot() comparisons.| tests/test_workflows.py |
 
 Include registration/find, booking, conflict rejection, different-practitioner booking, cancellation, retrieval, listing/filtering, freed slot and exit; duplicate/unknown/blank IDs, malformed/impossible date, invalid status, unknown choice and repeated cancellation. Identify before/after state and subsequent successful action.
 
@@ -121,15 +121,17 @@ Actual response: https://github.com/copilot/share/ca094108-0aa4-82d4-9900-264aa0
 |---|---|---|---|---|---|
 | Listing test books A1 and A2 for D1 at EIGHT_AM while A2 is still SCHEDULED, causing a same-practitioner conflict | test_practitioner_appointment_listing_filters_orders_and_isolates_results in tests/test_workflows.py | Important | Modify: Cancel A2 before booking A1 so the equal time fixture does not break the conflict rule.  | Reordered the setup. | Test now books all five appointments and fails only at NotImplementError |
 
-| snapshot() uses list_patients() and list_practitioners(). | snapshot() helper in tests/test_workflows.py | Optional | Accept: Both methods exist in the store. | No change. | 6 passed, 2 failed in 0.55s. | 
+| snapshot() uses list_patients() and list_practitioners(). | snapshot() helper in tests/test_workflows.py | Optional | Accept: Both methods exist in the store. | No change. | 8 passed in 0.55s | 
 
 Responsibility check: explain how domain invariants, shared-store collections, service coordination, pure queries and console effects remain separate: Appointment owns its domain rules, including guarded cancellation (a repeated cacnel was rejected with "Only SCHEDULED appointments may be cancelled" and the record stayed cancelled). SmartCareDataStore only holds the in-memory collections and looks up registered patients, practitioners and appointments. The services coordinate registraction, booking, conflict checks, cancellation and validated listing, and they call the queries. queries.py selects the sorts the lists it is given using the named key; it has no input/output, global store, services call or mutation. Console.py only prompts, parses, calls the services, prints, and catches ValueError and LookupError, so no domain rules are duplicated there. In the console runs, rejected requests returned to the menu and the stored records were unchanged. In tests/test_workflows.py, before/after snapshot comparisons passed for conflict, duplicate ID, unknown participant and repeated cancellation cases. 
 
+
+
 ## F. Required reflections
 
-1. Which integration concern was architectural rather than a filtering/sorting detail? <!-- response -->
-2. Which Copilot suggestion did you reject as over-engineering, and why? <!-- response -->
-3. How did you prove cancelled appointments remain retrievable and listable in the same session? <!-- response -->
+1. Which integration concern was architectural rather than a filtering/sorting detail? Deciding where each responsibility lives. The pure querly only selects and sorts what it is given, while the service validates the practitioner. The console only parses input and displays results, and it creates one store and one set of services for the whole session, so data persists between menu choices. Getting that wiring right mattered more than the filtering or sorting itself. 
+2. Which Copilot suggestion did you reject as over-engineering, and why? Both findings in E were accepted or modified, and neither was over-engineering. The 
+3. How did you prove cancelled appointments remain retrievable and listable in the same session? test_cancellation_keeps_the_same_appointment_findable cancels an appointment and checks it is still found with CANCELLED status. The listing test cancels A2, then lists D1 with the default status and confirms the cancelled appointment is still included. A SCHEDULED only list leaves it out, and all 8 workflow tests passed. 
 
 ## G. Ten formative answers
 
@@ -146,12 +148,13 @@ Responsibility check: explain how domain invariants, shared-store collections, s
 
 ## H. Review, completion and common handover
 
-Issues and bounded branches: <!-- links -->
-PR/diff and another-member human reviewer: <!-- actual links/name -->
-Review responses and Copilot comparison: <!-- links -->
-Integrated common Stage 9 SHA: <!-- complete -->
-Full regression command, working directory, actual count/result and evidence: <!-- complete -->
-README run instructions and scope/limitations: <!-- link -->
+Issues and bounded branches: UI-01 and UI02: run_menu in console.py [https://github.com/linhvantran/st1-assignment-3/issues/19], QRY-04: AppointmentService.list_practitioner_appointments in services.py [https://github.com/linhvantran/st1-assignment-3/issues/18], QRY-01, QRY-02, QRY-02, FP-01, FP-02: select_appointments in queries.py [https://github.com/linhvantran/st1-assignment-3/issues/17], QRY-03, FP-03: appointment_sort_key in queries.py [https://github.com/linhvantran/st1-assignment-3/issues/16]. https://github.com/linhvantran/st1-assignment-3/tree/feature/16-sort-key, https://github.com/linhvantran/st1-assignment-3/tree/feature/17-select-appointments
+PR/diff and another-member human reviewer: Merge Stage09 to main https://github.com/linhvantran/st1-assignment-3/pull/22 [reviewed by charatwukki] 
+Review responses and Copilot comparison: This was merged after all of the tests passed so there was nothing to respond to. Copilot assisted in checking over the code and raised suggestions. There is nothing to compare as copilot and I came to the same conclusions, and there were no errors in the code. 
+Integrated common Stage 9 SHA: 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1 [SHA after merge into main] 
+Full regression command, working directory, actual count/result and evidence: python -m pytest -q in project/ on 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1, ..........................................................                         [100%]
+58 passed in 0.11s [this is the evidence and actual count/result]
+README run instructions and scope/limitations: 
 Unresolved issues and support/action: <!-- complete -->
 UG common candidate / PG future branch plan: <!-- complete -->
 
