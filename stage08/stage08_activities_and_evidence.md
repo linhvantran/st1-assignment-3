@@ -10,6 +10,8 @@ Record owner / contribution links for each member:
 
 charatwukki and chara3kki [Chars]: Sections B, E and F for F8-01, K, J, and F8-01 repair 18f0173e614a76da644ebf57e02b8d012b368d2d; Created issues for F8-02 and F8-01 https://github.com/linhvantran/st1-assignment-3/issues/14 and https://github.com/linhvantran/st1-assignment-3/issues/13 respectively. 
 
+CrowdedGolf [Thomas]: Sections A, D, E and F for F8-02, G, I, and F8-02 repair 7093bb114650416377726f7f8461fedb4a34c820. 
+
 Use concise results and accessible artefact links rather than copying entire logs. Keep human-first entries before consulting GitHub Copilot. Link shared evidence once; do not repeat it across sections. No entries below are specimen answers or claimed results.
 
 ## A. Tutorial activities
