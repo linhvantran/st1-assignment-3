@@ -155,7 +155,7 @@ Integrated common Stage 9 SHA: 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1 [SHA aft
 Full regression command, working directory, actual count/result and evidence: python -m pytest -q in project/ on 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1, ..........................................................                         [100%]
 58 passed in 0.11s [this is the evidence and actual count/result]
 README run instructions and scope/limitations: 
-Unresolved issues and support/action: <!-- complete -->
+Unresolved issues and support/action: <!-- comp
 UG common candidate / PG future branch plan: <!-- complete -->
 
 - [ ] Query contracts, purity, new lists and named-key ordering verified.
