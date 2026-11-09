@@ -5,7 +5,7 @@ import re
 from datetime import datetime
 
 from smartcare.data_store import SmartCareDataStore
-from smartcare.domain import Appointment
+from smartcare.domain import Appointment, AppointmentStatus 
 from smartcare.services import (
     AppointmentService,
     PatientService,
@@ -68,12 +68,134 @@ def run_demo() -> None:
         print(f'Error: {error}')
     print('Session-only data: records are lost on exit.')
 
+menu = """
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+"""
 
 def run_menu() -> None:
-    """Stage 9: implement the register/find/book/cancel/list/exit menu.
+    data_store = SmartCareDataStore()
+    patients = PatientService(data_store)
+    practitioners = PractitionerService(data_store)
+    appointments = AppointmentService(data_store)
 
-    Call services, recover from expected input errors, and keep this
-    session's data until exit. main.py reports the incomplete menu
-    without crashing.
-    """
-    raise NotImplementedError('Stage 9 interactive menu is not yet completed')
+    def register_patient() -> None:
+        patient = patients.register_patient(
+            input("Patient ID: "), input("Patient name: ")
+        )
+        print("Patient registered successfully.")
+        print(f"{patient.patient_id}: {patient.name}")
+
+    def find_patient() -> None: 
+        patient = patients.find_patient(input("Patient ID: "))
+        print(f"Patient found. {patient.patient_id}: {patient.name}")
+
+    def register_practitioner() -> None: 
+        practitioner = practitioners.register_practitioner(
+            input("Practitioner ID: "),
+            input("Practitioner name: "), 
+            input("Specialty: "), 
+        )
+        print("Practitioner registered successfully.")
+        print( 
+            f"{practitioner.practitioner_id}: {practitioner.name}. "
+            f"{practitioner.specialty}"
+        )
+
+    def find_practitioner() -> None: 
+        practitioner = practitioners.find_practitioner( 
+            input("Practitioner ID: ")
+        )
+        print(
+                f"Practitioner found. {practitioner.practitioner_id}: "
+                f"{practitioner.name}, {practitioner.specialty}"
+        )
+
+    def book() -> None: 
+        appointment_id = input("Appointment ID: ")
+        patient_id = input("Patient ID: ")
+        practitioner_id = input("Practitioner ID: ")
+        when = parse_date_time(input("Date/Time [YYYY-MM-DD HH:MM]: "))
+        appointment = appointments.book_appointment(
+            appointment_id, patient_id, practitioner_id, when, 
+        )
+        print("Appointment booked successfully.")
+        print(format_appointment(appointment))
+
+    def cancel() -> None: 
+        appointment = appointments.cancel_appointment(
+            input("Appointment ID: ")
+        ) 
+        print("Appointment cancelled successfully.")
+        print(format_appointment(appointment))
+
+    def find_appointment() -> None: 
+        appointment = appointments.find_appointment(
+        input("Appointment ID: ")
+        )
+        print("Appointment found.")
+        print(format_appointment(appointment))
+
+    def list_appointments() -> None: 
+        practitioner_id = input("Practitioner ID: ")
+        text = input( 
+            "Status filter [scheduled/cancelled/completed, blank = all]: "
+        ).strip().lower()
+
+        if text == "":
+            status = None
+        else:
+            try:
+                status = AppointmentStatus(text)
+            except ValueError:
+                raise ValueError(
+                    "Status must be scheduled, cancelled or completed"
+                ) from None
+        found = appointments.list_practitioner_appointments(
+                practitioner_id, status, 
+        )
+        if not found:
+            print("No appointments found.") 
+            return
+        for number, appointment in enumerate(found, start=1):
+            print(f"{number}. {format_appointment(appointment)}") 
+        print(f"{len(found)} appointments found.")
+
+    handlers = {
+        "1": register_patient, 
+        "2": find_patient,
+        "3": register_practitioner,
+        "4": find_practitioner, 
+        "5": book, 
+        "6": cancel,
+        "7": find_appointment,
+        "8": list_appointments,
+    } 
+
+    print ("Smartcare Interactive Console")
+    print("Session data is temporary and will be discarded when you exit.")
+
+    while True: 
+        print(menu)
+        choice = input("Select an option: ").strip()
+        if choice == "0":
+                print("Goodbye. Session data discarded.")
+                return 
+        handler = handlers.get(choice)
+        if handler is None: 
+            print("Unknown choice. Choose a number from 0 to 8.")
+            continue
+        try:
+            handler()
+        except (ValueError, LookupError) as error:
+                print(f"Error: {error}")

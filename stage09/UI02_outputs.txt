@@ -1,0 +1,338 @@
+﻿Smartcare Interactive Console
+Session data is temporary and will be discarded when you exit.
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Patient ID: Patient name: Patient registered successfully.
+P1: Alex Example
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Practitioner ID: Practitioner name: Specialty: Practitioner registered successfully.
+D1: Taylor Example. General practice
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Appointment ID: Patient ID: Practitioner ID: Date/Time [YYYY-MM-DD HH:MM]: Appointment booked successfully.
+A1: P1 with D1, 2026-10-01 09:00, scheduled
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Unknown choice. Choose a number from 0 to 8.
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Patient ID: Patient found. P1: Alex Example
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Patient ID: Error: Value inserted into find_patient is invalid
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Patient ID: Error: Patient not found
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Patient ID: Patient name: Error: Patient ID already exists
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Patient ID: Patient found. P1: Alex Example
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Appointment ID: Patient ID: Practitioner ID: Date/Time [YYYY-MM-DD HH:MM]: Error: Patient not found
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Appointment ID: Error: Appointment not found
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Appointment ID: Patient ID: Practitioner ID: Date/Time [YYYY-MM-DD HH:MM]: Error: Use date/time format YYYY-MM-DD HH:MM
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Appointment ID: Patient ID: Practitioner ID: Date/Time [YYYY-MM-DD HH:MM]: Error: Invalid calendar date/time; use YYYY-MM-DD HH:MM
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Appointment ID: Error: Appointment not found
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Appointment ID: Patient ID: Practitioner ID: Date/Time [YYYY-MM-DD HH:MM]: Error: Appointment ID already exists
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Appointment ID: Appointment found.
+A1: P1 with D1, 2026-10-01 09:00, scheduled
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Appointment ID: Error: Appointment not found
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Appointment ID: Appointment cancelled successfully.
+A1: P1 with D1, 2026-10-01 09:00, cancelled
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Appointment ID: Error: Only SCHEDULED appointments may be cancelled
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Appointment ID: Appointment found.
+A1: P1 with D1, 2026-10-01 09:00, cancelled
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Practitioner ID: Status filter [scheduled/cancelled/completed, blank = all]: Error: Status must be scheduled, cancelled or completed
+
+Main Menu
+-----------------------------------------------------------
+[1] Register a patient
+[2] Find a patient
+[3] Register a practitioner
+[4] Find practitioner
+[5] Book appointment
+[6] Cancel appointment 
+[7] Find appointment
+[8] List practitioner appointments
+[0] Exit 
+-----------------------------------------------------------
+
+Select an option: Practitioner ID: Status filter [scheduled/cancelled/completed, blank = all]: Stage 9: practitioner appointments
