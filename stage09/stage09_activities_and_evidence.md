@@ -3,7 +3,10 @@
 Common UG and PG record. All Assignment 3 stage materials are provided from the beginning. Complete this stage only after the previous applicable stage has been integrated, verified and recorded. Use this supplied record in stage09/ in your EXISTING repository. Preserve project/, all earlier tests, records and responses. Do not download another starter or copy staff solutions. Use the Stage 9 handout and Overview/revision 2 baseline. Keep responses concise and link accessible artefacts; do not paste entire logs or private peer ratings.
 
 Group: [Mon 9:30-11:30 Group 1]
-Members and responsibilities: CrowdedGolf [Thomas]: Sections A and B.
+Members and responsibilities: CrowdedGolf [Thomas]: Sections A and B. 
+
+charatwukki and chara3kki [Chars]: Created test_workflows.py, Created the issues, Filled out Copilot information and suggestions, Filled out the formative questions. 
+
 Stage 8 integrated SHA, command, working directory and actual result: <!-- complete -->
 
 ## A. Tutorial activities
@@ -98,23 +101,25 @@ What the tests do and do not establish: <!-- response -->
 
 | Scenario / acceptance ID | Reproducible inputs / artefact | Expected result | Observed result and state check | Evidence link |
 |---|---|---|---|---|
-| UI-01 full menu workflow | | | | |
-| UI-02 invalid-input recovery | | | | |
-| Automated service workflow | | | | |
+| UI-01 full menu workflow |Get-Content ..\stage09\UI01_inputs.txt | python -u main.py --interactive 2>&1 | Tee-Object -FilePath ..\stage09\UI01_outputs.txt | Register/find P1, D1, D2, book A1, reject conflict, book A2 with D2, cancel, find, list, book freed slot, exit.  | Verified registrations and lookups correct. A1 booked. A-CONFLICT rejected and flind A-CONFLICT gave "Appointment not found (not stored)> A2 booked for D2 at the same time. Not run: stopped at the first listing, so cancel, retrieval, filters, freed slot and exit were not reached.  | UI01_inputs.txt and UI01_outputs.txt |
+| UI-02 invalid-input recovery | Get-Content ..\stage09\UI02_inputs.txt | python -u main.py --interactive 2>&1 | Tee-Object -FilePath ..\stage09\UI02_outputs.txt | Each rejection prints a message and returns to the menu. Leaves state unchanged, and successful action follows. | Verified all rejections gave a message with no traceback. P1 still Alex Example. A9 and A8 "Appointment not found" after failed bookings. A1 unchanged after the duplicate booking. A1 still cancelled after repeated cancellation. | UI02_inputs.txt and UI02_outputs.txt |
+| Automated service workflow | cd project, then python -m pytest -q tests/test_workflows.py, then python -m pytest -q | Rejections leave state unchanged. Different practitioner allowed, cancellation retained, filters work, and freed slot bookable. | 6 passed, 2 failed in 0.55s. Passing: conflict rejection, duplicate ID/unkonwn participants ID (ID not reserved), different-practitioner booking, cancellation keeps the same object findable, repeated/unknown cancellation, freed slot. State is checked with before/after snapshot() comparisons.| tests/test_workflows.py |
 
 Include registration/find, booking, conflict rejection, different-practitioner booking, cancellation, retrieval, listing/filtering, freed slot and exit; duplicate/unknown/blank IDs, malformed/impossible date, invalid status, unknown choice and repeated cancellation. Identify before/after state and subsequent successful action.
 
 ## E. GitHub Copilot review and human decisions
 
-Human design completed before AI: <!-- reference -->
-Actual prompt/context supplied: <!-- paste or accessible reference -->
-Actual response: <!-- accessible reference -->
+Human design completed before AI: b14a02aa80d34ed27bd5e4ae9a71cbc22dd9081e. This is the SHA before I used AI. 
+Actual prompt/context supplied: https://github.com/copilot/share/ca094108-0aa4-82d4-9900-264aa083409a
+Actual response: https://github.com/copilot/share/ca094108-0aa4-82d4-9900-264aa083409a
 
 | AI finding | Code/test evidence | Severity | Accept/Modify/Reject and reason | Change or no change | Actual verification |
 |---|---|---|---|---|---|
-| | | | | | |
+| Listing test books A1 and A2 for D1 at EIGHT_AM while A2 is still SCHEDULED, causing a same-practitioner conflict | test_practitioner_appointment_listing_filters_orders_and_isolates_results in tests/test_workflows.py | Important | Modify: Cancel A2 before booking A1 so the equal time fixture does not break the conflict rule.  | Reordered the setup. | Test now books all five appointments and fails only at NotImplementError |
 
-Responsibility check: explain how domain invariants, shared-store collections, service coordination, pure queries and console effects remain separate: <!-- response -->
+| snapshot() uses list_patients() and list_practitioners(). | snapshot() helper in tests/test_workflows.py | Optional | Accept: Both methods exist in the store. | No change. | 6 passed, 2 failed in 0.55s. | 
+
+Responsibility check: explain how domain invariants, shared-store collections, service coordination, pure queries and console effects remain separate: Appointment owns its domain rules, including guarded cancellation (a repeated cacnel was rejected with "Only SCHEDULED appointments may be cancelled" and the record stayed cancelled). SmartCareDataStore only holds the in-memory collections and looks up registered patients, practitioners and appointments. The services coordinate registraction, booking, conflict checks, cancellation and validated listing, and they call the queries. queries.py selects the sorts the lists it is given using the named key; it has no input/output, global store, services call or mutation. Console.py only prompts, parses, calls the services, prints, and catches ValueError and LookupError, so no domain rules are duplicated there. In the console runs, rejected requests returned to the menu and the stored records were unchanged. In tests/test_workflows.py, before/after snapshot comparisons passed for conflict, duplicate ID, unknown participant and repeated cancellation cases. 
 
 ## F. Required reflections
 
