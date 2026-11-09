@@ -10,7 +10,7 @@ def appointment_sort_key(appointment: Appointment) -> tuple[datetime, str]:
     """Return the date/time and appointment ID ordering key without side
     effects.
     """
-    raise NotImplementedError('Stage 9: named sorting key')
+    return (appointment.date_time, appointment.appointment_id)
 
 
 def select_appointments(
