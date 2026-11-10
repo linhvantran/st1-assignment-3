@@ -170,14 +170,21 @@ Release blockers still open / status: [response]
 
 ## I Git review and integration evidence
 
-Issue / PR / diff links and reviewed SHA: [response]
-Independent reviewer / feedback / response: [response]
-Integration commit / full recheck: [response]
-Tracked and untracked file inspection / cleanliness: [response]
-Secrets/staff material/caches/tool-metadata exclusion check: [response]
-Candidate recovery plan / known-good SHA: [response]
-Named substantive contributions: [response]
+Issue / PR / diff links and reviewed SHA: https://github.com/linhvantran/st1-assignment-3/pull/15 94693e5a1cec168db46e452976350b52878aabde
+Independent reviewer / feedback / response: CrowdedGolf [Thomas]. Stage08 sections have been completed, pytests pass, and no conflicts prevent merge.
+Integration commit / full recheck: 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1
+Tracked and untracked file inspection / cleanliness: `.idea` and `.vscode` accidentally included.
+Secrets/staff material/caches/tool-metadata exclusion check: `.idea` and `.vscode` accidentally included. No other data included.
+Candidate recovery plan / known-good SHA: Fallback to stage08 if failure. 2fe8d58bf4104209e0f7f6caa079b84502c4c553
+Named substantive contributions: All programing and responses for stage09.
 
+Issue / PR / diff links and reviewed SHA: https://github.com/linhvantran/st1-assignment-3/issues/1 250f06b144ac6f40a515bed390b3791945192500
+Independent reviewer / feedback / response: Chara. Problem solved. Merged the branch adding the Appointment Cancellation feature to resolve this issue.
+Integration commit / full recheck: 250f06b144ac6f40a515bed390b3791945192500
+Tracked and untracked file inspection / cleanliness: `.idea` accidentally included.
+Secrets/staff material/caches/tool-metadata exclusion check: `.idea` accidentally included. No other data included.
+Candidate recovery plan / known-good SHA: Fallback to previous non-code commit. b3f8bb7ab3cb2dbc87b4b8c92a04eed191895050
+Named substantive contributions: Completion of the `find_patient()` function in `services.py`
 
 ## J Human release decision
 
