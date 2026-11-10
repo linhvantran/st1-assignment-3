@@ -2,18 +2,18 @@
 
 BLANK student response template. Supplied from the beginning in stage12/ in your EXISTING repository; complete it only when you reach Stage 12 after the previous applicable stage is integrated, verified and recorded; preserve project/, tests, earlier records and Git history. UG/common and PG/extended scope must be explicit. Use concise results and versioned links, not copied logs or source. No staff answers or fabricated approvals.
 
-Group/tutorial: [response]
-Members and UG/PG applicability: [response]
+Group/tutorial: 9:30-11:30 Monday Group 1
+Members and UG/PG applicability: 
 
 
 ## A Release scope and starting SHA
 
-Release label/version and requirements baseline: [response]
-Common starting SHA / branch / applicable members: [response]
-PG starting SHA / branch / applicable members or not applicable: [response]
-Working-state review and approved integration: [response]
-Protected common candidate and PG differences: [response]
-Feature freeze / owner / verifier: [response]
+Release label/version and requirements baseline: v1.0. Requirements baseline: FR-01 to FR-09, QRY-01 to QRY-04, FP-01 to FP-03
+Common starting SHA / branch / applicable members: 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1 / debug/Stage12 / Chars, Thomas, Van, Leo 
+PG starting SHA / branch / applicable members or not applicable: NOT APPLICABLE. NO POSTGRADS. 
+Working-state review and approved integration: git status --short, git diff and git diff --cached at the starting SHA. All three returned no output, so there were no staged or untracked local changes. Nothing was discaded. No new work was integrated other than the previous 6 - 9 stages.  
+Protected common candidate and PG differences: The common candidate is the starting SHA 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1. There are no PG differences because there are no PG's
+Feature freeze / owner / verifier: 
 
 
 ## B Requirements and release readiness matrix
@@ -199,25 +199,25 @@ Remaining administration or release dependency: [response]
 
 ## M Formative questions
 
-1. What is a release candidate? [response]
+1. What is a release candidate? A release candidate is an exact version of the software that the team believes is ready to release and is now testing. If a serious problem is found, then it is fixed and a new candidate is tested. 
 
-2. What is feature freeze and why is it used? [response]
+2. What is feature freeze and why is it used? A feature freezed is the point after which no new or optional features are added. It keeps the code stable so the tests, demo and documentation stay valid for the version being released .
 
-3. What is regression testing in a release context? [response]
+3. What is regression testing in a release context? Regression testing in the release context means re-running the accumulated test suite on the release candidate to confirm that release changes have not broken anything that previously worked. Earlier tests are kept and not replaced to get a working result. 
 
-4. What is a known limitation? [response]
+4. What is a known limitation? A known limitation is a documented thing that the software does not do, or does partially. For example, for the software, the data is lost when the session ends. It isn't a defect because a requirement is not broken, it simply lacks the capability to remember because no storage was added. 
 
-5. What is technical debt? [response]
+5. What is technical debt? Technical debt are shortcuts or imperfect designs and code choices that work not but make future changes harder or riskier. It is recorded with its impact, priority and a planned fix. 
 
-6. What are release notes? [response]
+6. What are release notes? Release notes are short summaries for users and maintainers of what the release contains. This would contain the new features, fixes, quality improvements, limitations, and more. 
 
-7. What is software maintenance? [response]
+7. What is software maintenance? Software maintenance is the work after the release is created. Fixing bugs found after the release, improving code, and adding features. 
 
-8. What is the purpose of the individual demonstration/viva? [response]
+8. What is the purpose of the individual demonstration/viva? Utilised to show that each team member understands/comprehends the system, acknowledge their contributions/resposibilities, the design decisions, and the AI decisions if AI is used. Makes sure that the programmers understand the system and aren't mindlessly pushing code from AI.
 
-9. What should the final responsible-AI check establish before release? [response]
+9. What should the final responsible-AI check establish before release? That AI generated contributions were reviewed and understood by a human, are traceable, don't include unreviewed dependencies and more. Each suggestion is a candidate that was independently checked and accepted, modified or rejected, and any missing evidence is disclosed honestly. 
 
-10. What is the main course conclusion about AI and the role of the software engineer? [response]
+10. What is the main course conclusion about AI and the role of the software engineer? AI can speed up writing code, but it cannot replace engineers. Engineers remain reponsible for meeting the requirements, creating designs, verification, security and release decisions. The engineers must be able to explain the system and if anything goes wrong, the engineer will be held accountable as AI cannot hold responsibility. 
 
 
 ## N Reflection viva and handover
