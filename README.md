@@ -15,6 +15,63 @@ Baseline: Stage 6 foundation, 2026 revision 2. This starter deliberately leaves 
 
 Do not put student IDs, private peer ratings, credentials or personal contact details here.
 
+## Run
+
+From this directory (project/), using a python environment
+
+```sh
+python main.py --interactive
+python main.py
+python - pytest -q
+```
+
+If needed in your envieronment: python -m pip install -r requirements-dev.txt 
+
+## Menu 
+
+1. Register patient
+2. Find patient
+3. Register practitioner 
+4. Find practitioner
+5. Book appointment 
+6. Cancel appointment 
+7. Find appointment 
+8. List practitioner appointments (blank status = all statuses)
+0. Exit
+
+Date/time format is in YYYY-MM-DD HH:MM. 
+
+All listing statuses are: scheduled, cancelled or completed. 
+Unknown IDs, invalid dates, duplicate IDs and invalid statuses show a message and return to the menu. 
+
+## Structure 
+
+domain.py: Entities, status and guarded cancellation. 
+data_store.py: Three dictionariess through add/find/list methods. 
+services.py: Three services share the store adn coordinate registration, lookup, booking, cancellation and validated listing. 
+queries.py: Pure appointment_sort_key and select_appointments. 
+console.py: Prompts, parsing and display only.
+
+## Verification
+
+Test ran on SHA: 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1
+
+..........................................................                         [100%]
+58 passed in 0.10s
+
+Here is a picture: 
+![Picture for verification purposes](<Screenshot 2026-11-09 225716.png>)
+
+
+## Scope and limitations 
+
+- Data exists only in this session and is lost on exit. FR-10 restart persistence is retired, so there is no database or file storage. 
+- Cancelling keeps the appointment with CANCELLED status. There is no delete, and cancelled history stays listenable in the same session. 
+- A practitioner cannot have two SCHEDULED appointments at the same time, but the same patient may book different practitioners at that time. 
+- IDs are trimmed, non-black and case-sensitive. Store lookups return 'None' when absent, and service lookups raise 'LookupError'. Invalid values, duplicates, conflicts and illegal transitions raise 'ValueError'. 
+- No age, duration, patient conflict or past date rules apply. 
+- No rescheduling or assurance work is part of the common Stage 9 candidate. 
+
 ## Complete package and stage sequence
 
 All Assignment 3 ordinary materials are supplied at the beginning: the Overview, Git/GitHub Group Guide, Stage 6–12 handouts, this incomplete SmartCare starter, all seven blank activity/evidence records, and assessment instructions/forms. Stage numbers control the engineering sequence, not document availability.
