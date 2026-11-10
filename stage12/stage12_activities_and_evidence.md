@@ -18,7 +18,8 @@ Feature freeze / owner / verifier: [response]
 
 ## B Requirements and release readiness matrix
 
-Tutorial activity 1: All tests pass, README setup is incomplete, one dependency is unreviewed and a known limitation is undocumented. Decide Release / Release with conditions / Do not release and justify: [response]
+Tutorial activity 1: All tests pass, README setup is incomplete, one dependency is unreviewed and a known limitation is undocumented. Decide Release / Release with conditions / Do not release and justify: 
+- Do not release. There are parts of the program that are unreviewed and there is an undocumented knowen limitation. Ignoring these issue can lead to the program having problems and users running into knowen limitations that should have been documented.
 
 Tutorial activity 2 and actual readiness matrix. Add exact requirement/acceptance IDs, evidence and reviewer; distinguish common/PG applicability.
 
@@ -34,6 +35,20 @@ Tutorial activity 2 and actual readiness matrix. Add exact requirement/acceptanc
 | FR-09 and QRY/FP listing/filter/order/purity | Relevant pytests pass to show that the required practitioners appointments are returned, results are sorted using the working key, and query, filter, and ordering guidelines are followed. | tests in `test_queries.py` pass. | CrowdedGolf | Yes, the tests have passed. The tests have been formulated to check and make sure that all aspects of the queries are functioning as expected | None |
 | UI full console sequence and error recovery | Testing of various usecases in the console does not produce any unexpected behaviour. | `console.py` | CrowdedGolf | Yes, no issues were found in testing of the console. | None |
 
+Tutorial Activity 3: Practice answering these questions using your own artefacts:
+- Why use one shared SmartCareDataStore with services and pure queries?
+  - It is a good idea to use one shared datastore because it reduces the likelyhood of data mutations and outdated data existing due to data moving between multiple datastores. The central datastore also reduces the dificulty of running two subsquent functions from sections of the code. If there were two datastores, before the second part could execute it would have to pull the updated data from one database into the other while having one database means it can execute off the same database directly after the other has finnished writing.
+- Show a test establishing that a cancelled appointment remains retrievable.
+  - Tests starting on line 135 in `test_services.py`. This test creates a valid appointment and saves the object as a variable appointment. Then the appointment is cancelled and the test asserts that the data from the old appointment object previously saved in the appointment variable is the same object returned from `appointments.find_appointment()`. it also checks that the same pre-cancellation appointment object is in `store.list_appointments()` and that the status of the post-cancellation appointment is `AppointmentStatus.CANCELLED`.
+- What AI-generated change did you reject or modify, and why?
+  - In stage08 the last two suggestions by the AI were rejected. They were rejected as they were possible explinations that the AI could "think" of as to why there were errors which after inspection, were not the cause. Inspecting the code itself for any obvious logical errors and inspecting/running tests helped prove that these last two suggestions were not the cause.
+- What is one unresolved limitation?
+  - Lack of presistance. In a real world scenario, there would need to be some sought of propper storage solution as even highly reliable and redundant servers will need to be restarted at some point which would cause data loss since everything in this program is stored in memory.
+- What would break if session-state lookup or query responsibilities changed?
+  - If responsibilities changed, we could end up with sections of the architecture not communicating with each other in the way expected resulting in errors or communication not being able to make it to all the required functions. 
+
+Tutorial Activity 4:
+- See section N.
 
 ## C Full regression results
 
