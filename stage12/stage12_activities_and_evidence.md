@@ -18,25 +18,37 @@ Feature freeze / owner / verifier:
 
 ## B Requirements and release readiness matrix
 
-Tutorial activity 1: All tests pass, README setup is incomplete, one dependency is unreviewed and a known limitation is undocumented. Decide Release / Release with conditions / Do not release and justify: [response]
+Tutorial activity 1: All tests pass, README setup is incomplete, one dependency is unreviewed and a known limitation is undocumented. Decide Release / Release with conditions / Do not release and justify: 
+- Do not release. There are parts of the program that are unreviewed and there is an undocumented knowen limitation. Ignoring these issue can lead to the program having problems and users running into knowen limitations that should have been documented.
 
 Tutorial activity 2 and actual readiness matrix. Add exact requirement/acceptance IDs, evidence and reviewer; distinguish common/PG applicability.
 
 | Release claim / requirement / scope | Evidence | Location/link and SHA | Reviewer | Sufficient? | Gap/action |
 |---|---|---|---|---|---|
-| Cancellation history works | [response] | [response] | [response] | [response] | [response] |
-| Architecture responsibilities are appropriate | [response] | [response] | [response] | [response] | [response] |
-| Rescheduling is safe — PG only | [response] | [response] | [response] | [response] | [response] |
-| AI use is responsible — common recheck / PG assurance | [response] | [response] | [response] | [response] | [response] |
-| System is maintainable | [response] | [response] | [response] | [response] | [response] |
-| FR-01–03 register/find and validation | [response] | [response] | [response] | [response] | [response] |
-| FR-04–05 booking/conflict rules | [response] | [response] | [response] | [response] | [response] |
-| FR-06–08 cancellation/history/find | [response] | [response] | [response] | [response] | [response] |
-| FR-09 and QRY/FP listing/filter/order/purity | [response] | [response] | [response] | [response] | [response] |
-| UI full console sequence and error recovery | [response] | [response] | [response] | [response] | [response] |
-| Session-only scope / FR-10 retired | [response] | [response] | [response] | [response] | [response] |
-| PG RES and assurance integration | [response] | [response] | [response] | [response] | [response] |
+| Cancellation history works | pytests that check for retained history post cancellation pass. | tests starting on lines 125, 135 in `test_services.py` pass | CrowdedGolf | Yes, all testing cases confirm that the cancelled appointment is retained. | None |
+| Architecture responsibilities are appropriate | Each part of the architecture plays a key and destinct role. For example, `console.py` calls the service functions inside `services.py` which then pull data in and out of the datastore through `data_store.py` as required. | function starting line 142 in `console.py` calls a service once the input handling is done. | CrowdedGolf | Yes, each section of the code architecture plays a distinct role wihtout any responsiblity overlap. | None |
+| AI use is responsible — common recheck / PG assurance | AI only used in the sections specified and in complience with the guidelines. | Section H stage 6, Section H stage 7, Section F stage 8, and Section E: stage 9 | CrowdedGolf | All evidence recorded within these md files supports that AI was used appropriately. | None |
+| System is maintainable | The system follows object oriented principles with logical function names and responsibilities. | `test_services.py`, `console.py` | CrowdedGolf | Yes, our following these principles makes it easier to maintain. But there are not many code comments. | Lack of code comments. Improve documentation with a futre revision. |
+| FR-01–03 register/find and validation | Tests for finding and registering both patients and practitioners pass. | tests starting on lines 30, 37, 47, 53, and 63 in `test_services.py` pass | CrowdedGolf | Yes, the tests confirm that patient and practitioner data can successfully be created and looked up. | None |
+| FR-04–05 booking/conflict rules | relevant pytests pass to show that valid bookings are successfully created and creating a booking for the same practitioner and time as an existing SCHEDULED booking is cancelled. | tests starting on lines 71, 83, 94 and 104 in `test_services.py` pass | CrowdedGolf | Yes, these tests have been designed to test for possible failures to prove that the appointment booking functions are working as intended if it passes. | None |
+| FR-06–08 cancellation/history/find | relevant pytests pass to show that only scheduled appointments can be cancelled and the same appointment object with CANCELLED status is retained in history. | Tests starting on lines 125 and 135 in `test_services.py` pass | CrowdedGolf | Yes, these tests have checked the program to make sure that CANCELLED appointments are retained in the datastore with the CANCELLED status | None |
+| FR-09 and QRY/FP listing/filter/order/purity | Relevant pytests pass to show that the required practitioners appointments are returned, results are sorted using the working key, and query, filter, and ordering guidelines are followed. | tests in `test_queries.py` pass. | CrowdedGolf | Yes, the tests have passed. The tests have been formulated to check and make sure that all aspects of the queries are functioning as expected | None |
+| UI full console sequence and error recovery | Testing of various usecases in the console does not produce any unexpected behaviour. | `console.py` | CrowdedGolf | Yes, no issues were found in testing of the console. | None |
 
+Tutorial Activity 3: Practice answering these questions using your own artefacts:
+- Why use one shared SmartCareDataStore with services and pure queries?
+  - It is a good idea to use one shared datastore because it reduces the likelyhood of data mutations and outdated data existing due to data moving between multiple datastores. The central datastore also reduces the dificulty of running two subsquent functions from sections of the code. If there were two datastores, before the second part could execute it would have to pull the updated data from one database into the other while having one database means it can execute off the same database directly after the other has finnished writing.
+- Show a test establishing that a cancelled appointment remains retrievable.
+  - Tests starting on line 135 in `test_services.py`. This test creates a valid appointment and saves the object as a variable appointment. Then the appointment is cancelled and the test asserts that the data from the old appointment object previously saved in the appointment variable is the same object returned from `appointments.find_appointment()`. it also checks that the same pre-cancellation appointment object is in `store.list_appointments()` and that the status of the post-cancellation appointment is `AppointmentStatus.CANCELLED`.
+- What AI-generated change did you reject or modify, and why?
+  - In stage08 the last two suggestions by the AI were rejected. They were rejected as they were possible explinations that the AI could "think" of as to why there were errors which after inspection, were not the cause. Inspecting the code itself for any obvious logical errors and inspecting/running tests helped prove that these last two suggestions were not the cause.
+- What is one unresolved limitation?
+  - Lack of presistance. In a real world scenario, there would need to be some sought of propper storage solution as even highly reliable and redundant servers will need to be restarted at some point which would cause data loss since everything in this program is stored in memory.
+- What would break if session-state lookup or query responsibilities changed?
+  - If responsibilities changed, we could end up with sections of the architecture not communicating with each other in the way expected resulting in errors or communication not being able to make it to all the required functions. 
+
+Tutorial Activity 4:
+- See section N.
 
 ## C Full regression results
 
