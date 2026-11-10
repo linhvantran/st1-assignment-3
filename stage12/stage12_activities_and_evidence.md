@@ -9,7 +9,7 @@ Members and UG/PG applicability:
 ## A Release scope and starting SHA
 
 Release label/version and requirements baseline: v1.0. Requirements baseline: FR-01 to FR-09, QRY-01 to QRY-04, FP-01 to FP-03
-Common starting SHA / branch / applicable members: 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1 / debug/Stage12 / Chars, Thomas, Van, Leo 
+Common starting SHA / branch / applicable members: 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1 was found to be based on an outdated commit. Main was merged in to update it, therefore the common starting SHA is 8715fa689410af2b8d80b3612a63b5fcb76e81b0 / debug/Stage12 / Chars, Thomas, Van, Leo 
 PG starting SHA / branch / applicable members or not applicable: NOT APPLICABLE. NO POSTGRADS. 
 Working-state review and approved integration: git status --short, git diff and git diff --cached at the starting SHA. All three returned no output, so there were no staged or untracked local changes. Nothing was discaded. No new work was integrated other than the previous 6 - 9 stages.  
 Protected common candidate and PG differences: The common candidate is the starting SHA 9690e687ba3dec28ce1b0fdd925445ebe5a7ebc1. There are no PG differences because there are no PG's
@@ -54,12 +54,12 @@ Tutorial Activity 4:
 
 | Suite/scope | Environment/version | Working directory and command | Tested SHA | Actual result | Evidence link |
 |---|---|---|---|---|---|
-| Complete common | [response] | [response] | [response] | [response] | [response] |
-| Complete PG if applicable | [response] | [response] | [response] | [response] | [response] |
-| Affected focused checks after correction | [response] | [response] | [response] | [response] | [response] |
-| Full integrated recheck | [response] | [response] | [response] | [response] | [response] |
-Prior assertions preserved / reviewed test diff: [response]
-Remaining failure / limitation: [response]
+| Complete common | Python 3.14.5, pytest 8.3.5, Windows | st1-assignment-3\project; python -m pytest -q | 8715fa689410af2b8d80b3612a63b5fcb76e81b0 | 58 passed in 0.11s | https://github.com/linhvantran/st1-assignment-3/blob/c20613154832194a475990804f25325f6df754b6/stage12/c_regression_log.txt |
+| Complete PG if applicable | Not Applicable | Not Applicable | Not Applicable | Not Applicable | Not Applicable |
+| Affected focused checks after correction | Same things as above | Not run separately. The full suite was run on the updated commit (next row) | 8715fa689410af2b8d80b3612a63b5fcb76e81b0 [This is the updated commit starting commit, because the original starting commit of this branch was created on an old commit of stage 9 which was missing features] | Full run: 58 passed | Just check the full integrated recheck for evidence |
+| Full integrated recheck | Python 3.14.5, pytest 8.3.5, Windows | st1-assignment-3\project, python -m pytest -q | 8715fa689410af2b8d80b3612a63b5fcb76e81b0 | 58 passed in 0.11s, 0 failed | https://github.com/linhvantran/st1-assignment-3/blob/c20613154832194a475990804f25325f6df754b6/stage12/c_regression_log.txt |
+Prior assertions preserved / reviewed test diff: Earlier assertions are preserved
+Remaining failure / limitation: None observed. 
 
 
 ## D Console and end to end demonstration
