@@ -4,7 +4,7 @@ BLANK student response template. Supplied from the beginning in stage12/ in your
 
 Group/tutorial: 9:30-11:30 Monday Group 1
 Members and UG/PG applicability: 
-CrowdedGolf [Thomas]: Sections B and AI relection in E.
+CrowdedGolf [Thomas]: Sections B, G, and AI relection in E.
 
 
 ## A Release scope and starting SHA
@@ -141,20 +141,22 @@ Missing local file or setup gap / remedy and recheck: [response]
 
 ## G Known limitations debt and release notes
 
-Delivered features: [response]
-Important fixes: [response]
-Architecture/quality improvements: [response]
-Known limitations: [response]
-AI-assisted development note: [response]
+Delivered features: A console, services, datastore, and queries that work together to make an appointment management system.
+Important fixes: Lack of customisation, management, and persistance.
+Architecture/quality improvements: Better documentation of architecture is needed.
+Known limitations: Space code comments.
+AI-assisted development note: AI has been used throughout the project as noted in the relevant sections of each stage.
 
 | Debt item | Impact | Priority | Future action | Accepted? / release rationale |
 |---|---|---|---|---|
-| [response] | [response] | [response] | [response] | [response] |
-Session-only synthetic data and minute-precision local time: [response]
-Production auth/roles, portal, notifications, billing/insurance, clinical AI exclusions: [response]
-Scale/concurrency, timezone policy, operations/monitoring, accessibility/usability limitations: [response]
-Difference between accepted scope limit and unresolved required behaviour: [response]
-PG assurance residual risks / owner / status or not applicable: [response]
+| Limited code comments. | Reduces maintainability of the program. | Low | Add more code comments and other documentation to make the code easier to understand. | Accept. The program is still ready for release in its current state. |
+| Session-only synthetic data | Data is lost after restart of system | High | Add a long term storage solution. | Accept. The data is currently only used for demonstartion purposes. |
+| Minute-precision local time | Session times can only be stored in local time and with a maximum precision of minute level. | Low | None. | Accept. The program will still be fit for purpose as you are expected to be booking an appointment in the local time of the practice and we don't need more than minute level precision. |
+
+Production auth/roles, portal, notifications, billing/insurance, clinical AI exclusions: These functions are currently not implemented in our program.
+Scale/concurrency, timezone policy, operations/monitoring, accessibility/usability limitations: This system can currently only be accessed by the one single console at this time. The timezone that appointments are booked in is the same as the practice. Operations and monitoring is not currently implemented. Accessibility / usability limitations include accessibility and ease of use issues around a TUI.
+Difference between accepted scope limit and unresolved required behaviour: The scope was more to create the underlying framework for an appointment system while a lot of these other uresolved issues are around the management and individual setup side of things.
+PG assurance residual risks / owner / status or not applicable: N/A
 
 
 ## H Release findings and corrective action
