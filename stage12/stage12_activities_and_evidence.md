@@ -4,6 +4,7 @@ BLANK student response template. Supplied from the beginning in stage12/ in your
 
 Group/tutorial: 9:30-11:30 Monday Group 1
 Members and UG/PG applicability: 
+CrowdedGolf [Thomas]: Sections B and AI relection in E.
 
 
 ## A Release scope and starting SHA
@@ -103,9 +104,19 @@ PG demonstrations through service/tests or not applicable: [response]
 
 | AI claim | Affected requirement/code | Human check | Accept/Modify/Reject and reason | Actual outcome/action or no change |
 |---|---|---|---|---|
-| [response] | [response] | [response] | [response] | [response] |
-Access route or approved equivalent / limitations: [response]
-Available AI evidence and missing evidence honestly disclosed: [response]
+| Four tests need to be added to `test_data_store.py` to test datastore | `test_data_store.py` |Chars in `stage06_activities_and_evidence.md` section H | Modify. The test ideas smatched the `data_store.py` contracts, but they needed corrections before they ran. They also only cover patients, not practitioners, appointments or the conflict check | Tests were added with slight modifications. |
+| Create a test so that after cancelling A1, assert that `find_appointment("A1")` is not `None` | `test_services.py` | Chars in `stage07_activities_and_evidence.md` section H | Accept. The intention matches AC-05.2, but the assertion proves too little. data_store.py never deletes appointments, so identity, status and list checks acan fall if retention breaks. I replaced theweak assertion with those three checks. | Test was added with modifications. |
+| Create a test that cancels an appointment, create a new SmartCareDataStore form saved data, and assert the cancelled appointment still exists. | `test_services.py` | Chars in `stage07_activities_and_evidence.md` section H | Reject. it is a duplicate scenario. The handout tells us to reject duplicates. The new evidence is in T-21, which cancels through the service and checks find_appointment("A1") is appointment. | None. |
+| practitioner-ID comparison in has_practitioner_conflict is inverted (!= instead of ==) | `data_store.py` | Chars in `stage08_activities_and_evidence.md` section F | Accept. The line and the reversed behaviour both confirm it. | Use sugestion to help fix behaviour |
+| book_appointment passes an unexpected practitioner ID to the conflict check. | `data_store.py` | Chars in `stage08_activities_and_evidence.md` section F | Reject. The service passes the correct arguments, and the fault is the '!=" in the store's practitioner comparison. | None. |
+| The datetime or status condition selects the wrong stored appointment. | `data_store.py` | Chars in `stage08_activities_and_evidence.md` section F | Modify Not the cause of F8-01; leave unchanged in the repair, and note the magic string as a possible refactor smell. | Help fix smell. |
+| `find_appointment` returns a matching appointment only if its status is not "cancelled". | `data_store.py` | Thomas in `stage08_activities_and_evidence.md` section F | Accept. This explination is the likely cause as it is similar to my first competing idea. I have checked the code and there is infact a secion in `lookup_appointment()` in `data_store.py` that makes the lookup function return a LookupError if an appointment's status is CANCELLED. This is also supported by my findings in `test_regressions.py` where I found that the cancelled appointment still exists in the datastore itself but it is not found when using the lookup function. | Use suggestion to help fix behaviour. |
+| Cancellation removes or replaces the stored record | `data_store.py` | Thomas in `stage08_activities_and_evidence.md` section F | Reject. From my testing in `test_regressions.py` as the cancelled appointment still exists in the datastore post cancellation but it cannot be found when using the lookup function. | None. |
+| The service is using a different store or the lookup ID differs | `data_store.py` | Thomas in `stage08_activities_and_evidence.md` section F | Reject. All of the functions refer to the same `SmartCareDataStore` class in `data_store.py`. | None. |
+| Listing test books A1 and A2 for D1 at EIGHT_AM while A2 is still SCHEDULED, causing a same-practitioner conflict | `test_practitioner_appointment_listing_filters_orders_and_isolates_results` in `tests/test_workflows.py | Chara in `stage09_activities_and_evidence.md` | Modify: Cancel A2 before booking A1 so the equal time fixture does not break the conflict rule. | Reordered the setup. |
+
+Access route or approved equivalent / limitations: GitHub Copilot.
+Available AI evidence and missing evidence honestly disclosed: AI evidence has been disclosed per the guidelines in the AI sections.
 
 
 ## F README and reproducibility check
