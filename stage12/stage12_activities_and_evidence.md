@@ -90,7 +90,7 @@ PG demonstrations through service/tests or not applicable: [response]
 
 | Review area | Code/evidence location | Finding or no finding | Correction/no change and recheck |
 |---|---|---|---|
-| OOP responsibilities and pure-query boundaries | [response] | [response] | [response] |
+| OOP responsibilities and pure-query boundaries | services.py (SHA 8715fa689410af2b8d80b3612a63b5fcb76e81b0) the three services coordinate through the shared SmartCareDataStore. list_practitioner_appointments passes store data into select_appointments as explicit inputs. domain.py, data_store.py, queries.py, console.py PENDING|  | [response] |
 | PascalCase and snake_case naming | [response] | [response] | [response] |
 | Useful type hints and meaningful docstrings | [response] | [response] | [response] |
 | Four-space indentation and imports/layout | [response] | [response] | [response] |

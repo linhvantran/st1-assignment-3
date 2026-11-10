@@ -84,6 +84,9 @@ Main Menu
 """
 
 def run_menu() -> None:
+    """Run the interactive console menu until the user chooses to exit.
+    Uses a new in-memory store, so all records are lost on exit. Service 
+    errors are printed and the menu continues."""
     data_store = SmartCareDataStore()
     patients = PatientService(data_store)
     practitioners = PractitionerService(data_store)
