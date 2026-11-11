@@ -100,18 +100,18 @@ Available AI evidence and missing evidence honestly disclosed: [response]
 
 | README item | Location | Verifier | Result/gap |
 |---|---|---|---|
-| Purpose and included common/PG scope | [response] | [response] | [response] |
-| Out-of-scope capabilities and known limitations | [response] | [response] | [response] |
-| Confirmed teaching Python version and dependency installation | [response] | [response] | [response] |
-| Working directory / demo / interactive / test commands | [response] | [response] | [response] |
-| Repository structure and architecture responsibilities | [response] | [response] | [response] |
-| Responsible AI summary / synthetic-data rule | [response] | [response] | [response] |
-| Release label/version and SHA links | [response] | [response] | [response] |
-Root README index and project/README verified: [response]
-Fresh clone or extracted ZIP / candidate identity: [response]
-Verifier and clean environment / actual version: [response]
-Setup/run/test commands and observed results: [response]
-Missing local file or setup gap / remedy and recheck: [response]
+| Purpose and included common/PG scope | [README.md,Group index & Scope and limitations] | [XiChen] | [OK] |
+| Out-of-scope capabilities and known limitations | [README.md, Scope and limitations] | [XiChen] | [OK] |
+| Confirmed teaching Python version and dependency installation | [README.md, Run] | [XiChen] | [OK] |
+| Working directory / demo / interactive / test commands | [README.md, Run] | [XiChen] | [OK] |
+| Repository structure and architecture responsibilities | [README.md, Structure] | [XiChen] | [OK] |
+| Responsible AI summary / synthetic-data rule | [REAMDME.md, Group index] | [XiChen] | [OK] |
+| Release label/version and SHA links | [README.md, Verification] | [XiChen] | [OK] |
+Root README index and project/README verified: [Verified, root README.md is the vprimary project documentation]
+Fresh clone or extracted ZIP / candidate identity: [Verified, cloned fresh from group GitHub repository]
+Verifier and clean environment / actual version: [XiChen,clean venv,Python 3.13.5]
+Setup/run/test commands and observed results: [Setup, run snd test commands execute successfully; appointment cancellation works as expected]
+Missing local file or setup gap / remedy and recheck: [No missing local files, no blocking setup gaps]
 
 
 ## G Known limitations debt and release notes
@@ -154,12 +154,14 @@ Named substantive contributions: [response]
 
 ## J Human release decision
 
-Decision — READY FOR COURSE RELEASE / READY WITH DOCUMENTED LIMITATIONS / NOT YET READY: [response]
-Approver / date / rationale and evidence: [response]
-What risks remain / conditions / owners: [response]
-Can the team explain the system: [response]
-Can a change be recovered: [response]
-Common decision / PG decision where different: [response]
+Decision — READY FOR COURSE RELEASE / READY WITH DOCUMENTED LIMITATIONS / NOT YET READY: [READY WITH DOCUMENTED LIMITATIONS]
+Approver / date / rationale and evidence: [Whole team, 11 Nov 2026. The system satisfies all core functional requirements for this assessment.Supporting evidence includes test outputs, Git integration review records from section I and demonstration of the core workflow.A small number of secondary features are incomplete and listed below.]
+What risks remain / conditions / owners: [1. Mobile responsive layout is not fully refined; owner: team.
+                                          2. Full automated UI test suite is not implemented; owner: team.
+                                          These items do not break core functions and will not interfere with marking of mandatory requirements.]
+Can the team explain the system: [Yes.All team members understand the product purpose, userworkflow and compliance requirements.]
+Can a change be recovered: [Yes. We can revert to the stable known-good commit SHA documented in section I]
+Common decision / PG decision where different: [N/A]
 
 
 ## K Final tested release SHA
