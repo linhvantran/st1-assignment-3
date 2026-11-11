@@ -206,7 +206,7 @@ Common decision / PG decision where different: [response]
 
 Exact common tested SHA: 7e662f074a0b3cdf1d8287319d40e4a54fb25985. Full suite: 58 passed with `python -m pytest -q` from `project/` (Section C).
 Exact PG tested SHA or not applicable: Not applicable. There are no postgraduate members.
-Final submitted SHA / repository URL: [the commit submitted, normally the head of main at submission] / https://github.com/linhvantran/st1-assignment-3
+Final submitted SHA / repository URL: 25b641b899cf52e3be1f58192afb0d864009d387 / https://github.com/linhvantran/st1-assignment-3
 Evidence-only later commit and difference explanation: Commits after the tested SHA only changed the records in `stage12/`. `git diff --stat 5143ef49f3f0a372184110040a5fb59db2cca35e d3f100ee66991012523813b0b083270df2b4ac7f  final SHA  7e662f074a0b3cdf1d8287319d40e4a54fb25985 -- project` printed nothing, so no executable code differs.
 Executable changes after testing and re-verification: None. 
 Source ZIP name / SHA correspondence / extracted comparison: [zip name] was created with `git archive` from commit 7e662f074a0b3cdf1d8287319d40e4a54fb25985. It was extracted to a clean folder, its file list matched `git ls-tree` for that commit, and `python -m pytest -q` there gave 58 passed.
