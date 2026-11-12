@@ -5,7 +5,7 @@ BLANK student response template. Supplied from the beginning in stage12/ in your
 Group/tutorial: 9:30-11:30 Monday Group 1
 Members and UG/PG applicability: 
 CrowdedGolf [Thomas]: Sections B, G, and AI relection in E. linhvantran[Van]: Section D, H and K
-charatwukki and chara3kki [Chars]: Sections C, E, and M. 
+charatwukki and chara3kki [Chars]: Sections C, E, M, and N. 
 
 
 ## A Release scope and starting SHA
@@ -217,27 +217,27 @@ Source ZIP name / SHA correspondence / extracted comparison: SmartCare_v1.0_Grou
 
 ## L Submission package verification
 
-- [ ] Feature freeze and scoped requirements traced.
-- [ ] Applicable full regressions, integrated demo and invalid paths verified.
-- [ ] Architecture/code quality and final AI/dependency checks complete.
-- [ ] Root README and project/README reproduced by another verifier.
-- [ ] Release notes, technical debt and limitations visible.
-- [ ] Independent human review, integration and release decision recorded.
-- [ ] Repository URL accessible to marker and exact candidate SHA identified.
-- [ ] One source ZIP from submitted commit with root README.md and .gitignore.
-- [ ] project/ source and all accumulated applicable tests included.
-- [ ] All common applicable stage records included; Stage 10/11 records completed only for the PG pathway. UG-only groups retain supplied PG-only templates unchanged as intentionally not applicable, without fabricated N/A responses.
-- [ ] No .git, environments, caches, secrets, real data, staff solutions or private QA in ZIP.
-- [ ] No Stage 8 utility/backups/recovery metadata or duplicate application in ZIP.
-- [ ] Mixed-group common protection and candidate upload routing checked.
-- [ ] Group reflection, confidential individual peer forms and common team viva routed separately.
+- [X ] Feature freeze and scoped requirements traced.
+- [X ] Applicable full regressions, integrated demo and invalid paths verified.
+- [X ] Architecture/code quality and final AI/dependency checks complete.
+- [X ] Root README and project/README reproduced by another verifier.
+- [X ] Release notes, technical debt and limitations visible.
+- [X ] Independent human review, integration and release decision recorded.
+- [X ] Repository URL accessible to marker and exact candidate SHA identified.
+- [X ] One source ZIP from submitted commit with root README.md and .gitignore.
+- [X ] project/ source and all accumulated applicable tests included.
+- [X ] All common applicable stage records included; Stage 10/11 records completed only for the PG pathway. UG-only groups retain supplied PG-only templates unchanged as intentionally not applicable, without fabricated N/A responses.
+- [X ] No .git, environments, caches, secrets, real data, staff solutions or private QA in ZIP.
+- [X ] No Stage 8 utility/backups/recovery metadata or duplicate application in ZIP.
+- [X ] Mixed-group common protection and candidate upload routing checked.
+- [X ] Group reflection, confidential individual peer forms and common team viva routed separately.
 
-Confirmed assessment item/upload route: [response]
-Deadline/timezone: [response]
-Repository access arrangement: [response]
-Mixed-candidate upload arrangement: [response]
-Oral/video recording/accessibility arrangements: [response]
-Remaining administration or release dependency: [response]
+Confirmed assessment item/upload route: [Team will submit via the single provided group submission URL]
+Deadline/timezone: [13/11/2026]
+Repository access arrangement: [Repository is public,accessible to marker]
+Mixed-candidate upload arrangement: [Not applicable for this group]
+Oral/video recording/accessibility arrangements: [Individual oral assessment,each team member completes their own oral task separately.]
+Remaining administration or release dependency: [No outstanding release dependencies.]
 
 
 ## M Formative questions
@@ -265,36 +265,35 @@ Remaining administration or release dependency: [response]
 
 ## N Reflection viva and handover
 
-Strongest evidence SmartCare is ready: [response]
-Weakest area: [response]
-How AI use changed from Stage 1 to Stage 12: [response]
-Start doing — engineering and AI use: [response]
-Stop doing — engineering and AI use: [response]
-Continue doing — engineering and AI use: [response]
-What worked / caused rework / future delivery improvement: [response]
-One paragraph — If AI can write code why do we still need software engineers: [response]
+Strongest evidence SmartCare is ready: The full suite passes (58 tests, shown in section C), and the console demo (Section D) ran the whole required sequence from a frech process. Same-practitioner conflict rejected while a different practitioner was allowed, cancellation retained as CANCELLED, listing with filters and ordering, and recovery from invalid inputs. The tets and demo agree with each other, and all requirements are filled. 
+Weakest area: In this project, editor metadata was tracked in the repository, and it was hard to keep every piece of evidence tied to one exact commit. In the code, the comments were thin and the project suffers form a lack of persistence [although that is a deliberate scope limit]. 
+How AI use changed from Stage 1 to Stage 12: From Stage 1, we used AI to help understand the code. Mainly using AI to help us understand the syntax and the functionality of programs. Getting it to assist us in learning Python. By Stage 7 to 9, we understood the code and now used the AI to help us propose test cases and and assist in diagnosis when debugging programs, treating every suggestion as a hypothesis. By Stage 12, we utilised the AI to check against the code, critique it and suggestion improvements. 
+Start doing — engineering and AI use: Ensure that all of the changes had been pushed before you make branches. This branch initially did not contain the Stage 9 data due to miscommunication and that left me puzzled when I ran tests. When it comes to AI, we must confirm the approved Copilot route with the teaching team, saving prompts and outputs as we go. Sometimes I forget to get the output references and that is bad practice. 
+Stop doing — engineering and AI use: Stop letting tool files into the repository. Next time, double check the .gitignore file. I don't know how we went though the project without noticing this but we did. For AI, we need to stop accepting an AI explanation of a failure before reproducing it. When it came to testing, the AI sometimes got things wrong so it's useful to double check and get your own opinion on the matter.
+Continue doing — engineering and AI use: Requirement tests, Pull request reviews, and creating test cases. For AI, checking every suggestion independently before accepting, modifying or rejecting with evidence. 
+What worked / caused rework / future delivery improvement: What worked: The separation into domain, store, services, queries and console made defects easy to localise (In stage 8, we found the defects by comparing diffs and running the regression tests). Rework: The outdated branch base and the tracked editor files. Improvement: Check and commmunicate more clearly with your teammates. Everything here was caused by a lack of communication and not checking everything. The .gitignore issue should have been caught early. The branch shouldn't have been created before the merge to main.
+One paragraph — If AI can write code why do we still need software engineers: AI can produce code quickly, but it cannot be held accountable for whether that code is right. An AI cannot reliably diagnose problems in a program 100% of the time and sometimes it doesn't focus on the requirements. The AI can work on the programming but it doesn't consider the project as a whole. Engineers decide what the software must do for its stakeholders, design it so it can be changed safely in the future, verify it with evidence, and notice what the tests do not prove, taking responsibility for releasing it, explaining it, and recovering it when something goes wrong. 
 
 | Preparation item | Own explanation and evidence link |
 |---|---|
-| Problem and stakeholders | [response] |
-| Two requirements and acceptance criteria | [response] |
-| Domain model and architecture | [response] |
-| Design trade-off | [response] |
-| Meaningful test and its limits / 100 percent coverage | [response] |
-| Diagnosed defect and verification | [response] |
-| Shared store and session-state/query responsibilities | [response] |
-| What would break if session-state lookup/query responsibilities changed? | [response] |
-| Why cancellation is domain behaviour / conflict coordination is service behaviour | [response] |
-| FR-07 retained history test | [response] |
-| Actual AI change rejected/modified or honestly accepted with verification | [response] |
-| Unresolved limitation / future production work | [response] |
-| Personal implementation contribution | [response] |
-| Personal test/review/design/integration contribution | [response] |
+| Problem and stakeholders | A small clinic needs to keep track of patients, practitioners and appointments so that bookings do not clash and cancelled appointments stay on record. Stake holders include patients, practitioners, and receptionists/administrative staff. Refer back to section D, |
+| Two requirements and acceptance criteria | The same practitioner cannot have two SCHEDULED at the same time (AC-04.1), while a different practitioner at that time is allowed (AC-04.2). FR-07: A cancelled appointment is retained and can still be found, as the same object with CANCELLED status (AC-05.2). |
+| Domain model and architecture | Patient, Practitioner and Appointment own validated fields. Appointment and AppointmentStatus own status and the guarded cancel(). SmartCareDataStore holds the three in-memory collections. Services coordinate use cases and shared-store checks. Queries.py has pure functions. Console.py handles input and output only. Elaborated on (Evidence) in Section E. |
+| Design trade-off | It's really simple and easy to test things in the program, at the cost of no persistence (memory) and concurrency. We accepted this because the release is session-only (Sections B and G) |
+| Meaningful test and its limits / 100 percent coverage | test_cancelled_appointment_is_retained_and_listed (test_services.py) asserts that find_appointment returns the same obejct, that is still in list_appointments(), and that its status is CANCELLED. It would fail if cancellation deleted the record. it does not prove anything about persistence across sessions. 100 percent coverage only shows every line ran. It does not show if the behaviour is right or wrong, that all requirements are tested, or that the assertions are strong. |
+| Diagnosed defect and verification | F8-01, the practitioner ID comparison in has_practitioner_conflict was inverted (!= instead of ==). F8-02, lookup hid CANCELLED appointments so they could not be found. We confirmed each by comparing the known good and the injected commits, reading data_store.py and running test_regressions.py. Section F |
+| Shared store and session-state/query responsibilities | One SmartCareDataStore is created per session and passed to every service, so all services see the same records. Queries take an explicit list and return a new sorted list with no input/output and no changes to the source. Section E |
+| What would break if session-state lookup/query responsibilities changed? | If services used different stores, a booking made through one would be invisible to cancellation or the conflict check, so conflicts would be missed and cancellations would fail. if queries read the store directly or changed what they were given, they could no longer be tested on their own, and the filtering and ordering could change without the service noticing. |
+| Why cancellation is domain behaviour / conflict coordination is service behaviour | cancel() is in Appointment because only the appointment knows its own status rules (only SCHEDULED can be cancelled). A conflict depends on all appointments for a practitioner, which no single appointment knows about, so a service coordinates it using the shared store.  |
+| FR-07 retained history test | test_cancelled_appointment_is_retained_and_listed (T-21): book A1, cancel it, and then check the same object is found, listed and CANCELLED. In the console demo, cancelling A1 and then finding A1 showed "cancelled". Sections B and D. |
+| Actual AI change rejected/modified or honestly accepted with verification | Stage 7: Copilot's duplicate persistence style test was rejected and the weak assertion was strengthened. Stage 8: The wrong candidate causes were rejected after checking the code and tests. Stage 9: The listing-test setup was modified to cancel A2 before booking A1. Section E. |
+| Unresolved limitation / future production work | No persistence. All data is lost when the process ends. Before any real deployment, there must be durable storage, authentication and roles, privacy and security assessmment and cetification, concurrenty, monitoring and an accessibility evaluation. |
+| Personal implementation contribution | Chars: I wrote console.py's run_menu() which is based off the terminal I wrote for Assignment 2. It implements a simple shell-based interface for the user. |
+| Personal test/review/design/integration contribution | Chars: For Stage 6: I reviewed all the code for the functions that Thomas and Leo created and pull requested for. I handled in creating the issues for Stage 8 to 12 and verified the pull requests from then on.   |
 | PG agentic change and rescheduling verification | [response] |
 | PG responsible-AI risk/remediation or supported no finding | [response] |
 
 Optional bounded-change practice only: validation rule, focused test, safe error-message change, explicit-input query or agreed status rule with test. Explain expected impact before editing, make a small change, run the test, and identify evidence to inspect if unsure. No live AI unless explicitly permitted. Preserve the submitted candidate.
 
 Practice question/change and reasoning: [response or not undertaken]
-Separate reflection / peer / common team viva evidence links and routing: [response]
-No further coding stage. Later corrections use the published assessment process.
+Separate reflection / peer / common team viva evidence links and routing: 
