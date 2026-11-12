@@ -8,3 +8,9 @@ __pycache__/
 .stage8_faults/
 .stage8-check-*/
 .stage8-verify-*/
+
+.idea/
+.vscode/
+Thumbs.db
+.coverage
+htmlcov/
