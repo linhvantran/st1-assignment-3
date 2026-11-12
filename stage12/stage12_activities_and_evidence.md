@@ -297,9 +297,3 @@ Optional bounded-change practice only: validation rule, focused test, safe error
 
 Practice question/change and reasoning: [response or not undertaken]
 Separate reflection / peer / common team viva evidence links and routing: 
-
-CHARS REFLECTION AREA:  
-
-
-
-No further coding stage. Later corrections use the published assessment process.
