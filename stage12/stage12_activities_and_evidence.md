@@ -217,27 +217,27 @@ Source ZIP name / SHA correspondence / extracted comparison: [zip name] was crea
 
 ## L Submission package verification
 
-- [ ] Feature freeze and scoped requirements traced.
-- [ ] Applicable full regressions, integrated demo and invalid paths verified.
-- [ ] Architecture/code quality and final AI/dependency checks complete.
-- [ ] Root README and project/README reproduced by another verifier.
-- [ ] Release notes, technical debt and limitations visible.
-- [ ] Independent human review, integration and release decision recorded.
-- [ ] Repository URL accessible to marker and exact candidate SHA identified.
-- [ ] One source ZIP from submitted commit with root README.md and .gitignore.
-- [ ] project/ source and all accumulated applicable tests included.
-- [ ] All common applicable stage records included; Stage 10/11 records completed only for the PG pathway. UG-only groups retain supplied PG-only templates unchanged as intentionally not applicable, without fabricated N/A responses.
-- [ ] No .git, environments, caches, secrets, real data, staff solutions or private QA in ZIP.
-- [ ] No Stage 8 utility/backups/recovery metadata or duplicate application in ZIP.
-- [ ] Mixed-group common protection and candidate upload routing checked.
-- [ ] Group reflection, confidential individual peer forms and common team viva routed separately.
+- [X ] Feature freeze and scoped requirements traced.
+- [X ] Applicable full regressions, integrated demo and invalid paths verified.
+- [X ] Architecture/code quality and final AI/dependency checks complete.
+- [X ] Root README and project/README reproduced by another verifier.
+- [X ] Release notes, technical debt and limitations visible.
+- [X ] Independent human review, integration and release decision recorded.
+- [X ] Repository URL accessible to marker and exact candidate SHA identified.
+- [X ] One source ZIP from submitted commit with root README.md and .gitignore.
+- [X ] project/ source and all accumulated applicable tests included.
+- [X ] All common applicable stage records included; Stage 10/11 records completed only for the PG pathway. UG-only groups retain supplied PG-only templates unchanged as intentionally not applicable, without fabricated N/A responses.
+- [X ] No .git, environments, caches, secrets, real data, staff solutions or private QA in ZIP.
+- [X ] No Stage 8 utility/backups/recovery metadata or duplicate application in ZIP.
+- [X ] Mixed-group common protection and candidate upload routing checked.
+- [X ] Group reflection, confidential individual peer forms and common team viva routed separately.
 
-Confirmed assessment item/upload route: [response]
-Deadline/timezone: [response]
-Repository access arrangement: [response]
-Mixed-candidate upload arrangement: [response]
-Oral/video recording/accessibility arrangements: [response]
-Remaining administration or release dependency: [response]
+Confirmed assessment item/upload route: [Team will submit via the single provided group submission URL]
+Deadline/timezone: [13/11/2026]
+Repository access arrangement: [Repository is public,accessible to marker]
+Mixed-candidate upload arrangement: [Not applicable for this group]
+Oral/video recording/accessibility arrangements: [Individual oral assessment,each team member completes their own oral task separately.]
+Remaining administration or release dependency: [No outstanding release dependencies.]
 
 
 ## M Formative questions
