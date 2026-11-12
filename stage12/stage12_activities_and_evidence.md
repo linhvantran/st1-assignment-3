@@ -5,7 +5,7 @@ BLANK student response template. Supplied from the beginning in stage12/ in your
 Group/tutorial: 9:30-11:30 Monday Group 1
 Members and UG/PG applicability: 
 CrowdedGolf [Thomas]: Sections B, G, and AI relection in E. linhvantran[Van]: Section D, H and K
-charatwukki and chara3kki [Chars]: Sections C, E, and M. 
+charatwukki and chara3kki [Chars]: Sections C, E, M, and N. 
 
 
 ## A Release scope and starting SHA
