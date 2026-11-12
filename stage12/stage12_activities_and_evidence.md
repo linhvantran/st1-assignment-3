@@ -296,5 +296,10 @@ One paragraph — If AI can write code why do we still need software engineers: 
 Optional bounded-change practice only: validation rule, focused test, safe error-message change, explicit-input query or agreed status rule with test. Explain expected impact before editing, make a small change, run the test, and identify evidence to inspect if unsure. No live AI unless explicitly permitted. Preserve the submitted candidate.
 
 Practice question/change and reasoning: [response or not undertaken]
-Separate reflection / peer / common team viva evidence links and routing: [response]
+Separate reflection / peer / common team viva evidence links and routing: 
+
+CHARS REFLECTION AREA:  
+
+
+
 No further coding stage. Later corrections use the published assessment process.
